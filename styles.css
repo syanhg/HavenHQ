@@ -278,7 +278,7 @@ body {
 .tile-field-host {
   position: relative;
   width: 100%;
-  aspect-ratio: 3 / 1;
+  aspect-ratio: 6 / 1;
 }
 
 .tile-field-canvas {
