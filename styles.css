@@ -53,7 +53,7 @@ body {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-top: 16px;
+  margin-top: 32px;
 }
 
 .btn {
@@ -110,7 +110,7 @@ body {
   width: 100%;
   max-width: 640px;
   height: 320px;
-  margin-top: 56px;
+  margin-top: 32px;
   background: #ffffff;
   border: 1px solid var(--panel-border);
   border-radius: 8px;
