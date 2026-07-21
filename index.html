@@ -42,7 +42,8 @@
       var AGENTS = [
         { name: 'Ada', color: '#7c8cf8' },
         { name: 'Kai', color: '#f97316' },
-        { name: 'Nova', color: '#22c55e' }
+        { name: 'Nova', color: '#22c55e' },
+        { name: 'Milo', color: '#06b6d4' }
       ];
 
       var ARROW = function (c) {
@@ -74,12 +75,14 @@
         el.className = 'agent-cursor';
         var body = document.createElement('div');
         body.className = 'ac-body';
-        body.innerHTML = ARROW(agent.color);
+        var spin = document.createElement('span');
+        spin.className = 'ac-spin';
+        spin.innerHTML = ARROW(agent.color);
         var tag = document.createElement('span');
         tag.className = 'ac-tag';
         tag.style.background = agent.color;
         tag.textContent = agent.name;
-        body.appendChild(tag);
+        body.append(spin, tag);
         el.append(body);
         field.appendChild(el);
         requestAnimationFrame(function () {
@@ -88,7 +91,8 @@
         return {
           name: agent.name,
           el: el,
-          x: 0, y: 0, tx: 0, ty: 0, svx: 0, svy: 0,
+          spin: spin,
+          x: 0, y: 0, tx: 0, ty: 0, svx: 0, svy: 0, tilt: 0,
           wanderNext: 0
         };
       });
@@ -143,7 +147,14 @@
           res = smoothDamp(cur.y, cur.ty, cur.svy, 0.9, dt);
           cur.y = res[0]; cur.svy = res[1];
 
+          // bank the arrow into its direction of travel, easing back upright
+          // once it settles, instead of always pointing the same fixed way
+          var speed = Math.hypot(cur.svx, cur.svy);
+          var lean = speed < 12 ? 0 : Math.max(-30, Math.min(30, (cur.svx * 1.1 + cur.svy * 0.45) * 0.05));
+          cur.tilt += (lean - cur.tilt) * (1 - Math.exp(-dt * 8));
+
           cur.el.style.transform = 'translate(' + cur.x.toFixed(1) + 'px,' + cur.y.toFixed(1) + 'px)';
+          cur.spin.style.transform = 'rotate(' + cur.tilt.toFixed(2) + 'deg)';
         });
 
         requestAnimationFrame(loop);
