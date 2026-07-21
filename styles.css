@@ -469,7 +469,6 @@ a.brand-label:hover {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
 }
 
 .pricing-features li {
@@ -478,6 +477,11 @@ a.brand-label:hover {
   font-size: 0.82rem;
   line-height: 1.35;
   color: var(--text-secondary);
+  padding: 8px 0;
+}
+
+.pricing-features li + li {
+  border-top: 1px dashed #cbcbcb;
 }
 
 .pricing-card .btn {
