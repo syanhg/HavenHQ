@@ -64,7 +64,7 @@ body {
   font-weight: 400;
   font-size: 0.95rem;
   text-decoration: none;
-  padding: 8px 10px 8px 22px;
+  padding: 8px 20px;
   border-radius: 4px;
   transition: transform 0.15s ease, opacity 0.15s ease;
 }
@@ -102,9 +102,8 @@ body {
 }
 
 .btn-white .btn-key {
-  background: #ffffff;
-  color: var(--text-primary);
-  border: 1px solid var(--panel-border);
+  background: var(--panel-border);
+  color: var(--text-secondary);
 }
 
 @media (max-width: 560px) {
