@@ -49,53 +49,40 @@ class TileField {
     const canvas = this.canvas;
     const ctx = this.ctx;
 
-    const rect = stage.getBoundingClientRect();
-    this.viewW = rect.width;
-    this.viewH = rect.height;
+    const viewW = stage.getBoundingClientRect().width;
+    this.viewW = viewW;
     this.dpr = Math.min(2, window.devicePixelRatio || 1);
-    this.cell = Math.max(2, Math.round(this.viewW / 460));
+    this.cell = Math.max(2, Math.round(viewW / 460));
     const cell = this.cell;
-    const viewW = this.viewW;
-    const viewH = this.viewH;
-
-    canvas.style.width = Math.round(viewW) + "px";
-    canvas.style.height = Math.round(viewH) + "px";
-    canvas.width = Math.ceil(viewW * this.dpr);
-    canvas.height = Math.ceil(viewH * this.dpr);
-    ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
-    ctx.imageSmoothingEnabled = false;
-
-    const splits = ROWS.length === 1 ? [1] : [0.62, 0.38];
-    const bandTops = [];
-    const bandHeights = [];
-    let acc = 0;
-    for (const frac of splits) {
-      bandTops.push(acc * viewH);
-      bandHeights.push(frac * viewH);
-      acc += frac;
-    }
 
     const xs = [], ys = [], sd = [];
+    let bandTop = 0;
 
-    ROWS.forEach((row, ri) => {
-      const bandTop = bandTops[ri];
-      const bandH = bandHeights[ri];
+    ROWS.forEach((row) => {
+      const probe = document.createElement("canvas").getContext("2d");
+      probe.textAlign = "center";
+      probe.textBaseline = "alphabetic";
+
+      let fs = 100;
+      probe.letterSpacing = `${row.letterTrack * fs}px`;
+      probe.font = row.font(fs);
+      fs *= (viewW * row.fillFrac) / (probe.measureText(row.word).width || 1);
+      probe.letterSpacing = `${row.letterTrack * fs}px`;
+      probe.font = row.font(fs);
+      const metrics = probe.measureText(row.word);
+      const inkAscent = metrics.actualBoundingBoxAscent;
+      const bandH = Math.max(1, Math.ceil(inkAscent + metrics.actualBoundingBoxDescent));
+
       const sc = document.createElement("canvas");
       sc.width = Math.max(1, Math.floor(viewW));
-      sc.height = Math.max(1, Math.floor(bandH));
+      sc.height = bandH;
       const s = sc.getContext("2d");
       s.fillStyle = "#000";
       s.textAlign = "center";
-      s.textBaseline = "middle";
-
-      let fs = bandH * 0.9;
+      s.textBaseline = "alphabetic";
       s.letterSpacing = `${row.letterTrack * fs}px`;
       s.font = row.font(fs);
-      const measured = s.measureText(row.word).width || 1;
-      fs *= (viewW * row.fillFrac) / measured;
-      s.letterSpacing = `${row.letterTrack * fs}px`;
-      s.font = row.font(fs);
-      s.fillText(row.word, viewW / 2, bandH / 2);
+      s.fillText(row.word, viewW / 2, inkAscent);
 
       const data = s.getImageData(0, 0, sc.width, sc.height).data;
       const cols = Math.ceil(viewW / cell);
@@ -107,14 +94,29 @@ class TileField {
           if (lx >= sc.width || ly >= sc.height) continue;
           const a = (data[(ly * sc.width + lx) * 4 + 3] ?? 0) / 255;
           if (a <= 0.5) continue;
-          const gx = lx;
-          const gy = ly + bandTop;
-          xs.push(gx);
-          ys.push(gy);
-          sd.push(hash(gx * 1.3, gy * 0.7));
+          xs.push(lx);
+          ys.push(ly + bandTop);
+          sd.push(hash(lx * 1.3, (ly + bandTop) * 0.7));
         }
       }
+
+      bandTop += bandH;
     });
+
+    // Trim the box to the lowest actual tile so no empty band (the font's
+    // descent space) sits below the "haven" ink at the page bottom.
+    let maxY = 0;
+    for (let i = 0; i < ys.length; i++) if (ys[i] > maxY) maxY = ys[i];
+    const viewH = ys.length ? Math.ceil(maxY + cell / 2) : bandTop;
+    this.viewH = viewH;
+    stage.style.height = Math.round(viewH) + "px";
+
+    canvas.style.width = Math.round(viewW) + "px";
+    canvas.style.height = Math.round(viewH) + "px";
+    canvas.width = Math.ceil(viewW * this.dpr);
+    canvas.height = Math.ceil(viewH * this.dpr);
+    ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+    ctx.imageSmoothingEnabled = false;
 
     this.n = xs.length;
     this.px = new Float32Array(xs);
