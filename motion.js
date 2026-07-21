@@ -5,6 +5,9 @@
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var faqItems = Array.prototype.slice.call(document.querySelectorAll(".faq-item"));
 
+  // Gate the collapsible FAQ styling on JS so answers stay visible without it.
+  if (faqItems.length) docEl.classList.add("js-faq");
+
   // If the user prefers reduced motion or IntersectionObserver is unavailable,
   // drop the hiding hook so all content is shown immediately and native
   // <details> handles the FAQ (kept in sync for the chevron).
@@ -47,44 +50,36 @@
     io.observe(el);
   });
 
-  /* ---- Smooth FAQ accordion (animated height on top of <details>) ---- */
+  /* ---- Smooth FAQ accordion (grid-rows animation on top of <details>) ----
+     The panel wrapper animates grid-template-rows 0fr <-> 1fr, which is
+     content-height agnostic and never leaves a stuck lock behind. We keep the
+     native <details> open during a collapse so its content stays rendered
+     until the animation finishes. */
   faqItems.forEach(function (item) {
     var summary = item.querySelector(".faq-q");
     var panel = item.querySelector(".faq-a");
     if (!summary || !panel) return;
 
+    // Keep classes in sync with any external toggle (keyboard, etc.).
+    item.classList.toggle("is-open", item.open);
+
     summary.addEventListener("click", function (e) {
       e.preventDefault();
-      if (item.dataset.animating) return;
-      item.dataset.animating = "1";
 
       if (item.open) {
-        // Collapse: flip the chevron now, animate height to 0, then unset open.
+        // Collapse: animate to 0fr, then drop the native open state at the end.
         item.classList.remove("is-open");
-        panel.style.maxHeight = panel.scrollHeight + "px";
-        requestAnimationFrame(function () {
-          panel.style.maxHeight = "0px";
-        });
         panel.addEventListener("transitionend", function onEnd(ev) {
-          if (ev.propertyName !== "max-height") return;
+          if (ev.target !== panel || ev.propertyName !== "grid-template-rows")
+            return;
           panel.removeEventListener("transitionend", onEnd);
-          item.open = false;
-          panel.style.maxHeight = "";
-          delete item.dataset.animating;
+          if (!item.classList.contains("is-open")) item.open = false;
         });
       } else {
-        // Expand: render + flip the chevron, then grow to the natural height.
+        // Expand: render immediately, then animate open on the next frame.
         item.open = true;
-        item.classList.add("is-open");
-        panel.style.maxHeight = "0px";
         requestAnimationFrame(function () {
-          panel.style.maxHeight = panel.scrollHeight + "px";
-        });
-        panel.addEventListener("transitionend", function onEnd(ev) {
-          if (ev.propertyName !== "max-height") return;
-          panel.removeEventListener("transitionend", onEnd);
-          panel.style.maxHeight = "";
-          delete item.dataset.animating;
+          item.classList.add("is-open");
         });
       }
     });
