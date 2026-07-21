@@ -209,9 +209,10 @@ body {
 }
 
 .picture-frame {
+  position: relative;
   width: 100%;
   max-width: 640px;
-  margin-top: 32px;
+  margin-top: 0;
 }
 
 .picture-img {
