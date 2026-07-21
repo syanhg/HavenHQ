@@ -70,9 +70,23 @@
       <div class="footer">
         <span class="grid-line-v grid-line-v-left"></span>
         <span class="grid-line-v grid-line-v-right"></span>
-        monycompany, inc.
+        <div class="tile-field-host" id="tileFieldHost"></div>
+        <div class="footer-copyright">monycompany, inc.</div>
       </div>
     </section>
   </main>
+
+  <script src="tile-field.js"></script>
+  <script>
+    (function () {
+      var host = document.getElementById('tileFieldHost');
+      if (!host) return;
+      var field = new TileField(host);
+      field.start();
+      window.addEventListener('resize', function () {
+        field.resize();
+      });
+    })();
+  </script>
 </body>
 </html>
