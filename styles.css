@@ -57,11 +57,14 @@ body {
 }
 
 .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
   font-family: var(--font-body);
   font-weight: 400;
   font-size: 0.95rem;
   text-decoration: none;
-  padding: 8px 22px;
+  padding: 8px 10px 8px 22px;
   border-radius: 4px;
   transition: transform 0.15s ease, opacity 0.15s ease;
 }
@@ -79,6 +82,27 @@ body {
 
 .btn-dark {
   background: #2a2a2a;
+  color: #ffffff;
+}
+
+.btn-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.btn-dark .btn-key {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+.btn-white .btn-key {
+  background: var(--text-primary);
   color: #ffffff;
 }
 
