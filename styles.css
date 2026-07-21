@@ -26,6 +26,7 @@ body {
 
 /* ---------- hero ---------- */
 .hero {
+  position: relative;
   max-width: var(--container);
   margin: 0 auto;
   min-height: 70vh;
@@ -35,6 +36,18 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+
+.brand-label {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
 }
 
 .headline {
