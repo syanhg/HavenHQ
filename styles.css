@@ -82,12 +82,25 @@ body {
 }
 
 .tagline {
+  position: relative;
   margin-top: 32px;
+  padding-bottom: 32px;
   font-family: var(--font-body);
   font-weight: 500;
   font-size: 1.2rem;
   letter-spacing: 0.02em;
   color: var(--text-secondary);
+}
+
+.tagline::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  margin-left: -50vw;
+  background: var(--panel-border);
 }
 
 .btn {
