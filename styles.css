@@ -127,11 +127,11 @@ body {
 }
 
 .btn-dark {
-  background: linear-gradient(to bottom, #6bb1ff 0%, #2f7ef5 48%, #0f5de0 52%, #0a3fab 100%);
+  background: linear-gradient(to bottom, #bfe3ff 0%, #7ec2fb 48%, #4fa4f5 52%, #2f7ef0 100%);
   color: #ffffff;
-  border: 1px solid #0a3fab;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.35);
-  box-shadow: 0 1px 3px rgba(10, 40, 100, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  border: 1px solid #3d84e8;
+  text-shadow: 0 -1px 0 rgba(0, 60, 140, 0.3);
+  box-shadow: 0 1px 3px rgba(60, 140, 220, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
 .btn-key {
