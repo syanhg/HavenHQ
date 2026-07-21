@@ -281,6 +281,7 @@ main {
   width: 100%;
   max-width: 640px;
   padding-top: 20px;
+  padding-bottom: 40px;
 }
 
 .tile-field-host {
