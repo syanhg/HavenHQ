@@ -37,15 +37,6 @@ body {
   text-align: center;
 }
 
-.brand {
-  margin-bottom: 32px;
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 0.95rem;
-  letter-spacing: -0.01em;
-  color: var(--text-primary);
-}
-
 .headline {
   position: relative;
   margin: 0;
