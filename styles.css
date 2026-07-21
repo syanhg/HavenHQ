@@ -24,6 +24,14 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Clip the decorative 100vh grid lines so the footer's lines don't
+   overflow ~50vh below the last content and create empty page space.
+   main is exactly 100vw wide, so the full-width horizontal hairlines
+   (also 100vw) sit flush at the edges and are not clipped. */
+main {
+  overflow: hidden;
+}
+
 /* ---------- hero ---------- */
 .hero {
   position: relative;
@@ -278,7 +286,6 @@ body {
 .tile-field-host {
   position: relative;
   width: 100%;
-  aspect-ratio: 6 / 1;
 }
 
 .tile-field-canvas {
