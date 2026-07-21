@@ -58,11 +58,11 @@ body {
 
 .btn {
   font-family: var(--font-body);
-  font-weight: 900;
+  font-weight: 400;
   font-size: 0.95rem;
   text-decoration: none;
-  padding: 13px 26px;
-  border-radius: 8px;
+  padding: 8px 22px;
+  border-radius: 4px;
   transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
@@ -72,7 +72,7 @@ body {
 }
 
 .btn-white {
-  background: #ffffff;
+  background: transparent;
   color: var(--text-primary);
   border: 1px solid var(--panel-border);
 }
