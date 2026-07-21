@@ -29,7 +29,7 @@ body {
    main is exactly 100vw wide, so the full-width horizontal hairlines
    (also 100vw) sit flush at the edges and are not clipped. */
 main {
-  overflow: hidden;
+  overflow: clip;
 }
 
 /* ---------- hero ---------- */
@@ -38,7 +38,7 @@ main {
   max-width: var(--container);
   margin: 0 auto;
   min-height: 70vh;
-  padding: 72px 32px 0;
+  padding: 4px 32px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,16 +46,97 @@ main {
   text-align: center;
 }
 
-.brand-label {
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto 32px;
+  padding: 14px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* full-viewport-width backdrop so scrolled content stays hidden behind the bar */
+.site-header::before {
+  content: "";
   position: absolute;
-  top: 12px;
+  top: 0;
+  bottom: 0;
   left: 50%;
-  transform: translateX(-50%);
+  width: 100vw;
+  margin-left: -50vw;
+  background: var(--bg);
+  z-index: -1;
+}
+
+.site-header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  margin-left: -50vw;
+  background: var(--panel-border);
+}
+
+.site-footer {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 14px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  margin-left: -50vw;
+  background: var(--panel-border);
+}
+
+.brand-label {
   font-family: var(--font-body);
   font-weight: 400;
   font-size: 0.85rem;
   letter-spacing: -0.01em;
   color: var(--text-primary);
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+a.brand-label:hover {
+  opacity: 0.55;
+}
+
+.site-nav {
+  display: flex;
+  gap: 24px;
+}
+
+.site-nav a {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.85rem;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  text-decoration: none;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.site-nav a:hover {
+  opacity: 0.55;
 }
 
 .headline {
@@ -68,17 +149,6 @@ main {
   line-height: 1.25;
   letter-spacing: -0.01em;
   color: var(--text-primary);
-}
-
-.headline::before {
-  content: "";
-  position: absolute;
-  top: -32px;
-  left: 50%;
-  width: 100vw;
-  height: 1px;
-  margin-left: -50vw;
-  background: var(--panel-border);
 }
 
 /* ---------- buttons ---------- */
@@ -141,7 +211,7 @@ main {
   font-weight: 500;
   font-size: 1.2rem;
   letter-spacing: 0.02em;
-  color: var(--text-secondary);
+  color: var(--text-primary);
 }
 
 .btn {
@@ -154,12 +224,18 @@ main {
   text-decoration: none;
   padding: 8px 20px;
   border-radius: 4px;
-  transition: transform 0.15s ease, opacity 0.15s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.4s ease, box-shadow 0.4s ease;
 }
 
 .btn:hover {
-  transform: translateY(-1px);
-  opacity: 0.9;
+  transform: translateY(-2px);
+  opacity: 0.92;
+}
+
+.btn:active {
+  transform: translateY(0);
+  transition-duration: 0.1s;
 }
 
 .btn-white {
@@ -276,6 +352,185 @@ main {
   user-select: none;
 }
 
+/* ---------- pricing ---------- */
+.pricing,
+.faq {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px 0 44px;
+  text-align: left;
+}
+
+.pricing,
+.faq {
+  padding-bottom: 0;
+}
+
+.pricing::after,
+.faq::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  margin-left: -50vw;
+  background: var(--panel-border);
+}
+
+.section-title {
+  margin: 0 0 24px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 1.5rem;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+  text-align: center;
+}
+
+.pricing .section-title {
+  position: relative;
+  margin-bottom: 0;
+  padding-bottom: 24px;
+}
+
+.pricing .section-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  margin-left: -50vw;
+  background: var(--panel-border);
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.pricing-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid var(--panel-border);
+  border-top: none;
+  border-bottom: none;
+  padding: 20px 18px;
+}
+
+.pricing-card-featured {
+  border-color: var(--panel-border);
+}
+
+.pricing-name {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.pricing-price {
+  margin: 8px 0 16px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.pricing-price span {
+  font-weight: 400;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.pricing-features {
+  flex: 1;
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pricing-features li {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: var(--text-secondary);
+}
+
+.pricing-card .btn {
+  justify-content: center;
+  font-size: 0.85rem;
+  padding: 8px 12px;
+}
+
+/* ---------- faq ---------- */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px dashed #cbcbcb;
+}
+
+.faq-item {
+  border-bottom: 1px dashed #cbcbcb;
+}
+
+.faq-q {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 40px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.faq-q::-webkit-details-marker {
+  display: none;
+}
+
+.faq-q::after {
+  content: "";
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  margin-top: -3px;
+  border-right: 1.5px solid #b0b0b0;
+  border-bottom: 1.5px solid #b0b0b0;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+.faq-item[open] .faq-q::after,
+.faq-item.is-open .faq-q::after {
+  margin-top: 3px;
+  transform: rotate(-135deg);
+}
+
+.faq-a {
+  overflow: hidden;
+  padding: 0 40px 20px;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .footer {
   position: relative;
   width: 100%;
@@ -312,5 +567,35 @@ main {
   .btn {
     width: 100%;
     text-align: center;
+  }
+
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- motion ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  .js-motion .headline,
+  .js-motion .placeholder-box,
+  .js-motion .cta-row,
+  .js-motion .tagline-row,
+  .js-motion .picture-frame,
+  .js-motion .pricing,
+  .js-motion .faq {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+
+  .js-motion .is-visible {
+    opacity: 1;
+    transform: none;
   }
 }

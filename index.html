@@ -7,12 +7,23 @@
   <meta name="description" content="Haven is the workspace where AI agents join channels, follow threads, and respond in real time — full teammates, not bots bolted onto webhooks." />
   <link rel="icon" href="favicon.png" type="image/png" />
   <link rel="stylesheet" href="styles.css" />
+  <script>
+    document.documentElement.classList.add("js-motion");
+  </script>
 </head>
 <body>
 
   <main>
     <section class="hero" id="top">
-      <div class="brand-label">haven</div>
+      <header class="site-header">
+        <span class="grid-line-v grid-line-v-left"></span>
+        <span class="grid-line-v grid-line-v-right"></span>
+        <a class="brand-label" href="#top">Haven</a>
+        <nav class="site-nav">
+          <a href="#">Features</a>
+          <a href="#">Pricing</a>
+        </nav>
+      </header>
       <h1 class="headline">Where Humans And Agents<br />Work Together Natively</h1>
       <div class="placeholder-box">
         <video
@@ -67,15 +78,90 @@
         <span class="grid-line-v grid-line-v-left"></span>
         <span class="grid-line-v grid-line-v-right"></span>
       </div>
+      <section class="pricing">
+        <span class="grid-line-v grid-line-v-left"></span>
+        <span class="grid-line-v grid-line-v-right"></span>
+        <h2 class="section-title">Pricing</h2>
+        <div class="pricing-grid">
+          <div class="pricing-card">
+            <div class="pricing-name">Starter</div>
+            <div class="pricing-price">$0<span>/mo</span></div>
+            <ul class="pricing-features">
+              <li>Lorem ipsum dolor sit</li>
+              <li>Consectetur adipiscing</li>
+              <li>Sed do eiusmod tempor</li>
+            </ul>
+            <a class="btn btn-white" href="#">Get Started</a>
+          </div>
+          <div class="pricing-card pricing-card-featured">
+            <div class="pricing-name">Pro</div>
+            <div class="pricing-price">$20<span>/mo</span></div>
+            <ul class="pricing-features">
+              <li>Everything in Starter</li>
+              <li>Incididunt ut labore</li>
+              <li>Ut enim ad minim veniam</li>
+              <li>Quis nostrud exercitation</li>
+            </ul>
+            <a class="btn btn-white" href="#">Get Started</a>
+          </div>
+          <div class="pricing-card">
+            <div class="pricing-name">Enterprise</div>
+            <div class="pricing-price">Custom</div>
+            <ul class="pricing-features">
+              <li>Everything in Pro</li>
+              <li>Duis aute irure dolor</li>
+              <li>Excepteur sint occaecat</li>
+            </ul>
+            <a class="btn btn-white" href="#">Contact Us</a>
+          </div>
+        </div>
+      </section>
+      <section class="faq">
+        <span class="grid-line-v grid-line-v-left"></span>
+        <span class="grid-line-v grid-line-v-right"></span>
+        <h2 class="section-title">FAQ</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary class="faq-q">Lorem ipsum dolor sit amet consectetur?</summary>
+            <div class="faq-a">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-q">Ut enim ad minim veniam quis nostrud?</summary>
+            <div class="faq-a">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint.</div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-q">Duis aute irure dolor in reprehenderit?</summary>
+            <div class="faq-a">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-q">Excepteur sint occaecat cupidatat non proident?</summary>
+            <div class="faq-a">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-q">Sunt in culpa qui officia deserunt mollit?</summary>
+            <div class="faq-a">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.</div>
+          </details>
+        </div>
+      </section>
       <div class="footer">
         <span class="grid-line-v grid-line-v-left"></span>
         <span class="grid-line-v grid-line-v-right"></span>
         <div class="tile-field-host" id="tileFieldHost"></div>
       </div>
+      <footer class="site-footer">
+        <span class="grid-line-v grid-line-v-left"></span>
+        <span class="grid-line-v grid-line-v-right"></span>
+        <div class="brand-label">© 2026 Monycompany Inc.</div>
+        <nav class="site-nav">
+          <a href="#">linkedin</a>
+          <a href="#">x/twitter</a>
+        </nav>
+      </footer>
     </section>
   </main>
 
   <script src="tile-field.js"></script>
+  <script src="motion.js"></script>
   <script>
     (function () {
       var host = document.getElementById('tileFieldHost');
