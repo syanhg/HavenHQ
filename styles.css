@@ -81,18 +81,16 @@ body {
   background: var(--panel-border);
 }
 
-.tagline {
+.tagline-row {
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin-top: 32px;
   padding-bottom: 32px;
-  font-family: var(--font-body);
-  font-weight: 500;
-  font-size: 1.2rem;
-  letter-spacing: 0.02em;
-  color: var(--text-secondary);
 }
 
-.tagline::after {
+.tagline-row::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -101,6 +99,28 @@ body {
   height: 1px;
   margin-left: -50vw;
   background: var(--panel-border);
+}
+
+.step-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  background: var(--panel-border);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.8rem;
+  border-radius: 0;
+}
+
+.tagline {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 1.2rem;
+  letter-spacing: 0.02em;
+  color: var(--text-secondary);
 }
 
 .btn {
