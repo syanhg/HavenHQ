@@ -37,6 +37,15 @@ body {
   text-align: center;
 }
 
+.brand {
+  margin-bottom: 32px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
 .headline {
   position: relative;
   margin: 0;
@@ -62,10 +71,23 @@ body {
 
 /* ---------- buttons ---------- */
 .cta-row {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 16px;
   margin-top: 32px;
+  padding-bottom: 32px;
+}
+
+.cta-row::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  margin-left: -50vw;
+  background: var(--panel-border);
 }
 
 .btn {
