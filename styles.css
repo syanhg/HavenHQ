@@ -215,6 +215,17 @@ body {
   margin-top: 0;
 }
 
+.picture-frame::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  margin-left: -50vw;
+  background: var(--panel-border);
+}
+
 .picture-img {
   display: block;
   width: 100%;
