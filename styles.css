@@ -24,6 +24,22 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ---------- header island ---------- */
+.island {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  background: #ffffff;
+  border: 1px solid var(--panel-border);
+  border-radius: 0;
+  padding: 10px 22px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
 /* ---------- hero ---------- */
 .hero {
   max-width: var(--container);
