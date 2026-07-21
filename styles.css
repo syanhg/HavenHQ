@@ -272,7 +272,7 @@ body {
   position: relative;
   width: 100%;
   max-width: 640px;
-  padding: 20px 0;
+  padding-top: 20px;
 }
 
 .tile-field-host {
@@ -288,13 +288,6 @@ body {
   width: 100%;
   height: 100%;
   pointer-events: none;
-}
-
-.footer-copyright {
-  margin-top: 12px;
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  color: var(--text-secondary);
 }
 
 @media (max-width: 560px) {
