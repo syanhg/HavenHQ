@@ -114,7 +114,6 @@ body {
   margin-top: 32px;
   background: #ffffff;
   border: 1px solid var(--panel-border);
-  border-radius: 8px;
 }
 
 .placeholder-box::before,
