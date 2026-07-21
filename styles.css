@@ -185,6 +185,81 @@ body {
   right: 0;
 }
 
+/* ---------- agent cursors ---------- */
+.agent-cursors {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.agent-cursor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  will-change: transform;
+}
+
+.agent-cursor.on {
+  opacity: 1;
+}
+
+.agent-cursor .ac-body {
+  display: flex;
+  align-items: flex-start;
+  animation: ac-breathe 3.2s ease-in-out infinite;
+}
+
+.agent-cursor .ac-arrow {
+  display: block;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.25));
+}
+
+.agent-cursor .ac-tag {
+  margin: 10px 0 0 -2px;
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 3px 7px 4px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.agent-cursor .ac-say {
+  position: absolute;
+  left: 26px;
+  top: -32px;
+  background: #ffffff;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  padding: 5px 8px;
+  border-radius: 5px 5px 5px 2px;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+  opacity: 0;
+  transform: translateY(4px) scale(0.9);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.agent-cursor.say .ac-say {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+@keyframes ac-breathe {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2.5px);
+  }
+}
+
 @media (max-width: 560px) {
   .hero {
     padding: 40px 20px 72px;

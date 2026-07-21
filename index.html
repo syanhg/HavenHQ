@@ -25,6 +25,7 @@
         ></video>
         <span class="grid-line-v grid-line-v-left"></span>
         <span class="grid-line-v grid-line-v-right"></span>
+        <div class="agent-cursors" id="agentCursors"></div>
       </div>
       <div class="cta-row">
         <a class="btn btn-dark" href="#">Get Started</a>
@@ -33,5 +34,146 @@
     </section>
   </main>
 
+  <script>
+    (function () {
+      var field = document.getElementById('agentCursors');
+      if (!field) return;
+
+      var AGENTS = [
+        { name: 'Ada', color: '#7c8cf8' },
+        { name: 'Kai', color: '#f97316' },
+        { name: 'Nova', color: '#22c55e' }
+      ];
+
+      var SAYS = ['reviewing…', 'looks good ✓', 'on it', 'synced ✓', 'nice', 'shipped ✓'];
+
+      var ARROW = function (c) {
+        return (
+          '<svg class="ac-arrow" width="20" height="20" viewBox="0 0 18 18">' +
+          '<path d="M2 1 L16 8.5 L9.5 10.5 L6.5 17 Z" fill="#fff" stroke="#fff" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>' +
+          '<path d="M2 1 L16 8.5 L9.5 10.5 L6.5 17 Z" fill="' + c + '" stroke="' + c + '" stroke-width="0.6" stroke-linejoin="round" stroke-linecap="round"/>' +
+          '</svg>'
+        );
+      };
+
+      function smoothDamp(cur, target, vel, smoothTime, dt) {
+        var omega = 2 / smoothTime;
+        var x = omega * dt;
+        var exp = 1 / (1 + x + 0.48 * x * x + 0.235 * x * x * x);
+        var change = cur - target;
+        var temp = (vel + omega * change) * dt;
+        var newVel = (vel - omega * temp) * exp;
+        var out = target + (change + temp) * exp;
+        if ((target - cur > 0) === (out > target)) {
+          out = target;
+          newVel = (out - target) / dt;
+        }
+        return [out, newVel];
+      }
+
+      var cursors = AGENTS.map(function (agent, i) {
+        var el = document.createElement('div');
+        el.className = 'agent-cursor';
+        var say = document.createElement('span');
+        say.className = 'ac-say';
+        var body = document.createElement('div');
+        body.className = 'ac-body';
+        body.innerHTML = ARROW(agent.color);
+        var tag = document.createElement('span');
+        tag.className = 'ac-tag';
+        tag.style.background = agent.color;
+        tag.textContent = agent.name;
+        body.appendChild(tag);
+        el.append(say, body);
+        field.appendChild(el);
+        requestAnimationFrame(function () {
+          el.classList.add('on');
+        });
+        return {
+          name: agent.name,
+          el: el,
+          say: say,
+          x: 0, y: 0, tx: 0, ty: 0, svx: 0, svy: 0,
+          wanderNext: 0,
+          sayTimer: 0
+        };
+      });
+
+      function bounds() {
+        var r = field.getBoundingClientRect();
+        return { w: r.width, h: r.height };
+      }
+
+      function pickTarget(b) {
+        var pad = 34;
+        return {
+          x: pad + Math.random() * Math.max(1, b.w - pad * 2),
+          y: pad + Math.random() * Math.max(1, b.h - pad * 2)
+        };
+      }
+
+      // seed initial positions/targets
+      (function seed() {
+        var b = bounds();
+        cursors.forEach(function (c, i) {
+          var t = pickTarget(b);
+          c.x = c.tx = t.x;
+          c.y = c.ty = t.y;
+          c.wanderNext = performance.now() + 800 + i * 400;
+        });
+      })();
+
+      function speak(cur, text) {
+        cur.say.textContent = text;
+        cur.el.classList.add('say');
+        clearTimeout(cur.sayTimer);
+        cur.sayTimer = setTimeout(function () {
+          cur.el.classList.remove('say');
+        }, 1800);
+      }
+
+      var last = performance.now();
+
+      function loop(now) {
+        var dt = Math.min((now - last) / 1000, 1 / 30) || 1 / 60;
+        last = now;
+        var b = bounds();
+
+        cursors.forEach(function (cur, i) {
+          if (now >= cur.wanderNext) {
+            var meet = Math.random() < 0.4;
+            if (meet && cursors.length > 1) {
+              var other = cursors[(i + 1 + Math.floor(Math.random() * (cursors.length - 1))) % cursors.length];
+              var angle = Math.random() * Math.PI * 2;
+              var r = 46 + Math.random() * 18;
+              cur.tx = Math.max(20, Math.min(b.w - 20, other.tx + Math.cos(angle) * r));
+              cur.ty = Math.max(20, Math.min(b.h - 20, other.ty + Math.sin(angle) * r));
+              cur.wanderNext = now + 1400 + Math.random() * 900;
+              setTimeout(function () {
+                speak(cur, SAYS[Math.floor(Math.random() * SAYS.length)]);
+              }, 1300);
+            } else {
+              var t = pickTarget(b);
+              cur.tx = t.x;
+              cur.ty = t.y;
+              cur.wanderNext = now + 1800 + Math.random() * 1800;
+            }
+          }
+
+          var res;
+          res = smoothDamp(cur.x, cur.tx, cur.svx, 0.9, dt);
+          cur.x = res[0]; cur.svx = res[1];
+          res = smoothDamp(cur.y, cur.ty, cur.svy, 0.9, dt);
+          cur.y = res[0]; cur.svy = res[1];
+
+          cur.el.style.transform = 'translate(' + cur.x.toFixed(1) + 'px,' + cur.y.toFixed(1) + 'px)';
+        });
+
+        requestAnimationFrame(loop);
+      }
+
+      requestAnimationFrame(loop);
+    })();
+  </script>
 </body>
 </html>
