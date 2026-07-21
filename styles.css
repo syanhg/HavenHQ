@@ -85,7 +85,7 @@ body {
   margin-top: 32px;
   font-family: var(--font-body);
   font-weight: 500;
-  font-size: 0.85rem;
+  font-size: 1.2rem;
   letter-spacing: 0.02em;
   color: var(--text-secondary);
 }
