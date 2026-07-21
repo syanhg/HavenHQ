@@ -107,6 +107,7 @@ body {
 }
 
 .placeholder-box {
+  position: relative;
   width: 100%;
   max-width: 640px;
   height: 320px;
@@ -114,6 +115,25 @@ body {
   background: #ffffff;
   border: 1px solid var(--panel-border);
   border-radius: 8px;
+}
+
+.placeholder-box::before,
+.placeholder-box::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  margin-left: -50vw;
+  background: var(--panel-border);
+}
+
+.placeholder-box::before {
+  top: 0;
+}
+
+.placeholder-box::after {
+  bottom: 0;
 }
 
 @media (max-width: 560px) {
