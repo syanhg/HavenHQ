@@ -102,8 +102,9 @@ body {
 }
 
 .btn-white .btn-key {
-  background: var(--text-primary);
-  color: #ffffff;
+  background: #ffffff;
+  color: var(--text-primary);
+  border: 1px solid var(--panel-border);
 }
 
 @media (max-width: 560px) {
