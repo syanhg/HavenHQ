@@ -48,6 +48,10 @@ body {
   color: var(--text-primary);
 }
 
+.headline .cap {
+  font-weight: 900;
+}
+
 /* ---------- buttons ---------- */
 .cta-row {
   display: flex;
