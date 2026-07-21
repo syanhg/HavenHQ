@@ -134,6 +134,23 @@ body {
   bottom: 0;
 }
 
+.grid-line-v {
+  position: absolute;
+  top: 50%;
+  width: 1px;
+  height: 100vh;
+  margin-top: -50vh;
+  background: var(--panel-border);
+}
+
+.grid-line-v-left {
+  left: 0;
+}
+
+.grid-line-v-right {
+  right: 0;
+}
+
 @media (max-width: 560px) {
   .hero {
     padding: 40px 20px 72px;
