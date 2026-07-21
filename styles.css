@@ -524,7 +524,7 @@ a.brand-label:hover {
   border-right: 1.5px solid #b0b0b0;
   border-bottom: 1.5px solid #b0b0b0;
   transform: rotate(45deg);
-  transition: transform 0.2s ease;
+  transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .js-faq .faq-item.is-open .faq-q::after,
@@ -536,7 +536,7 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
 .js-faq .faq-a {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: grid-template-rows 0.26s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .js-faq .faq-item.is-open .faq-a {
@@ -552,6 +552,16 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
   font-size: 0.85rem;
   line-height: 1.5;
   color: var(--text-secondary);
+}
+
+.js-faq .faq-a-inner {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.js-faq .faq-item.is-open .faq-a-inner {
+  opacity: 1;
+  transition: opacity 0.26s ease 0.06s;
 }
 
 .footer {
