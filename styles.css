@@ -81,6 +81,15 @@ body {
   background: var(--panel-border);
 }
 
+.tagline {
+  margin-top: 32px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  color: var(--text-secondary);
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
