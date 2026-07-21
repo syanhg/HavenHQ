@@ -229,28 +229,6 @@ body {
   white-space: nowrap;
 }
 
-.agent-cursor .ac-say {
-  position: absolute;
-  left: 26px;
-  top: -32px;
-  background: #ffffff;
-  color: var(--text-primary);
-  font-family: var(--font-body);
-  font-size: 0.7rem;
-  padding: 5px 8px;
-  border-radius: 5px 5px 5px 2px;
-  white-space: nowrap;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
-  opacity: 0;
-  transform: translateY(4px) scale(0.9);
-  transition: opacity 0.18s ease, transform 0.18s ease;
-}
-
-.agent-cursor.say .ac-say {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
 @keyframes ac-breathe {
   0%, 100% {
     transform: translateY(0);
