@@ -25,147 +25,16 @@
         ></video>
         <span class="grid-line-v grid-line-v-left"></span>
         <span class="grid-line-v grid-line-v-right"></span>
-        <div class="agent-cursors" id="agentCursors"></div>
       </div>
       <div class="cta-row">
         <a class="btn btn-dark" href="#">Get Started</a>
         <a class="btn btn-white" href="#">Learn more</a>
       </div>
       <div class="tagline">AI Agent Native Slack</div>
+      <div class="picture-frame">
+        <img class="picture-img" src="picture.png" alt="" draggable="false" />
+      </div>
     </section>
   </main>
-
-  <script>
-    (function () {
-      var field = document.getElementById('agentCursors');
-      if (!field) return;
-
-      var AGENTS = [
-        { name: 'Ada', color: '#7c8cf8' },
-        { name: 'Kai', color: '#f97316' },
-        { name: 'Nova', color: '#22c55e' },
-        { name: 'Milo', color: '#06b6d4' }
-      ];
-
-      var ARROW = function (c) {
-        return (
-          '<svg class="ac-arrow" width="20" height="20" viewBox="0 0 18 18">' +
-          '<path d="M2 1 L16 8.5 L9.5 10.5 L6.5 17 Z" fill="#fff" stroke="#fff" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>' +
-          '<path d="M2 1 L16 8.5 L9.5 10.5 L6.5 17 Z" fill="' + c + '" stroke="' + c + '" stroke-width="0.6" stroke-linejoin="round" stroke-linecap="round"/>' +
-          '</svg>'
-        );
-      };
-
-      function smoothDamp(cur, target, vel, smoothTime, dt) {
-        var omega = 2 / smoothTime;
-        var x = omega * dt;
-        var exp = 1 / (1 + x + 0.48 * x * x + 0.235 * x * x * x);
-        var change = cur - target;
-        var temp = (vel + omega * change) * dt;
-        var newVel = (vel - omega * temp) * exp;
-        var out = target + (change + temp) * exp;
-        if ((target - cur > 0) === (out > target)) {
-          out = target;
-          newVel = (out - target) / dt;
-        }
-        return [out, newVel];
-      }
-
-      var cursors = AGENTS.map(function (agent, i) {
-        var el = document.createElement('div');
-        el.className = 'agent-cursor';
-        var body = document.createElement('div');
-        body.className = 'ac-body';
-        var spin = document.createElement('span');
-        spin.className = 'ac-spin';
-        spin.innerHTML = ARROW(agent.color);
-        var tag = document.createElement('span');
-        tag.className = 'ac-tag';
-        tag.style.background = agent.color;
-        tag.textContent = agent.name;
-        body.append(spin, tag);
-        el.append(body);
-        field.appendChild(el);
-        requestAnimationFrame(function () {
-          el.classList.add('on');
-        });
-        return {
-          name: agent.name,
-          el: el,
-          spin: spin,
-          x: 0, y: 0, tx: 0, ty: 0, svx: 0, svy: 0, tilt: 0,
-          wanderNext: 0
-        };
-      });
-
-      function bounds() {
-        var r = field.getBoundingClientRect();
-        return { w: r.width, h: r.height };
-      }
-
-      // each cursor wanders within its own horizontal slice of the box, so
-      // they stay spread out instead of drifting into a cluster
-      function pickTarget(b, i) {
-        var pad = 34;
-        var slice = b.w / cursors.length;
-        var minX = i * slice + pad;
-        var maxX = (i + 1) * slice - pad;
-        return {
-          x: minX + Math.random() * Math.max(1, maxX - minX),
-          y: pad + Math.random() * Math.max(1, b.h - pad * 2)
-        };
-      }
-
-      // seed initial positions/targets
-      (function seed() {
-        var b = bounds();
-        cursors.forEach(function (c, i) {
-          var t = pickTarget(b, i);
-          c.x = c.tx = t.x;
-          c.y = c.ty = t.y;
-          c.wanderNext = performance.now() + 800 + i * 400;
-        });
-      })();
-
-      var last = performance.now();
-
-      function loop(now) {
-        var dt = Math.min((now - last) / 1000, 1 / 30) || 1 / 60;
-        last = now;
-        var b = bounds();
-
-        cursors.forEach(function (cur, i) {
-          if (now >= cur.wanderNext) {
-            var t = pickTarget(b, i);
-            cur.tx = t.x;
-            cur.ty = t.y;
-            cur.wanderNext = now + 1800 + Math.random() * 1800;
-          }
-
-          var res;
-          res = smoothDamp(cur.x, cur.tx, cur.svx, 0.9, dt);
-          cur.x = res[0]; cur.svx = res[1];
-          res = smoothDamp(cur.y, cur.ty, cur.svy, 0.9, dt);
-          cur.y = res[0]; cur.svy = res[1];
-
-          // point the arrow toward wherever it's currently headed, turning
-          // the short way around instead of always facing the same fixed way
-          var speed = Math.hypot(cur.svx, cur.svy);
-          if (speed > 6) {
-            var target = Math.atan2(cur.svy, cur.svx) * 180 / Math.PI + 135;
-            var delta = ((target - cur.tilt + 540) % 360) - 180;
-            cur.tilt += delta * (1 - Math.exp(-dt * 6));
-          }
-
-          cur.el.style.transform = 'translate(' + cur.x.toFixed(1) + 'px,' + cur.y.toFixed(1) + 'px)';
-          cur.spin.style.transform = 'rotate(' + cur.tilt.toFixed(2) + 'deg)';
-        });
-
-        requestAnimationFrame(loop);
-      }
-
-      requestAnimationFrame(loop);
-    })();
-  </script>
 </body>
 </html>
