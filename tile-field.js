@@ -2,7 +2,7 @@ const TAU = Math.PI * 2;
 
 const ROWS = [
   {
-    word: "haven",
+    word: "soffo",
     font: (px) => `600 ${px}px ui-sans-serif, system-ui, Arial, sans-serif`,
     letterTrack: -0.02,
     fillFrac: 0.92,
