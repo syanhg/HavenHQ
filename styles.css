@@ -611,6 +611,12 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
   }
 }
 
+/* offset anchor targets so they clear the sticky header */
+#features,
+#pricing {
+  scroll-margin-top: 80px;
+}
+
 /* ---------- motion ---------- */
 @media (prefers-reduced-motion: no-preference) {
   html {
