@@ -470,6 +470,17 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
   padding-bottom: 30px;
 }
 
+.wordmark-band::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  margin-left: -50vw;
+  background: var(--panel-border);
+}
+
 .tile-field-host {
   position: relative;
   width: 100%;
