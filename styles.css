@@ -315,7 +315,7 @@ a.brand-label:hover {
 }
 
 /* pricing now stands alone on its own page, so the cards need breathing room
-   above the site footer -- they have no bottom border of their own */
+   below -- they have no bottom border of their own */
 .pricing {
   padding-bottom: 44px;
 }
