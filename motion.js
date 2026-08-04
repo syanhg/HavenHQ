@@ -23,8 +23,7 @@
 
   /* ---- Scroll reveal: fade + rise as elements enter the viewport ---- */
   var selector =
-    ".headline, .cta-row, .tagline-row, .picture-frame," +
-    " .pricing, .faq";
+    ".headline, .cta-row, .pricing, .faq";
   var els = Array.prototype.slice.call(document.querySelectorAll(selector));
 
   var io = new IntersectionObserver(
