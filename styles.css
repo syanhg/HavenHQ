@@ -271,34 +271,6 @@ a.brand-label:hover {
   color: var(--text-secondary);
 }
 
-.placeholder-box {
-  position: relative;
-  width: 100%;
-  max-width: 640px;
-  height: 320px;
-  margin-top: 32px;
-  background: #ffffff;
-}
-
-.placeholder-box::before,
-.placeholder-box::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  width: 100vw;
-  height: 1px;
-  margin-left: -50vw;
-  background: var(--panel-border);
-}
-
-.placeholder-box::before {
-  top: 0;
-}
-
-.placeholder-box::after {
-  bottom: 0;
-}
-
 .grid-line-v {
   position: absolute;
   top: 50%;
@@ -615,7 +587,6 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
   }
 
   .js-motion .headline,
-  .js-motion .placeholder-box,
   .js-motion .cta-row,
   .js-motion .tagline-row,
   .js-motion .picture-frame,

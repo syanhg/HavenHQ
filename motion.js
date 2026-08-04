@@ -23,7 +23,7 @@
 
   /* ---- Scroll reveal: fade + rise as elements enter the viewport ---- */
   var selector =
-    ".headline, .placeholder-box, .cta-row, .tagline-row, .picture-frame," +
+    ".headline, .cta-row, .tagline-row, .picture-frame," +
     " .pricing, .faq";
   var els = Array.prototype.slice.call(document.querySelectorAll(selector));
 
