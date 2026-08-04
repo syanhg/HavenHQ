@@ -149,6 +149,7 @@ a.brand-label:hover {
   line-height: 1.25;
   letter-spacing: -0.01em;
   color: var(--text-primary);
+  padding-top: 32px;
   padding-bottom: 32px;
 }
 
@@ -215,6 +216,14 @@ a.brand-label:hover {
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
+/* flat white fill, no inset shadow -- the page sits on #efefef, so this
+   reads as white where .btn-white only reads as white via its shadow */
+.btn-solid {
+  background: #ffffff;
+  color: var(--text-primary);
+  border: 1px solid var(--panel-border);
+}
+
 .btn-dark {
   background: #2a2a2a;
   color: #ffffff;
@@ -236,7 +245,8 @@ a.brand-label:hover {
   color: #ffffff;
 }
 
-.btn-white .btn-key {
+.btn-white .btn-key,
+.btn-solid .btn-key {
   background: var(--panel-border);
   color: var(--text-secondary);
 }
