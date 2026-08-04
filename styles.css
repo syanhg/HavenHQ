@@ -149,6 +149,18 @@ a.brand-label:hover {
   line-height: 1.25;
   letter-spacing: -0.01em;
   color: var(--text-primary);
+  padding-bottom: 32px;
+}
+
+.headline::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  margin-left: -50vw;
+  background: var(--panel-border);
 }
 
 /* ---------- buttons ---------- */
