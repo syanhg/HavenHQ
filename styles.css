@@ -290,6 +290,12 @@ a.brand-label:hover {
   padding-bottom: 44px;
 }
 
+/* the FAQ lost its heading, so the first question sits straight under the
+   CTA row with no leading gap */
+.faq {
+  padding-top: 0;
+}
+
 .pricing::after,
 .faq::after {
   content: "";
@@ -403,7 +409,6 @@ a.brand-label:hover {
 .faq-list {
   display: flex;
   flex-direction: column;
-  border-top: 1px dashed #cbcbcb;
 }
 
 .faq-item {
