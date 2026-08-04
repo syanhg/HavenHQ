@@ -251,7 +251,7 @@ a.brand-label:hover {
   color: var(--text-secondary);
 }
 
-/* looping background video above the closing headline */
+/* looping background video below the closing headline */
 .video-band {
   position: relative;
   width: 100%;
@@ -269,7 +269,7 @@ a.brand-label:hover {
   user-select: none;
 }
 
-/* the top rule lands on .faq::after, so only the bottom one is drawn here */
+/* the top rule lands on .headline::after, so only the bottom one is drawn here */
 .video-band::after {
   content: "";
   position: absolute;
