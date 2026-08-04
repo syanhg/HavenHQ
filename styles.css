@@ -91,7 +91,7 @@ main {
   padding: 14px 40px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .site-footer::before {
@@ -137,19 +137,6 @@ a.brand-label:hover {
 
 .site-nav a:hover {
   opacity: 0.55;
-}
-
-.social-link {
-  display: inline-flex;
-  align-items: center;
-}
-
-.social-icon {
-  display: block;
-  width: 16px;
-  height: 16px;
-  -webkit-user-drag: none;
-  user-select: none;
 }
 
 .headline {
