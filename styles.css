@@ -489,17 +489,6 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
   max-width: 640px;
   padding-top: 20px;
   padding-bottom: 30px;
-  background: #ffffff;
-}
-
-/* closing CTA band, white to match the hero wordmark above */
-.headline-band {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  max-width: 640px;
-  background: #ffffff;
 }
 
 .wordmark-band::after {
