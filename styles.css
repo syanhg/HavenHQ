@@ -314,12 +314,6 @@ a.brand-label:hover {
   padding-bottom: 0;
 }
 
-/* pricing now stands alone on its own page, so the cards need breathing room
-   below -- they have no bottom border of their own */
-.pricing {
-  padding-bottom: 44px;
-}
-
 /* the FAQ lost its heading, so the first question sits straight under the
    CTA row with no leading gap */
 .faq {
