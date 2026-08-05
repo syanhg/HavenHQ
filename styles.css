@@ -53,6 +53,30 @@ main {
   text-align: center;
 }
 
+.site-header {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  /* the bar is empty, so its former text height is held open explicitly */
+  min-height: 44px;
+  padding: 14px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  margin-left: -50vw;
+  background: var(--panel-border);
+}
+
 .site-footer {
   position: relative;
   width: 100%;
