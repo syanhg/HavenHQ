@@ -17,25 +17,6 @@ function hash(x, y) {
   return r - Math.floor(r);
 }
 
-/* One breathing tile per sampled cell — shared by every field on the page so
-   they all pulse on the same clock and at the same weight. */
-function paintTiles(field, time) {
-  const { ctx, viewW, viewH, cell, n, px, py, seed } = field;
-
-  ctx.clearRect(0, 0, viewW, viewH);
-
-  const grayP = new Path2D();
-  for (let i = 0; i < n; i++) {
-    const breathe = 0.5 + 0.5 * Math.sin(seed[i] * TAU + time * 1.3);
-    const sz = cell * (0.22 + 0.1 * breathe);
-    const h = sz / 2;
-    grayP.rect(px[i] - h, py[i] - h, sz, sz);
-  }
-
-  ctx.fillStyle = REST;
-  ctx.fill(grayP);
-}
-
 class TileField {
   constructor(host, _opts = {}) {
     this.host = host;
@@ -146,8 +127,27 @@ class TileField {
   }
 
   frame = () => {
+    const ctx = this.ctx;
+    const { viewW, viewH, cell, n, px, py, seed } = this;
+
+    ctx.clearRect(0, 0, viewW, viewH);
     this.time += SPEED;
-    paintTiles(this, this.time);
+    const time = this.time;
+
+    const grayP = new Path2D();
+
+    for (let i = 0; i < n; i++) {
+      const x = px[i], y = py[i];
+      const breathe = 0.5 + 0.5 * Math.sin(seed[i] * TAU + time * 1.3);
+      const base = 0.22 + 0.1 * breathe;
+      const sz = cell * base;
+      const h = sz / 2;
+      grayP.rect(x - h, y - h, sz, sz);
+    }
+
+    ctx.fillStyle = REST;
+    ctx.fill(grayP);
+
     this.raf = requestAnimationFrame(this.frame);
   };
 
@@ -163,108 +163,6 @@ class TileField {
     ctx.fillStyle = REST;
     ctx.fill(grayP);
   }
-
-  start() {
-    if (this.reduced) return;
-    if (!this.raf) this.raf = requestAnimationFrame(this.frame);
-  }
-
-  stop() {
-    if (this.raf) cancelAnimationFrame(this.raf);
-    this.raf = 0;
-  }
-
-  destroy() {
-    this.stop();
-    this.canvas.remove();
-  }
-}
-
-/* The same field with the wordmark mask taken away: every cell inside the host
-   box emits a tile, so the texture fills whatever it sits behind. The canvas is
-   absolutely positioned, so it reads the host's size without ever setting it. */
-class TileTexture {
-  constructor(host) {
-    this.host = host;
-
-    this.canvas = document.createElement("canvas");
-    this.canvas.className = "tile-texture-canvas";
-    this.canvas.setAttribute("aria-hidden", "true");
-    this.ctx = this.canvas.getContext("2d");
-    this.host.insertBefore(this.canvas, this.host.firstChild);
-
-    this.reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    this.dpr = Math.min(2, window.devicePixelRatio || 1);
-    this.viewW = 0;
-    this.viewH = 0;
-    this.cell = 2;
-    this.time = 0;
-
-    this.n = 0;
-    this.px = new Float32Array(0);
-    this.py = new Float32Array(0);
-    this.seed = new Float32Array(0);
-
-    this.raf = 0;
-
-    this.resize();
-  }
-
-  resize() {
-    const rect = this.host.getBoundingClientRect();
-    const viewW = Math.floor(rect.width);
-    const viewH = Math.floor(rect.height);
-    if (viewW <= 0 || viewH <= 0) return;
-
-    this.viewW = viewW;
-    this.viewH = viewH;
-    this.dpr = Math.min(2, window.devicePixelRatio || 1);
-    // Same cell derivation as the wordmark, so both read as one texture.
-    this.cell = Math.max(2, Math.round(viewW / 460));
-    const cell = this.cell;
-
-    const canvas = this.canvas;
-    canvas.style.width = viewW + "px";
-    canvas.style.height = viewH + "px";
-    canvas.width = Math.ceil(viewW * this.dpr);
-    canvas.height = Math.ceil(viewH * this.dpr);
-    this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
-    this.ctx.imageSmoothingEnabled = false;
-
-    const cols = Math.ceil(viewW / cell);
-    const rows = Math.ceil(viewH / cell);
-    const n = cols * rows;
-
-    const px = new Float32Array(n);
-    const py = new Float32Array(n);
-    const seed = new Float32Array(n);
-
-    let i = 0;
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        const lx = Math.floor(c * cell + cell / 2);
-        const ly = Math.floor(r * cell + cell / 2);
-        px[i] = lx;
-        py[i] = ly;
-        seed[i] = hash(lx * 1.3, ly * 0.7);
-        i++;
-      }
-    }
-
-    this.n = n;
-    this.px = px;
-    this.py = py;
-    this.seed = seed;
-
-    if (this.reduced) paintTiles(this, 0);
-  }
-
-  frame = () => {
-    this.time += SPEED;
-    paintTiles(this, this.time);
-    this.raf = requestAnimationFrame(this.frame);
-  };
 
   start() {
     if (this.reduced) return;

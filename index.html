@@ -71,9 +71,7 @@
           </div>
         </div>
       </section>
-      <div class="headline-band" id="headlineBand">
-        <h1 class="headline">Where Humans And Agents<br />Work Together Natively</h1>
-      </div>
+      <h1 class="headline">Where Humans And Agents<br />Work Together Natively</h1>
       <footer class="site-footer">
         <div class="brand-label">© 2026 Monycompany Inc.</div>
       </footer>
@@ -85,16 +83,11 @@
   <script>
     (function () {
       var host = document.getElementById('tileFieldHost');
-      var band = document.getElementById('headlineBand');
-      var field = host ? new TileField(host) : null;
-      var texture = band ? new TileTexture(band) : null;
-
-      if (field) field.start();
-      if (texture) texture.start();
-
+      if (!host) return;
+      var field = new TileField(host);
+      field.start();
       window.addEventListener('resize', function () {
-        if (field) field.resize();
-        if (texture) texture.resize();
+        field.resize();
       });
     })();
   </script>
