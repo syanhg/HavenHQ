@@ -245,25 +245,16 @@ main {
 }
 
 /* ---------- pricing ---------- */
+/* Neither section carries a heading any more, so both sit flush against the
+   hairline above them with no leading gap. */
 .pricing,
 .faq {
   position: relative;
   width: 100%;
   max-width: 640px;
   margin: 0 auto;
-  padding: 24px 0 44px;
+  padding: 0;
   text-align: left;
-}
-
-.pricing,
-.faq {
-  padding-bottom: 0;
-}
-
-/* the FAQ lost its heading, so the first question sits straight under the
-   CTA row with no leading gap */
-.faq {
-  padding-top: 0;
 }
 
 .pricing::after,
