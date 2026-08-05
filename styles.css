@@ -124,9 +124,20 @@ main {
   transition: opacity 0.3s ease;
 }
 
+/* Holds a measure-limited block — the tagline, the closing headline — out to
+   the full column, so the band reads as wide as its neighbours while the type
+   inside keeps its own line length. */
+.text-band {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+}
+
 .headline {
   position: relative;
-  margin: 0;
+  /* auto margins because it is centred inside .text-band now, not by the
+     hero's own flex centring */
+  margin: 0 auto;
   max-width: 32ch;
   font-family: var(--font-body);
   font-weight: 500;
