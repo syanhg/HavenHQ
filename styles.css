@@ -514,6 +514,19 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
   width: 100%;
 }
 
+.hero-tagline {
+  max-width: 44ch;
+  margin: 0 auto;
+  padding-top: 32px;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
 .tile-field-canvas {
   position: absolute;
   inset: 0;
@@ -556,6 +569,7 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
     scroll-behavior: smooth;
   }
 
+  .js-motion .hero-tagline,
   .js-motion .headline,
   .js-motion .cta-row,
   .js-motion .video-band,
