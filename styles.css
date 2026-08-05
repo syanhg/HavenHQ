@@ -24,10 +24,9 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Clip the decorative 100vh grid lines so the footer's lines don't
-   overflow ~50vh below the last content and create empty page space.
-   main is exactly 100vw wide, so the full-width horizontal hairlines
-   (also 100vw) sit flush at the edges and are not clipped. */
+/* The full-width horizontal hairlines are 100vw, which exceeds the document
+   width whenever a vertical scrollbar is present — clip so that never turns
+   into a horizontal scrollbar. */
 main {
   overflow: clip;
 }
@@ -212,20 +211,36 @@ main {
   color: var(--text-secondary);
 }
 
-.grid-line-v {
+/* One continuous pair of column rules for the whole page. Each band used to
+   carry its own 100vh-tall pair, which meant neighbouring bands stacked their
+   lines on top of each other — doubling up wherever a band faded or slid in. */
+.hero-grid {
   position: absolute;
-  top: 50%;
+  z-index: 51; /* clears the sticky header's backdrop, which sits at 50 */
+  top: 0;
+  bottom: 0;
+  left: 32px;
+  right: 32px;
+  max-width: 640px;
+  margin-inline: auto;
+  pointer-events: none;
+}
+
+.hero-grid::before,
+.hero-grid::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
   width: 1px;
-  height: 100vh;
-  margin-top: -50vh;
   background: var(--panel-border);
 }
 
-.grid-line-v-left {
+.hero-grid::before {
   left: 0;
 }
 
-.grid-line-v-right {
+.hero-grid::after {
   right: 0;
 }
 
@@ -253,33 +268,6 @@ main {
 
 .pricing::after,
 .faq::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 100vw;
-  height: 1px;
-  margin-left: -50vw;
-  background: var(--panel-border);
-}
-
-.section-title {
-  margin: 0 0 24px;
-  font-family: var(--font-body);
-  font-weight: 500;
-  font-size: 1.5rem;
-  letter-spacing: 0.02em;
-  color: var(--text-primary);
-  text-align: center;
-}
-
-.pricing .section-title {
-  position: relative;
-  margin-bottom: 0;
-  padding-bottom: 24px;
-}
-
-.pricing .section-title::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -500,6 +488,11 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
 @media (max-width: 560px) {
   .hero {
     padding: 40px 20px 72px;
+  }
+
+  .hero-grid {
+    left: 20px;
+    right: 20px;
   }
 
   .cta-row {
