@@ -142,12 +142,19 @@ main {
    footer, whose ::before already rules that boundary. */
 
 /* ---------- buttons ---------- */
+/* A full-width band like the rest of the page rather than a shrink-wrapped
+   row, so it rules the same column and its selection frame matches its
+   neighbours. The leading gap is padding, not margin, so it belongs to the
+   band and the button sits centred within it. */
 .cta-row {
   position: relative;
+  width: 100%;
+  max-width: 640px;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 16px;
-  margin-top: 32px;
+  padding-top: 32px;
   padding-bottom: 32px;
 }
 
@@ -549,6 +556,15 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
   letter-spacing: 0;
   color: #ffffff;
   white-space: nowrap;
+}
+
+/* Nothing below the last band to hang the badge over, so it flips to the top
+   edge instead of running off the end of the page. */
+.frame-select.is-flipped .frame-label {
+  top: auto;
+  bottom: 100%;
+  margin-top: 0;
+  margin-bottom: 6px;
 }
 
 @media (max-width: 560px) {

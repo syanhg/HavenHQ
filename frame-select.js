@@ -29,12 +29,19 @@
 
   var active = null;
 
+  // The page's own bottom edge, measured off the content rather than the
+  // document height — the badge itself can extend the latter.
+  var page = document.querySelector("main") || document.body;
+
   function place(el) {
     var r = el.getBoundingClientRect();
     box.style.left = r.left + window.scrollX + "px";
     box.style.top = r.top + window.scrollY + "px";
     box.style.width = r.width + "px";
     box.style.height = r.height + "px";
+
+    var room = page.getBoundingClientRect().bottom - r.bottom;
+    box.classList.toggle("is-flipped", room < label.offsetHeight + 6);
   }
 
   // The ring glides between neighbouring frames, but arrives without travel:
