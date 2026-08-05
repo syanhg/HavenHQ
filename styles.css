@@ -123,7 +123,9 @@ main {
 
 .headline {
   position: relative;
-  margin: 0;
+  /* auto margins because it is now centred inside .headline-band rather than
+     by the hero's own flex centring */
+  margin: 0 auto;
   max-width: 32ch;
   font-family: var(--font-body);
   font-weight: 500;
@@ -137,6 +139,23 @@ main {
 
 /* The closing headline draws no bottom rule: it sits directly above the
    footer, whose ::before already rules that boundary. */
+
+/* Carries the tile texture behind the headline. The canvas is laid out over
+   the whole band, so the type stacks on top of it by document order. */
+.headline-band {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+}
+
+.tile-texture-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
 
 /* ---------- buttons ---------- */
 .cta-row {
@@ -514,7 +533,7 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
   }
 
   .js-motion .hero-tagline,
-  .js-motion .headline,
+  .js-motion .headline-band,
   .js-motion .cta-row,
   .js-motion .pricing,
   .js-motion .faq {
