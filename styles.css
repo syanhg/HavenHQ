@@ -209,11 +209,20 @@ a.brand-label:hover {
   transition-duration: 0.1s;
 }
 
-.btn-white {
-  background: transparent;
-  color: var(--text-primary);
-  border: 1px solid var(--panel-border);
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);
+.btn-primary {
+  background: linear-gradient(180deg, #5b8dfa 0%, #3f6fe8 100%);
+  color: #ffffff;
+  border: 1px solid #2f5cc4;
+  border-radius: 10px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.38),
+    0 1px 2px rgba(16, 42, 100, 0.28);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(180deg, #6c99fb 0%, #4a7bef 100%);
+  opacity: 1;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    0 4px 10px rgba(16, 42, 100, 0.24);
 }
 
 .btn-dark {
@@ -237,9 +246,9 @@ a.brand-label:hover {
   color: #ffffff;
 }
 
-.btn-white .btn-key {
-  background: var(--panel-border);
-  color: var(--text-secondary);
+.btn-primary .btn-key {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
 }
 
 /* looping background video below the closing headline */
