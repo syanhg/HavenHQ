@@ -153,16 +153,8 @@ a.brand-label:hover {
   padding-bottom: 32px;
 }
 
-.headline::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 100vw;
-  height: 1px;
-  margin-left: -50vw;
-  background: var(--panel-border);
-}
+/* The closing headline draws no bottom rule: it sits directly above the
+   footer, whose ::before already rules that boundary. */
 
 /* ---------- buttons ---------- */
 .cta-row {
@@ -241,28 +233,6 @@ a.brand-label:hover {
   background: var(--panel-border);
   color: var(--text-secondary);
 }
-
-/* looping background video below the closing headline */
-.video-band {
-  position: relative;
-  width: 100%;
-  max-width: 640px;
-  height: 320px;
-  background: #ffffff;
-}
-
-.video-band-media {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  pointer-events: none;
-  -webkit-user-drag: none;
-  user-select: none;
-}
-
-/* The band draws no rules of its own: the top one lands on .headline::after
-   and the bottom one on .site-footer::before, so drawing them here would
-   stack a second hairline on each. */
 
 .grid-line-v {
   position: absolute;
@@ -515,9 +485,11 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
 }
 
 .hero-tagline {
+  position: relative;
   max-width: 44ch;
   margin: 0 auto;
   padding-top: 32px;
+  padding-bottom: 32px;
   font-family: var(--font-body);
   font-weight: 400;
   font-size: 0.95rem;
@@ -525,6 +497,17 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
   letter-spacing: -0.01em;
   color: var(--text-secondary);
   text-align: center;
+}
+
+.hero-tagline::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  margin-left: -50vw;
+  background: var(--panel-border);
 }
 
 .tile-field-canvas {
@@ -572,7 +555,6 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
   .js-motion .hero-tagline,
   .js-motion .headline,
   .js-motion .cta-row,
-  .js-motion .video-band,
   .js-motion .pricing,
   .js-motion .faq {
     opacity: 0;
