@@ -260,17 +260,9 @@ a.brand-label:hover {
   user-select: none;
 }
 
-/* the top rule lands on .headline::after, so only the bottom one is drawn here */
-.video-band::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 100vw;
-  height: 1px;
-  margin-left: -50vw;
-  background: var(--panel-border);
-}
+/* The band draws no rules of its own: the top one lands on .headline::after
+   and the bottom one on .site-footer::before, so drawing them here would
+   stack a second hairline on each. */
 
 .grid-line-v {
   position: absolute;
