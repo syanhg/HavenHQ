@@ -168,6 +168,10 @@ main {
 .btn {
   display: inline-flex;
   align-items: center;
+  /* centred rather than start-packed, so the label stays put once the button
+     is stretched wider than its text — full width on a phone, card width in
+     the pricing grid */
+  justify-content: center;
   gap: 14px;
   font-family: var(--font-body);
   font-weight: 400;
@@ -345,7 +349,6 @@ main {
 }
 
 .pricing-card .btn {
-  justify-content: center;
   font-size: 0.85rem;
   padding: 8px 12px;
 }
@@ -564,8 +567,10 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
 }
 
 @media (max-width: 560px) {
+  /* Same shape as the desktop hero — the bands themselves carry the vertical
+     rhythm, so the hero only sets the side gutter the column rules align to. */
   .hero {
-    padding: 40px 20px 72px;
+    padding: 4px 20px 0;
   }
 
   .hero-grid {
@@ -573,15 +578,44 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
     right: 20px;
   }
 
-  .cta-row {
-    flex-direction: column;
-    width: 100%;
-    max-width: 260px;
+  /* Both bars are near-empty, so on a phone they only need to be tall enough
+     to read as a bar above and below the content. */
+  .site-header {
+    min-height: 0;
+    padding: 9px 20px;
   }
 
-  .btn {
+  .site-footer {
+    padding: 9px 20px;
+  }
+
+  /* The band keeps the full column width like every other one — it is the
+     band's own padding, not a narrower band, that insets the button. */
+  .cta-row {
+    padding: 24px 20px;
+  }
+
+  .cta-row .btn {
     width: 100%;
-    text-align: center;
+    max-width: 320px;
+    padding: 12px 20px;
+  }
+
+  /* The 40px gutters read as generous next to a 32px desktop page margin and
+     as cramped next to a 20px one — match the page gutter instead. */
+  .faq-q {
+    gap: 12px;
+    padding: 16px 20px;
+  }
+
+  .faq-a-inner {
+    padding: 0 20px 16px;
+  }
+
+  .hero-tagline,
+  .headline {
+    padding-top: 24px;
+    padding-bottom: 24px;
   }
 
   .pricing-grid {
