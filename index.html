@@ -16,16 +16,16 @@
   <main>
     <section class="hero" id="top">
       <div class="hero-grid"></div>
-      <header class="site-header">
+      <header class="site-header" data-frame="header">
       </header>
-      <div class="wordmark-band">
+      <div class="wordmark-band" data-frame="hero">
         <div class="tile-field-host" id="tileFieldHost"></div>
       </div>
-      <p class="hero-tagline">The future of work should be intuitive, fluid, and free from predetermined workflows</p>
-      <div class="cta-row">
+      <p class="hero-tagline" data-frame="tagline">The future of work should be intuitive, fluid, and free from predetermined workflows</p>
+      <div class="cta-row" data-frame="cta">
         <a class="btn btn-white" href="https://app.getsoffo.com">Get Started</a>
       </div>
-      <section class="faq" id="faq">
+      <section class="faq" id="faq" data-frame="faq">
         <div class="faq-list">
           <details class="faq-item">
             <summary class="faq-q">How is Soffo different from Slack with bots?</summary>
@@ -45,7 +45,7 @@
           </details>
         </div>
       </section>
-      <section class="pricing" id="pricing">
+      <section class="pricing" id="pricing" data-frame="pricing">
         <div class="pricing-grid">
           <div class="pricing-card">
             <div class="pricing-name">Small Team</div>
@@ -71,14 +71,15 @@
           </div>
         </div>
       </section>
-      <h1 class="headline">Where Humans And Agents<br />Work Together Natively</h1>
-      <footer class="site-footer">
+      <h1 class="headline" data-frame="headline">Where Humans And Agents<br />Work Together Natively</h1>
+      <footer class="site-footer" data-frame="footer">
         <div class="brand-label">© 2026 Monycompany Inc.</div>
       </footer>
     </section>
   </main>
 
   <script src="tile-field.js"></script>
+  <script src="frame-select.js"></script>
   <script src="motion.js"></script>
   <script>
     (function () {

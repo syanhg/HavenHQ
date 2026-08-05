@@ -5,6 +5,9 @@
   --text-secondary: #6b6b6b;
   --panel-border: #e5e5e5;
   --accent: #111111;
+  /* the hover-selection ring and its name badge */
+  --select: #0d99ff;
+  --select-ease: cubic-bezier(0.32, 0.72, 0, 1);
 
   --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
@@ -473,6 +476,79 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
   width: 100%;
   height: 100%;
   pointer-events: none;
+}
+
+/* ---------- frame selection on hover ---------- */
+/* A single ring, moved onto whichever band the pointer is over. It sits above
+   the column rules (51) and the sticky header (50) and never takes the
+   pointer, so hovering it can't fight with the element underneath. */
+.frame-select {
+  position: absolute;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: 0 0 0 1px var(--select);
+  transition: left 140ms var(--select-ease), top 140ms var(--select-ease),
+    width 140ms var(--select-ease), height 140ms var(--select-ease),
+    opacity 110ms linear;
+}
+
+.frame-select.is-active {
+  opacity: 1;
+}
+
+/* Used for the single frame in which the ring is repositioned before it fades
+   in, so it never travels from its last frame's box. */
+.frame-select.is-snapping {
+  transition: none;
+}
+
+.frame-handle {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background: var(--bg);
+  border: 1px solid var(--select);
+}
+
+.frame-handle-nw {
+  top: -4px;
+  left: -4px;
+}
+
+.frame-handle-ne {
+  top: -4px;
+  right: -4px;
+}
+
+.frame-handle-sw {
+  bottom: -4px;
+  left: -4px;
+}
+
+.frame-handle-se {
+  bottom: -4px;
+  right: -4px;
+}
+
+/* The badge Figma prints under a selection — the frame's name here rather than
+   its measurements. */
+.frame-label {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 6px;
+  padding: 2px 6px;
+  border-radius: 2px;
+  background: var(--select);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.68rem;
+  line-height: 1.35;
+  letter-spacing: 0;
+  color: #ffffff;
+  white-space: nowrap;
 }
 
 @media (max-width: 560px) {
