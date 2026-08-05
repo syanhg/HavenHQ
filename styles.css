@@ -53,45 +53,6 @@ main {
   text-align: center;
 }
 
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  width: 100%;
-  max-width: 640px;
-  margin: 0 auto;
-  /* the bar is empty, so its former text height is held open explicitly */
-  min-height: 44px;
-  padding: 14px 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/* full-viewport-width backdrop so scrolled content stays hidden behind the bar */
-.site-header::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 100vw;
-  margin-left: -50vw;
-  background: var(--bg);
-  z-index: -1;
-}
-
-.site-header::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 100vw;
-  height: 1px;
-  margin-left: -50vw;
-  background: var(--panel-border);
-}
-
 .site-footer {
   position: relative;
   width: 100%;
@@ -242,7 +203,7 @@ main {
    lines on top of each other — doubling up wherever a band faded or slid in. */
 .hero-grid {
   position: absolute;
-  z-index: 51; /* clears the sticky header's backdrop, which sits at 50 */
+  z-index: 51;
   top: 0;
   bottom: 0;
   left: 32px;
@@ -498,8 +459,8 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
 
 /* ---------- frame selection on hover ---------- */
 /* A single ring, moved onto whichever band the pointer is over. It sits above
-   the column rules (51) and the sticky header (50) and never takes the
-   pointer, so hovering it can't fight with the element underneath. */
+   the column rules (51) and never takes the pointer, so hovering it can't
+   fight with the element underneath. */
 .frame-select {
   position: absolute;
   z-index: 60;
@@ -604,10 +565,10 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
   }
 }
 
-/* offset anchor targets so they clear the sticky header */
+/* a little breathing room above anchor targets */
 #pricing,
 #faq {
-  scroll-margin-top: 80px;
+  scroll-margin-top: 32px;
 }
 
 /* ---------- motion ---------- */
