@@ -159,7 +159,7 @@ class TileField {
       const sz = this.cell * 0.5;
       const h = sz / 2;
       grayP.rect(this.px[i] - h, this.py[i] - h, sz, sz);
-    }a
+    }
     ctx.fillStyle = REST;
     ctx.fill(grayP);
   }

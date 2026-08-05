@@ -8,6 +8,11 @@
 
   --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
+  /* shared by the FAQ panel, its fade, and the caret — motion.js reads these
+     so every part of an accordion toggle moves on one curve */
+  --faq-duration: 340ms;
+  --faq-ease: cubic-bezier(0.32, 0.72, 0, 1);
+
   --container: 1160px;
 }
 
@@ -367,37 +372,30 @@ main {
   display: none;
 }
 
+/* The nudge that optically centres the caret rides inside the transform, so
+   it interpolates with the rotation instead of jumping at the halfway point. */
 .faq-q::after {
   content: "";
   flex-shrink: 0;
   width: 8px;
   height: 8px;
-  margin-top: -3px;
   border-right: 1.5px solid #b0b0b0;
   border-bottom: 1.5px solid #b0b0b0;
-  transform: rotate(45deg);
-  transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(-3px) rotate(45deg);
+  transition: transform var(--faq-duration) var(--faq-ease);
 }
 
 .js-faq .faq-item.is-open .faq-q::after,
 html:not(.js-faq) .faq-item[open] .faq-q::after {
-  margin-top: 3px;
-  transform: rotate(-135deg);
+  transform: translateY(3px) rotate(-135deg);
 }
 
+/* motion.js animates the panel's height directly; it only needs the clip. */
 .js-faq .faq-a {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.26s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.js-faq .faq-item.is-open .faq-a {
-  grid-template-rows: 1fr;
+  overflow: hidden;
 }
 
 .faq-a-inner {
-  overflow: hidden;
-  min-height: 0;
   padding: 0 40px 20px;
   font-family: var(--font-body);
   font-weight: 400;
@@ -406,14 +404,15 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
   color: var(--text-secondary);
 }
 
+/* The fade runs on the same clock as the height so the two read as one
+   movement — no lag, no delay to catch up on a fast second click. */
 .js-faq .faq-a-inner {
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity var(--faq-duration) var(--faq-ease);
 }
 
 .js-faq .faq-item.is-open .faq-a-inner {
   opacity: 1;
-  transition: opacity 0.26s ease 0.06s;
 }
 
 /* animated "soffo" wordmark that opens the hero */

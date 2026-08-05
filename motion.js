@@ -49,11 +49,27 @@
     io.observe(el);
   });
 
-  /* ---- Smooth FAQ accordion (grid-rows animation on top of <details>) ----
-     The panel wrapper animates grid-template-rows 0fr <-> 1fr, which is
-     content-height agnostic and never leaves a stuck lock behind. We keep the
-     native <details> open during a collapse so its content stays rendered
-     until the animation finishes. */
+  /* ---- Smooth FAQ accordion ----
+     The panel's height is animated in pixels rather than through
+     grid-template-rows: fr units interpolate on their own curve, so the panel
+     did not actually travel on the easing it was given. Measuring the height
+     each time also means a toggle can be interrupted at any point — the next
+     one starts from wherever the panel currently is and reverses from there.
+
+     The native <details> is held open for the whole of a collapse so its
+     content stays rendered until the animation lands. */
+  var faqStyle = getComputedStyle(docEl);
+  var faqDuration = (function (raw) {
+    var ms = parseFloat(raw);
+    if (!ms) return 340;
+    // Accept the token written either as 340ms or as 0.34s.
+    return /ms\s*$/.test(raw) ? ms : ms * 1000;
+  })(faqStyle.getPropertyValue("--faq-duration"));
+  var faqEase =
+    faqStyle.getPropertyValue("--faq-ease").trim() ||
+    "cubic-bezier(0.32, 0.72, 0, 1)";
+  var canAnimate = typeof Element.prototype.animate === "function";
+
   faqItems.forEach(function (item) {
     var summary = item.querySelector(".faq-q");
     var panel = item.querySelector(".faq-a");
@@ -62,25 +78,40 @@
     // Keep classes in sync with any external toggle (keyboard, etc.).
     item.classList.toggle("is-open", item.open);
 
+    var anim = null;
+
     summary.addEventListener("click", function (e) {
       e.preventDefault();
 
-      if (item.open) {
-        // Collapse: animate to 0fr, then drop the native open state at the end.
-        item.classList.remove("is-open");
-        panel.addEventListener("transitionend", function onEnd(ev) {
-          if (ev.target !== panel || ev.propertyName !== "grid-template-rows")
-            return;
-          panel.removeEventListener("transitionend", onEnd);
-          if (!item.classList.contains("is-open")) item.open = false;
-        });
-      } else {
-        // Expand: render immediately, then animate open on the next frame.
-        item.open = true;
-        requestAnimationFrame(function () {
-          item.classList.add("is-open");
-        });
+      var opening = !item.classList.contains("is-open");
+
+      if (!canAnimate) {
+        item.open = opening;
+        item.classList.toggle("is-open", opening);
+        return;
       }
+
+      // Read the live height first: mid-flight this is the animated value.
+      var from = panel.getBoundingClientRect().height;
+      if (anim) anim.cancel();
+
+      // Render the content for both directions, then let CSS settle to the
+      // natural height so it can be measured.
+      item.open = true;
+      item.classList.toggle("is-open", opening);
+      var to = opening ? panel.getBoundingClientRect().height : 0;
+
+      anim = panel.animate(
+        [{ height: from + "px" }, { height: to + "px" }],
+        { duration: faqDuration, easing: faqEase }
+      );
+
+      anim.onfinish = function () {
+        anim = null;
+        // No fill is kept, so the panel falls back to its CSS height: auto
+        // when open, and to nothing at all once <details> closes.
+        if (!opening) item.open = false;
+      };
     });
   });
 })();
