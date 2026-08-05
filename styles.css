@@ -53,6 +53,8 @@ main {
   width: 100%;
   max-width: 640px;
   margin: 0 auto;
+  /* the bar is empty, so its former text height is held open explicitly */
+  min-height: 44px;
   padding: 14px 40px;
   display: flex;
   align-items: center;
@@ -113,30 +115,6 @@ main {
   color: var(--text-primary);
   text-decoration: none;
   transition: opacity 0.3s ease;
-}
-
-a.brand-label:hover {
-  opacity: 0.55;
-}
-
-.site-nav {
-  display: flex;
-  gap: 24px;
-}
-
-.site-nav a {
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 0.85rem;
-  letter-spacing: -0.01em;
-  color: var(--text-primary);
-  text-decoration: none;
-  opacity: 1;
-  transition: opacity 0.3s ease;
-}
-
-.site-nav a:hover {
-  opacity: 0.55;
 }
 
 .headline {
