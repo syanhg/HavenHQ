@@ -259,6 +259,28 @@ main {
   right: 0;
 }
 
+/* ---------- open slot ---------- */
+/* Deliberately empty band held between the CTA and the FAQ, waiting on the
+   content that will fill it. Its height is the placeholder — once something
+   lives here, drop the min-height and let the content set it. */
+.slot-band {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  min-height: 220px;
+}
+
+.slot-band::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  margin-left: -50vw;
+  background: var(--panel-border);
+}
+
 /* ---------- pricing ---------- */
 /* Neither section carries a heading any more, so both sit flush against the
    hairline above them with no leading gap. */
@@ -621,6 +643,10 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
   .pricing-grid {
     grid-template-columns: 1fr;
   }
+
+  .slot-band {
+    min-height: 160px;
+  }
 }
 
 /* a little breathing room above anchor targets */
@@ -638,6 +664,7 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
   .js-motion .hero-tagline,
   .js-motion .headline,
   .js-motion .cta-row,
+  .js-motion .slot-band,
   .js-motion .pricing,
   .js-motion .faq {
     opacity: 0;
