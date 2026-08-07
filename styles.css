@@ -272,8 +272,13 @@ main {
 /* Four cells splitting the column into equal quarters, short enough to read as
    a rule of buttons rather than a band of its own. Only the inner divides are
    drawn: the outer two are the page's column rules, already there. */
+/* Above the page's column rules. The frame's outer edges land exactly on them
+   — on the first cell and the last — so from underneath the grey would paint
+   over the blue and the frame would lose a side. Nothing else in the row is
+   opaque, so the rules still read straight through it. */
 .quad-row {
   position: relative;
+  z-index: 52;
   width: 100%;
   max-width: 640px;
   display: grid;
@@ -383,7 +388,8 @@ main {
 .quad-thumb-label {
   position: absolute;
   top: 100%;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   margin-top: 6px;
   padding: 2px 6px;
   border-radius: 2px;
