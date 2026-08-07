@@ -418,15 +418,105 @@ main {
   }
 }
 
-/* ---------- open slot ---------- */
-/* Deliberately empty band held between the CTA and the FAQ, waiting on the
-   content that will fill it. Its height is the placeholder — once something
-   lives here, drop the min-height and let the content set it. */
+/* ---------- integrations marquee ---------- */
+/* The band between the CTA and the FAQ. Its contents are centred as a group,
+   so the strip rides the middle of the band with its line above it; the
+   min-height is a floor that keeps the band generous, not a placeholder. */
 .slot-band {
   position: relative;
   width: 100%;
   max-width: 640px;
   min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+  padding: 32px 0;
+}
+
+.marquee-lede {
+  margin: 0;
+  padding: 0 40px;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* Ruled above and below so the run reads as a row of the page's own grid
+   rather than as a strip laid over it. */
+.marquee {
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid var(--panel-border);
+  border-bottom: 1px solid var(--panel-border);
+  /* The ends fade instead of cutting, so a name leaving the row is never
+     chopped mid-word against the column rule. */
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 48px,
+    #000 calc(100% - 48px),
+    transparent
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 48px,
+    #000 calc(100% - 48px),
+    transparent
+  );
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-slide 48s linear infinite;
+}
+
+/* Stops under the pointer so a name can actually be read. */
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* One cell is a quarter of the column — the same 160px module the button row
+   is built from, so the divides pass through the page's existing grid lines
+   whenever the run comes to rest. */
+.marquee-cell {
+  flex: 0 0 160px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid var(--panel-border);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.85rem;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+@keyframes marquee-slide {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Nothing moves on its own; the run becomes an ordinary scrollable row. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+
+  .marquee {
+    overflow-x: auto;
+  }
 }
 
 .slot-band::after {
@@ -804,7 +894,17 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
   }
 
   .slot-band {
-    min-height: 160px;
+    min-height: 0;
+    gap: 20px;
+    padding: 24px 0;
+  }
+
+  .marquee-lede {
+    padding: 0 20px;
+  }
+
+  .marquee-cell {
+    height: 64px;
   }
 
   /* Four across leaves ~80px a cell on a phone — the quarters fold to a 2x2 so
