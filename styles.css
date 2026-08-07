@@ -419,9 +419,10 @@ main {
 }
 
 /* ---------- integrations marquee ---------- */
-/* The band between the CTA and the FAQ. Its contents are centred as a group,
-   so the strip rides the middle of the band with its line above it; the
-   min-height is a floor that keeps the band generous, not a placeholder. */
+/* The band between the CTA and the FAQ. The strip is the only thing in flow,
+   so centring the band centres the strip itself on the band's middle rather
+   than centring it as a group with its line — which would push it low. The
+   line is hung off that middle instead. */
 .slot-band {
   position: relative;
   width: 100%;
@@ -430,11 +431,19 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 24px;
   padding: 32px 0;
+  /* the strip's own height, which the line above is measured from */
+  --marquee-h: 80px;
+  --marquee-lede-gap: 24px;
 }
 
+/* Taken out of flow so it cannot shift the strip off centre; it sits its own
+   gap above the strip's top edge, rules included. */
 .marquee-lede {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(50% + (var(--marquee-h) + 2px) / 2 + var(--marquee-lede-gap));
   margin: 0;
   padding: 0 40px;
   font-family: var(--font-body);
@@ -495,14 +504,14 @@ main {
 }
 
 /* The marks arrive as square app tiles, some on their own colour and some on
-   white, so they are set at one size with one corner radius and read as a set.
-   Grey at rest keeps the page to its two colours; a mark takes its own colour
-   back when the pointer stops the run on it. */
+   white, so they are set at one size and left square-cornered — the page is
+   built from right angles, and a rounded tile is the one shape in it that
+   would not be. Grey at rest keeps the page to its two colours; a mark takes
+   its own colour back when the pointer stops the run on it. */
 .marquee-logo {
   width: 36px;
   height: 36px;
   object-fit: contain;
-  border-radius: 8px;
   filter: grayscale(1);
   opacity: 0.75;
   transition: filter var(--slide-duration) var(--slide-ease),
@@ -908,10 +917,13 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
     grid-template-columns: 1fr;
   }
 
+  /* The line is out of flow, so the band needs a height that leaves room for
+     it above the centred strip rather than growing to fit it. */
   .slot-band {
-    min-height: 0;
-    gap: 20px;
+    min-height: 180px;
     padding: 24px 0;
+    --marquee-h: 64px;
+    --marquee-lede-gap: 20px;
   }
 
   .marquee-lede {
