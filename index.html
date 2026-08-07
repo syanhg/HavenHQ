@@ -27,11 +27,12 @@
       <div class="cta-row" data-frame="cta">
         <a class="btn btn-white" href="https://app.getsoffo.com">Get Started</a>
       </div>
-      <div class="quad-row" data-frame="buttons">
-        <button class="quad-cell" type="button">Button 1</button>
-        <button class="quad-cell" type="button">Button 2</button>
-        <button class="quad-cell" type="button">Button 3</button>
-        <button class="quad-cell" type="button">Button 4</button>
+      <div class="quad-row" data-frame="buttons" role="group" aria-label="Sections">
+        <span class="quad-thumb" aria-hidden="true"></span>
+        <button class="quad-cell" type="button" aria-pressed="true">Button 1</button>
+        <button class="quad-cell" type="button" aria-pressed="false">Button 2</button>
+        <button class="quad-cell" type="button" aria-pressed="false">Button 3</button>
+        <button class="quad-cell" type="button" aria-pressed="false">Button 4</button>
       </div>
       <div class="slot-band" data-frame="slot"></div>
       <section class="faq" id="faq" data-frame="faq">
@@ -90,6 +91,7 @@
   </main>
 
   <script src="tile-field.js"></script>
+  <script src="quad-slider.js"></script>
   <script src="frame-select.js"></script>
   <script src="motion.js"></script>
   <script>

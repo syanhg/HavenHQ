@@ -16,6 +16,13 @@
   --faq-duration: 340ms;
   --faq-ease: cubic-bezier(0.32, 0.72, 0, 1);
 
+  /* the segmented slider: the thumb, its labels, and the press all run on this
+     one pair so nothing in the control arrives ahead of the rest */
+  --slide-duration: 460ms;
+  --slide-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* how far the thumb sits inside the cell it occupies */
+  --thumb-inset: 6px;
+
   --container: 1160px;
 }
 
@@ -282,7 +289,44 @@ main {
   background: var(--panel-border);
 }
 
+/* The travelling card. It is sized and moved from JS off the live cell boxes,
+   so one rule covers both the four-across row and the folded 2x2 — and both
+   axes travel on the same curve. Sitting above the divides rather than between
+   them is deliberate: it reads as a frame moving over the grid. */
+.quad-thumb {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  background: var(--bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 4px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);
+  pointer-events: none;
+  transform: var(--thumb-transform, translate3d(0, 0, 0));
+  transition: transform var(--slide-duration) var(--slide-ease),
+    width var(--slide-duration) var(--slide-ease),
+    height var(--slide-duration) var(--slide-ease),
+    opacity 180ms linear;
+  will-change: transform, width, height;
+}
+
+/* Held back until JS has measured a box to sit on, so it never flashes at the
+   row's top-left corner on load. */
+.quad-row.is-ready .quad-thumb {
+  opacity: 1;
+}
+
+/* For the one frame in which the thumb is re-measured after a resize: it
+   should land on the new box, not glide across the row to reach it. */
+.quad-thumb.is-snapping {
+  transition: opacity 180ms linear;
+}
+
 .quad-cell {
+  position: relative;
+  z-index: 2;
   appearance: none;
   -webkit-appearance: none;
   background: transparent;
@@ -298,21 +342,49 @@ main {
   font-weight: 400;
   font-size: 0.85rem;
   letter-spacing: -0.01em;
-  color: var(--text-primary);
+  color: var(--text-secondary);
   cursor: pointer;
-  transition: background 0.3s ease, opacity 0.3s ease;
+  /* Label and thumb settle together — same clock, same curve. */
+  transition: color var(--slide-duration) var(--slide-ease),
+    opacity 0.15s ease;
 }
 
 .quad-cell:first-child {
   border-left: 0;
 }
 
-.quad-cell:hover {
-  background: #fafafa;
+/* The thumb is the hover affordance; the label only firms up under it. */
+.quad-cell:hover,
+.quad-cell.is-lit {
+  color: var(--text-primary);
+}
+
+.quad-cell[aria-pressed="true"] {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* Once the thumb is live it is the focus indicator too — it follows the
+   keyboard. Without JS the native ring is left alone. */
+.quad-row.is-ready .quad-cell:focus-visible {
+  outline: none;
 }
 
 .quad-cell:active {
   opacity: 0.7;
+}
+
+/* The press gives a little under the pointer and springs back on release. */
+.quad-row.is-pressed .quad-thumb {
+  transform: var(--thumb-transform) scale(0.97);
+}
+
+/* The thumb still tracks the selection, it just arrives without the travel. */
+@media (prefers-reduced-motion: reduce) {
+  .quad-thumb,
+  .quad-cell {
+    transition: none;
+  }
 }
 
 /* ---------- open slot ---------- */
