@@ -28,18 +28,25 @@
     return /ms\s*$/.test(raw) ? ms : ms * 1000;
   })(style.getPropertyValue("--thumb-label-hold"));
 
-  // The badge names the cell the frame has just landed on, then goes quiet. A
-  // move that interrupts the hold restarts it rather than stacking a second.
+  // The badge names the cell the frame has just landed on. On a cell the
+  // pointer is only previewing it holds and then goes quiet; on one that was
+  // clicked it stays up for as long as that cell is the selection. A move that
+  // interrupts the hold restarts it rather than stacking a second timer.
   var holdTimer = null;
 
-  function name(text) {
+  function name(text, persist) {
     if (!label) return;
     label.textContent = text;
     thumb.classList.add("is-named");
     clearTimeout(holdTimer);
+    if (persist) return;
     holdTimer = setTimeout(function () {
       thumb.classList.remove("is-named");
     }, hold);
+  }
+
+  function announce(index) {
+    name(cells[index].textContent.trim(), pinned && index === selected);
   }
 
   // What a click committed to, versus what the pointer or keyboard is
@@ -48,6 +55,9 @@
     return cell.getAttribute("aria-pressed") === "true";
   }));
   var shown = -1;
+  // The opening selection is only a starting position, not a choice anyone
+  // made, so its badge behaves like a preview until a cell is actually picked.
+  var pinned = false;
 
   function place(index, snap) {
     var cell = cells[index];
@@ -78,7 +88,7 @@
         c.classList.toggle("is-lit", i === index);
       });
       shown = index;
-      name(cell.textContent.trim());
+      announce(index);
     }
 
     row.classList.add("is-ready");
@@ -86,10 +96,15 @@
 
   function select(index) {
     selected = index;
+    pinned = true;
     cells.forEach(function (cell, i) {
       cell.setAttribute("aria-pressed", i === index ? "true" : "false");
     });
     place(index);
+    // Announced again by hand: a click usually lands on the cell the pointer
+    // already slid the frame onto, so place() sees no move to report — and it
+    // is exactly that click which pins the badge.
+    announce(index);
   }
 
   place(selected, true);

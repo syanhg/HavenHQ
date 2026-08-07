@@ -382,15 +382,16 @@ main {
   opacity: 0.7;
 }
 
-/* The badge Figma prints under a selection, borrowed for the cell the frame is
-   on. It announces the cell it just landed on and then gets out of the way —
-   the frame alone is enough to say which cell is selected. */
+/* The badge Figma prints against a selection, borrowed for the cell the frame
+   is on, and hung above the frame so it never covers the band below. A
+   previewed cell announces itself and then gets out of the way; a clicked one
+   keeps its badge up for as long as it stays selected. */
 .quad-thumb-label {
   position: absolute;
-  top: 100%;
+  bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
-  margin-top: 6px;
+  margin-bottom: 6px;
   padding: 2px 6px;
   border-radius: 2px;
   background: var(--select);
