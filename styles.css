@@ -20,8 +20,10 @@
      one pair so nothing in the control arrives ahead of the rest */
   --slide-duration: 460ms;
   --slide-ease: cubic-bezier(0.22, 1, 0.36, 1);
-  /* how far the thumb sits inside the cell it occupies */
-  --thumb-inset: 6px;
+  /* the frame sits on the cell's own edge, so it frames the grid exactly */
+  --thumb-inset: 0px;
+  /* how long the frame's name badge stays up after the frame moves */
+  --thumb-label-hold: 2000ms;
 
   --container: 1160px;
 }
@@ -289,20 +291,21 @@ main {
   background: var(--panel-border);
 }
 
-/* The travelling card. It is sized and moved from JS off the live cell boxes,
+/* The travelling frame. It is sized and moved from JS off the live cell boxes,
    so one rule covers both the four-across row and the folded 2x2 — and both
-   axes travel on the same curve. Sitting above the divides rather than between
-   them is deliberate: it reads as a frame moving over the grid. */
+   axes travel on the same curve. It carries no fill: it is the same blue ring
+   the page draws around a hovered band, here framing one cell of the grid.
+
+   It rides above the cells, not between them, because the divides are drawn as
+   cell borders — from underneath, a neighbour's border would cut the ring's
+   edge in grey wherever the two share a line. */
 .quad-thumb {
   position: absolute;
-  z-index: 1;
+  z-index: 3;
   top: 0;
   left: 0;
   opacity: 0;
-  background: var(--bg);
-  border: 1px solid var(--panel-border);
-  border-radius: 4px;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);
+  box-shadow: inset 0 0 0 1px var(--select);
   pointer-events: none;
   transform: var(--thumb-transform, translate3d(0, 0, 0));
   transition: transform var(--slide-duration) var(--slide-ease),
@@ -374,9 +377,30 @@ main {
   opacity: 0.7;
 }
 
-/* The press gives a little under the pointer and springs back on release. */
-.quad-row.is-pressed .quad-thumb {
-  transform: var(--thumb-transform) scale(0.97);
+/* The badge Figma prints under a selection, borrowed for the cell the frame is
+   on. It announces the cell it just landed on and then gets out of the way —
+   the frame alone is enough to say which cell is selected. */
+.quad-thumb-label {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 6px;
+  padding: 2px 6px;
+  border-radius: 2px;
+  background: var(--select);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.68rem;
+  line-height: 1.35;
+  letter-spacing: 0;
+  color: #ffffff;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 200ms linear;
+}
+
+.quad-thumb.is-named .quad-thumb-label {
+  opacity: 1;
 }
 
 /* The thumb still tracks the selection, it just arrives without the travel. */

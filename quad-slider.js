@@ -15,12 +15,32 @@
   if (!row) return;
 
   var thumb = row.querySelector(".quad-thumb");
+  var label = row.querySelector(".quad-thumb-label");
   var cells = Array.prototype.slice.call(row.querySelectorAll(".quad-cell"));
   if (!thumb || !cells.length) return;
 
-  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var inset =
-    parseFloat(getComputedStyle(row).getPropertyValue("--thumb-inset")) || 0;
+  var style = getComputedStyle(row);
+  var inset = parseFloat(style.getPropertyValue("--thumb-inset")) || 0;
+  var hold = (function (raw) {
+    var ms = parseFloat(raw);
+    if (!ms) return 2000;
+    // Accept the token written either as 2000ms or as 2s.
+    return /ms\s*$/.test(raw) ? ms : ms * 1000;
+  })(style.getPropertyValue("--thumb-label-hold"));
+
+  // The badge names the cell the frame has just landed on, then goes quiet. A
+  // move that interrupts the hold restarts it rather than stacking a second.
+  var holdTimer = null;
+
+  function name(text) {
+    if (!label) return;
+    label.textContent = text;
+    thumb.classList.add("is-named");
+    clearTimeout(holdTimer);
+    holdTimer = setTimeout(function () {
+      thumb.classList.remove("is-named");
+    }, hold);
+  }
 
   // What a click committed to, versus what the pointer or keyboard is
   // currently previewing. The thumb always renders the latter.
@@ -58,6 +78,7 @@
         c.classList.toggle("is-lit", i === index);
       });
       shown = index;
+      name(cell.textContent.trim());
     }
 
     row.classList.add("is-ready");
@@ -111,22 +132,6 @@
   row.addEventListener("mouseleave", function () {
     place(selected);
   });
-
-  // The give under a press, released whether the pointer lifts on the control
-  // or somewhere else entirely.
-  if (!reduce) {
-    row.addEventListener("pointerdown", function () {
-      row.classList.add("is-pressed");
-    });
-    ["pointerup", "pointercancel", "mouseleave"].forEach(function (type) {
-      row.addEventListener(type, function () {
-        row.classList.remove("is-pressed");
-      });
-    });
-    window.addEventListener("pointerup", function () {
-      row.classList.remove("is-pressed");
-    });
-  }
 
   // Re-measure when the row reflows — chiefly the fold to 2x2, which moves
   // every cell at once.
