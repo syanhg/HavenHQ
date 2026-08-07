@@ -492,11 +492,26 @@ main {
   align-items: center;
   justify-content: center;
   border-left: 1px solid var(--panel-border);
-  font-family: var(--font-body);
-  font-weight: 500;
-  font-size: 0.85rem;
-  letter-spacing: -0.01em;
-  color: var(--text-primary);
+}
+
+/* The marks arrive as square app tiles, some on their own colour and some on
+   white, so they are set at one size with one corner radius and read as a set.
+   Grey at rest keeps the page to its two colours; a mark takes its own colour
+   back when the pointer stops the run on it. */
+.marquee-logo {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border-radius: 8px;
+  filter: grayscale(1);
+  opacity: 0.75;
+  transition: filter var(--slide-duration) var(--slide-ease),
+    opacity var(--slide-duration) var(--slide-ease);
+}
+
+.marquee:hover .marquee-logo {
+  filter: grayscale(0);
+  opacity: 1;
 }
 
 @keyframes marquee-slide {
