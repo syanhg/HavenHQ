@@ -259,6 +259,62 @@ main {
   right: 0;
 }
 
+/* ---------- quad button row ---------- */
+/* Four cells splitting the column into equal quarters, short enough to read as
+   a rule of buttons rather than a band of its own. Only the inner divides are
+   drawn: the outer two are the page's column rules, already there. */
+.quad-row {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.quad-row::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  margin-left: -50vw;
+  background: var(--panel-border);
+}
+
+.quad-cell {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  border-left: 1px solid var(--panel-border);
+  border-radius: 0;
+  min-height: 56px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.85rem;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background 0.3s ease, opacity 0.3s ease;
+}
+
+.quad-cell:first-child {
+  border-left: 0;
+}
+
+.quad-cell:hover {
+  background: #fafafa;
+}
+
+.quad-cell:active {
+  opacity: 0.7;
+}
+
 /* ---------- open slot ---------- */
 /* Deliberately empty band held between the CTA and the FAQ, waiting on the
    content that will fill it. Its height is the placeholder — once something
@@ -647,6 +703,29 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
   .slot-band {
     min-height: 160px;
   }
+
+  /* Four across leaves ~80px a cell on a phone — the quarters fold to a 2x2 so
+     the labels keep room to breathe, and the divides move with them. */
+  .quad-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .quad-cell {
+    min-height: 48px;
+    padding: 8px;
+  }
+
+  .quad-cell:nth-child(odd) {
+    border-left: 0;
+  }
+
+  .quad-cell:nth-child(even) {
+    border-left: 1px solid var(--panel-border);
+  }
+
+  .quad-cell:nth-child(n + 3) {
+    border-top: 1px solid var(--panel-border);
+  }
 }
 
 /* a little breathing room above anchor targets */
@@ -664,6 +743,7 @@ html:not(.js-faq) .faq-item[open] .faq-q::after {
   .js-motion .hero-tagline,
   .js-motion .headline,
   .js-motion .cta-row,
+  .js-motion .quad-row,
   .js-motion .slot-band,
   .js-motion .pricing,
   .js-motion .faq {
