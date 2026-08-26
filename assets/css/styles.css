@@ -1,20 +1,13 @@
 /* ---------- tokens ---------- */
 :root {
-  /* Paper, not white: the page is the ground the concrete is drawn on, and a
-     trace of warmth in it is what keeps the greys from reading as blue. */
-  --bg: #fbfaf8;
-  --text-primary: #171614;
-  --text-secondary: #78746c;
-  --panel-border: #e6e3dd;
-  --accent: #171614;
-
-  /* The marginalia down the outer gutter — sheet numbers, captions, the
-     labels on the top rule. Quiet enough to miss until you look for it. */
-  --mark: #bdb9b1;
-
-  /* Every dot the canvases lay down is this ink at some alpha; the drawings
-     read it off the page so the two never drift apart. */
-  --ink-rgb: 24, 23, 21;
+  --bg: #ffffff;
+  --text-primary: #111111;
+  --text-secondary: #6b6b6b;
+  --panel-border: #e5e5e5;
+  --accent: #111111;
+  /* the hover-selection ring and its name badge */
+  --select: #0d99ff;
+  --select-ease: cubic-bezier(0.32, 0.72, 0, 1);
 
   --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
@@ -24,7 +17,6 @@
   --faq-ease: cubic-bezier(0.32, 0.72, 0, 1);
 
   --container: 1160px;
-  --column: 640px;
 }
 
 * {
@@ -36,7 +28,7 @@ body {
   background: var(--bg);
   color: var(--text-primary);
   font-family: var(--font-body);
-  font-weight: 400;
+  font-weight: 900;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -64,10 +56,11 @@ main {
 .site-header {
   position: relative;
   width: 100%;
-  max-width: var(--column);
+  max-width: 640px;
   margin: 0 auto;
+  /* the bar is empty, so its former text height is held open explicitly */
   min-height: 44px;
-  padding: 14px 0;
+  padding: 14px 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -84,34 +77,18 @@ main {
   background: var(--panel-border);
 }
 
-/* The two labels riding the top rule, set the way a drawing sheet titles
-   itself: inset to the column, not to the page. */
-.rule-mark {
-  padding-left: 20px;
-  font-size: 0.66rem;
-  font-weight: 400;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--mark);
-}
-
-.rule-mark-end {
-  padding-left: 0;
-  padding-right: 20px;
-}
-
 .site-footer {
   position: relative;
   width: 100%;
-  max-width: var(--column);
+  max-width: 640px;
   margin: 0 auto;
-  padding: 16px 40px;
+  padding: 14px 40px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.site-footer::after {
+.site-footer::before {
   content: "";
   position: absolute;
   top: 0;
@@ -125,28 +102,11 @@ main {
 .brand-label {
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--mark);
+  font-size: 0.85rem;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
   text-decoration: none;
-}
-
-/* ---------- sheet numbers ---------- */
-/* Each band is numbered in the outer gutter, hung off the band's top edge.
-   It replaces the selection ring that used to name the bands on hover: the
-   same information, but drawn once and left there, the way a plan is
-   annotated rather than inspected. */
-[data-mark]::before {
-  content: attr(data-mark);
-  position: absolute;
-  top: 13px;
-  right: calc(100% + 22px);
-  font-size: 0.62rem;
-  font-weight: 400;
-  letter-spacing: 0.14em;
-  color: var(--mark);
-  pointer-events: none;
+  transition: opacity 0.3s ease;
 }
 
 /* Holds a measure-limited block — the tagline, the closing headline — out to
@@ -155,7 +115,7 @@ main {
 .text-band {
   position: relative;
   width: 100%;
-  max-width: var(--column);
+  max-width: 640px;
 }
 
 .headline {
@@ -165,32 +125,33 @@ main {
   margin: 0 auto;
   max-width: 32ch;
   font-family: var(--font-body);
-  font-weight: 400;
+  font-weight: 500;
   font-size: clamp(1.4rem, 2.4vw, 2rem);
-  line-height: 1.3;
-  letter-spacing: -0.02em;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
   color: var(--text-primary);
-  padding-top: 52px;
-  padding-bottom: 52px;
+  padding-top: 32px;
+  padding-bottom: 32px;
 }
 
 /* The closing headline draws no bottom rule: it sits directly above the
-   footer, whose ::after already rules that boundary. */
+   footer, whose ::before already rules that boundary. */
 
 /* ---------- buttons ---------- */
 /* A full-width band like the rest of the page rather than a shrink-wrapped
-   row, so it rules the same column. The leading gap is padding, not margin,
-   so it belongs to the band and the button sits centred within it. */
+   row, so it rules the same column and its selection frame matches its
+   neighbours. The leading gap is padding, not margin, so it belongs to the
+   band and the button sits centred within it. */
 .cta-row {
   position: relative;
   width: 100%;
-  max-width: var(--column);
+  max-width: 640px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 16px;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-top: 32px;
+  padding-bottom: 32px;
 }
 
 .cta-row::after {
@@ -214,38 +175,55 @@ main {
   gap: 14px;
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: 0.9rem;
-  letter-spacing: 0.02em;
+  font-size: 0.95rem;
   text-decoration: none;
-  padding: 11px 28px;
-  border-radius: 0;
-  transition: background 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-    color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.45s ease;
+  padding: 8px 20px;
+  border-radius: 4px;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.4s ease, box-shadow 0.4s ease;
 }
 
-/* No lift, no shadow: the button is a cut in the sheet, and it fills with ink
-   rather than rising off the page. */
+.btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.92;
+}
+
+.btn:active {
+  transform: translateY(0);
+  transition-duration: 0.1s;
+}
+
 .btn-white {
   background: transparent;
   color: var(--text-primary);
   border: 1px solid var(--panel-border);
-}
-
-.btn-white:hover {
-  background: var(--text-primary);
-  border-color: var(--text-primary);
-  color: var(--bg);
-}
-
-.btn-white:active {
-  opacity: 0.88;
-  transition-duration: 0.1s;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
 .btn-dark {
-  background: var(--text-primary);
-  color: var(--bg);
+  background: #2a2a2a;
+  color: #ffffff;
+}
+
+.btn-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.btn-dark .btn-key {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+.btn-white .btn-key {
+  background: var(--panel-border);
+  color: var(--text-secondary);
 }
 
 /* One continuous pair of column rules for the whole page. Each band used to
@@ -258,7 +236,7 @@ main {
   bottom: 0;
   left: 32px;
   right: 32px;
-  max-width: var(--column);
+  max-width: 640px;
   margin-inline: auto;
   pointer-events: none;
 }
@@ -281,70 +259,6 @@ main {
   right: 0;
 }
 
-/* ---------- the drawings ---------- */
-/* Two canvases, one engine. The court is the page's one picture; the seam is
-   a single course of the same concrete, run edge to edge as a rule between
-   the offer and the closing line. Both are drawn in dots — see ando-field.js
-   — so they sit on the page as a material rather than as an illustration. */
-.ando-band,
-.ando-seam {
-  position: relative;
-  width: 100%;
-  max-width: var(--column);
-}
-
-.ando-band {
-  padding-top: 40px;
-  padding-bottom: 20px;
-}
-
-.ando-seam {
-  padding-top: 40px;
-  padding-bottom: 40px;
-}
-
-.ando-band::after,
-.ando-seam::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 100vw;
-  height: 1px;
-  margin-left: -50vw;
-  background: var(--panel-border);
-}
-
-.ando-host {
-  position: relative;
-  width: 100%;
-}
-
-.ando-canvas {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-/* The plate caption, set as a drawing is captioned: what it is on the left,
-   what it is made of on the right. */
-.ando-caption {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 20px;
-  padding-top: 16px;
-  font-size: 0.64rem;
-  font-weight: 400;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--mark);
-  text-align: left;
-}
-
 /* ---------- pricing ---------- */
 /* Neither section carries a heading any more, so both sit flush against the
    hairline above them with no leading gap. */
@@ -352,7 +266,7 @@ main {
 .faq {
   position: relative;
   width: 100%;
-  max-width: var(--column);
+  max-width: 640px;
   margin: 0 auto;
   padding: 0;
   text-align: left;
@@ -370,54 +284,52 @@ main {
   background: var(--panel-border);
 }
 
-/* No gutter between the cards: they are two bays of one wall, divided by the
-   single hairline they share. */
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0;
+  gap: 12px;
 }
 
 .pricing-card {
   display: flex;
   flex-direction: column;
-  padding: 32px 28px;
-  border-right: 1px solid var(--panel-border);
+  background: #ffffff;
+  border: 1px solid var(--panel-border);
+  border-top: none;
+  border-bottom: none;
+  padding: 20px 18px;
 }
 
-.pricing-card:last-child {
-  border-right: none;
+.pricing-card-featured {
+  border-color: var(--panel-border);
 }
 
 .pricing-name {
   font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 0.66rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--mark);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-primary);
 }
 
 .pricing-price {
-  margin: 14px 0 22px;
+  margin: 8px 0 16px;
   font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 2rem;
-  letter-spacing: -0.03em;
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
 }
 
 .pricing-price span {
   font-weight: 400;
-  font-size: 0.78rem;
-  letter-spacing: 0;
+  font-size: 0.85rem;
   color: var(--text-secondary);
 }
 
 .pricing-features {
   flex: 1;
   list-style: none;
-  margin: 0 0 26px;
+  margin: 0 0 20px;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -429,16 +341,16 @@ main {
   font-size: 0.82rem;
   line-height: 1.35;
   color: var(--text-secondary);
-  padding: 10px 0;
+  padding: 8px 0;
 }
 
 .pricing-features li + li {
-  border-top: 1px solid var(--panel-border);
+  border-top: 1px dashed #cbcbcb;
 }
 
 .pricing-card .btn {
-  font-size: 0.82rem;
-  padding: 10px 12px;
+  font-size: 0.85rem;
+  padding: 8px 12px;
 }
 
 /* ---------- faq ---------- */
@@ -447,8 +359,8 @@ main {
   flex-direction: column;
 }
 
-.faq-item + .faq-item {
-  border-top: 1px solid var(--panel-border);
+.faq-item {
+  border-bottom: 1px dashed #cbcbcb;
 }
 
 .faq-q {
@@ -458,59 +370,33 @@ main {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 24px 28px;
+  padding: 20px 40px;
   font-family: var(--font-body);
-  font-weight: 400;
+  font-weight: 500;
   font-size: 0.95rem;
-  letter-spacing: -0.01em;
   color: var(--text-primary);
-  transition: color 0.4s ease;
-}
-
-.faq-q:hover {
-  color: var(--text-secondary);
 }
 
 .faq-q::-webkit-details-marker {
   display: none;
 }
 
-/* A cross that loses its upright once the panel is open — the same mark a
-   plan uses for a point, opening into the rule it sits on. */
-.faq-sign {
-  position: relative;
-  flex-shrink: 0;
-  width: 9px;
-  height: 9px;
-}
-
-.faq-sign::before,
-.faq-sign::after {
+/* The nudge that optically centres the caret rides inside the transform, so
+   it interpolates with the rotation instead of jumping at the halfway point. */
+.faq-q::after {
   content: "";
-  position: absolute;
-  background: var(--mark);
-  transition: transform var(--faq-duration) var(--faq-ease),
-    opacity var(--faq-duration) var(--faq-ease);
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid #b0b0b0;
+  border-bottom: 1.5px solid #b0b0b0;
+  transform: translateY(-3px) rotate(45deg);
+  transition: transform var(--faq-duration) var(--faq-ease);
 }
 
-.faq-sign::before {
-  top: 4px;
-  left: 0;
-  width: 9px;
-  height: 1px;
-}
-
-.faq-sign::after {
-  top: 0;
-  left: 4px;
-  width: 1px;
-  height: 9px;
-}
-
-.js-faq .faq-item.is-open .faq-sign::after,
-html:not(.js-faq) .faq-item[open] .faq-sign::after {
-  transform: scaleY(0);
-  opacity: 0;
+.js-faq .faq-item.is-open .faq-q::after,
+html:not(.js-faq) .faq-item[open] .faq-q::after {
+  transform: translateY(3px) rotate(-135deg);
 }
 
 /* motion.js animates the panel's height directly; it only needs the clip. */
@@ -519,12 +405,11 @@ html:not(.js-faq) .faq-item[open] .faq-sign::after {
 }
 
 .faq-a-inner {
-  padding: 0 28px 24px;
-  max-width: 56ch;
+  padding: 0 40px 20px;
   font-family: var(--font-body);
   font-weight: 400;
   font-size: 0.85rem;
-  line-height: 1.6;
+  line-height: 1.5;
   color: var(--text-secondary);
 }
 
@@ -543,9 +428,9 @@ html:not(.js-faq) .faq-item[open] .faq-sign::after {
 .wordmark-band {
   position: relative;
   width: 100%;
-  max-width: var(--column);
-  padding-top: 28px;
-  padding-bottom: 36px;
+  max-width: 640px;
+  padding-top: 20px;
+  padding-bottom: 30px;
 }
 
 .wordmark-band::after {
@@ -566,14 +451,14 @@ html:not(.js-faq) .faq-item[open] .faq-sign::after {
 
 .hero-tagline {
   position: relative;
-  max-width: 42ch;
+  max-width: 44ch;
   margin: 0 auto;
-  padding-top: 44px;
-  padding-bottom: 44px;
+  padding-top: 32px;
+  padding-bottom: 32px;
   font-family: var(--font-body);
   font-weight: 400;
   font-size: 0.95rem;
-  line-height: 1.6;
+  line-height: 1.45;
   letter-spacing: -0.01em;
   color: var(--text-secondary);
   text-align: center;
@@ -599,12 +484,86 @@ html:not(.js-faq) .faq-item[open] .faq-sign::after {
   pointer-events: none;
 }
 
-/* The gutter is too narrow to hang anything in once the page stops being
-   wider than its column plus margins. */
-@media (max-width: 860px) {
-  [data-mark]::before {
-    display: none;
-  }
+/* ---------- frame selection on hover ---------- */
+/* A single ring, moved onto whichever band the pointer is over. It sits above
+   the column rules (51) and never takes the pointer, so hovering it can't
+   fight with the element underneath. */
+.frame-select {
+  position: absolute;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: 0 0 0 1px var(--select);
+  transition: left 140ms var(--select-ease), top 140ms var(--select-ease),
+    width 140ms var(--select-ease), height 140ms var(--select-ease),
+    opacity 110ms linear;
+}
+
+.frame-select.is-active {
+  opacity: 1;
+}
+
+/* Used for the single frame in which the ring is repositioned before it fades
+   in, so it never travels from its last frame's box. */
+.frame-select.is-snapping {
+  transition: none;
+}
+
+.frame-handle {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background: var(--bg);
+  border: 1px solid var(--select);
+}
+
+.frame-handle-nw {
+  top: -4px;
+  left: -4px;
+}
+
+.frame-handle-ne {
+  top: -4px;
+  right: -4px;
+}
+
+.frame-handle-sw {
+  bottom: -4px;
+  left: -4px;
+}
+
+.frame-handle-se {
+  bottom: -4px;
+  right: -4px;
+}
+
+/* The badge Figma prints under a selection — the frame's name here rather than
+   its measurements. */
+.frame-label {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 6px;
+  padding: 2px 6px;
+  border-radius: 2px;
+  background: var(--select);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.68rem;
+  line-height: 1.35;
+  letter-spacing: 0;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+/* Nothing below the last band to hang the badge over, so it flips to the top
+   edge instead of running off the end of the page. */
+.frame-select.is-flipped .frame-label {
+  top: auto;
+  bottom: 100%;
+  margin-top: 0;
+  margin-bottom: 6px;
 }
 
 @media (max-width: 560px) {
@@ -619,80 +578,50 @@ html:not(.js-faq) .faq-item[open] .faq-sign::after {
     right: 20px;
   }
 
+  /* Both bars are near-empty, so on a phone they only need to be tall enough
+     to read as a bar above and below the content. */
   .site-header {
     min-height: 0;
-    padding: 10px 0;
-  }
-
-  .rule-mark {
-    padding-left: 14px;
-  }
-
-  .rule-mark-end {
-    padding-right: 14px;
+    padding: 9px 20px;
   }
 
   .site-footer {
-    padding: 12px 20px;
+    padding: 9px 20px;
   }
 
   /* The band keeps the full column width like every other one — it is the
      band's own padding, not a narrower band, that insets the button. */
   .cta-row {
-    padding: 28px 20px;
+    padding: 24px 20px;
   }
 
   .cta-row .btn {
     width: 100%;
     max-width: 320px;
-    padding: 13px 20px;
+    padding: 12px 20px;
   }
 
-  /* The 28px gutters read as generous next to a 32px desktop page margin and
+  /* The 40px gutters read as generous next to a 32px desktop page margin and
      as cramped next to a 20px one — match the page gutter instead. */
   .faq-q {
     gap: 12px;
-    padding: 18px 20px;
+    padding: 16px 20px;
   }
 
   .faq-a-inner {
-    padding: 0 20px 18px;
+    padding: 0 20px 16px;
   }
 
   .hero-tagline,
   .headline {
-    padding-top: 32px;
-    padding-bottom: 32px;
+    padding-top: 24px;
+    padding-bottom: 24px;
   }
 
-  .ando-band {
-    padding-top: 28px;
-    padding-bottom: 16px;
-  }
-
-  .ando-seam {
-    padding-top: 28px;
-    padding-bottom: 28px;
-  }
-
-  .ando-caption {
-    font-size: 0.58rem;
-    letter-spacing: 0.1em;
-  }
-
-  /* Stacked, the cards divide horizontally instead of vertically. */
   .pricing-grid {
     grid-template-columns: 1fr;
   }
 
-  .pricing-card {
-    border-right: none;
-    padding: 24px 20px;
-  }
-
-  .pricing-card + .pricing-card {
-    border-top: 1px solid var(--panel-border);
-  }
 }
 
 /* a little breathing room above anchor targets */
@@ -711,9 +640,7 @@ html:not(.js-faq) .faq-item[open] .faq-sign::after {
   .js-motion .headline,
   .js-motion .cta-row,
   .js-motion .pricing,
-  .js-motion .faq,
-  .js-motion .ando-band,
-  .js-motion .ando-seam {
+  .js-motion .faq {
     opacity: 0;
     transform: translateY(28px);
     transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
