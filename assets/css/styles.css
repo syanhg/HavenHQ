@@ -1,419 +1,655 @@
-/* getsoffo.com
-
-   One idea holds the page together: the hairlines that rule the layout are
-   ground. Every plant on the canvas stands on one of them, so the rules are
-   not decoration between sections — they are the thing the garden grows out
-   of. Nothing else is ruled. Everything else is white.
-
-   Two inks only: sumi black and a moss so muted the page still reads as black
-   on white until you look closely. */
-
-/* ---------- tokens ------------------------------------------------------ */
+/* ---------- tokens ---------- */
 :root {
-  --paper: #ffffff;
-  --ink: #22252a;
-  --graphite: #5f6570;
-  --rule: #e4e1db;          /* the ground line: warm, closer to paper than to ink */
-  --rule-soft: #edeae4;     /* the dashed rules inside a bed */
+  --bg: #ffffff;
+  --text-primary: #111111;
+  --text-secondary: #6b6b6b;
+  --panel-border: #e5e5e5;
+  --accent: #111111;
+  /* the hover-selection ring and its name badge */
+  --select: #0d99ff;
+  --select-ease: cubic-bezier(0.32, 0.72, 0, 1);
 
-  --font-plate: "Newsreader", Georgia, "Times New Roman", serif;
-  --font-tag: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-  --col: 680px;             /* the measure everything is set to */
-  --gutter: clamp(20px, 5vw, 44px);
+  /* shared by the FAQ panel, its fade, and the caret — motion.js reads these
+     so every part of an accordion toggle moves on one curve */
+  --faq-duration: 340ms;
+  --faq-ease: cubic-bezier(0.32, 0.72, 0, 1);
 
-  --ease: cubic-bezier(0.32, 0.72, 0, 1);
-  --row-duration: 380ms;
+  --container: 1160px;
 }
 
-* { box-sizing: border-box; }
-
-html { -webkit-text-size-adjust: 100%; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-plate);
-  font-weight: 380;
-  font-size: 17px;
-  line-height: 1.6;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-weight: 900;
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
 }
 
-/* ---------- the canvas -------------------------------------------------- */
-/* Fixed behind the page, transparent everywhere there is no ink, and never
-   in the way of the pointer. */
-.garden {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
+/* The full-width horizontal hairlines are 100vw, which exceeds the document
+   width whenever a vertical scrollbar is present — clip so that never turns
+   into a horizontal scrollbar. */
+main {
+  overflow: clip;
+}
+
+/* ---------- hero ---------- */
+.hero {
+  position: relative;
+  max-width: var(--container);
+  margin: 0 auto;
+  min-height: 70vh;
+  padding: 4px 32px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+}
+
+.site-header {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  /* the bar is empty, so its former text height is held open explicitly */
+  min-height: 44px;
+  padding: 14px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  margin-left: -50vw;
+  background: var(--panel-border);
+}
+
+.site-footer {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 14px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.site-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  margin-left: -50vw;
+  background: var(--panel-border);
+}
+
+.brand-label {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.85rem;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Holds a measure-limited block — the tagline, the closing headline — out to
+   the full column, so the band reads as wide as its neighbours while the type
+   inside keeps its own line length. */
+.text-band {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+}
+
+.headline {
+  position: relative;
+  /* auto margins because it is centred inside .text-band now, not by the
+     hero's own flex centring */
+  margin: 0 auto;
+  max-width: 32ch;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+/* The closing headline draws no bottom rule: it sits directly above the
+   footer, whose ::before already rules that boundary. */
+
+/* ---------- buttons ---------- */
+/* A full-width band like the rest of the page rather than a shrink-wrapped
+   row, so it rules the same column and its selection frame matches its
+   neighbours. The leading gap is padding, not margin, so it belongs to the
+   band and the button sits centred within it. */
+.cta-row {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+.cta-row::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  margin-left: -50vw;
+  background: var(--panel-border);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  /* centred rather than start-packed, so the label stays put once the button
+     is stretched wider than its text — full width on a phone, card width in
+     the pricing grid */
+  justify-content: center;
+  gap: 14px;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.95rem;
+  text-decoration: none;
+  padding: 8px 20px;
+  border-radius: 4px;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.4s ease, box-shadow 0.4s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.92;
+}
+
+.btn:active {
+  transform: translateY(0);
+  transition-duration: 0.1s;
+}
+
+.btn-white {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--panel-border);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.btn-dark {
+  background: #2a2a2a;
+  color: #ffffff;
+}
+
+.btn-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.btn-dark .btn-key {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+.btn-white .btn-key {
+  background: var(--panel-border);
+  color: var(--text-secondary);
+}
+
+/* One continuous pair of column rules for the whole page. Each band used to
+   carry its own 100vh-tall pair, which meant neighbouring bands stacked their
+   lines on top of each other — doubling up wherever a band faded or slid in. */
+.hero-grid {
+  position: absolute;
+  z-index: 51;
+  top: 0;
+  bottom: 0;
+  left: 32px;
+  right: 32px;
+  max-width: 640px;
+  margin-inline: auto;
   pointer-events: none;
 }
 
-.garden canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-main, footer { position: relative; z-index: 1; }
-
-/* The empty boxes a plant is anchored to are only worth their space once
-   something is actually going to grow in them. */
-.topiary, .plot-art, .canopy, .marker { display: none; }
-
-.has-garden .topiary,
-.has-garden .plot-art,
-.has-garden .canopy { display: block; }
-
-.has-garden .marker { display: block; }
-
-/* ---------- beds -------------------------------------------------------- */
-/* A bed is a full-width band closed by its ground line. */
-.bed {
-  position: relative;
-  padding: clamp(56px, 9vw, 104px) var(--gutter);
-}
-
-.bed::after {
+.hero-grid::before,
+.hero-grid::after {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
+  top: 0;
   bottom: 0;
-  height: 1px;
-  background: var(--rule);
+  width: 1px;
+  background: var(--panel-border);
 }
 
-.bed > * { max-width: var(--col); margin-inline: auto; }
-
-/* ---------- the specimen ------------------------------------------------ */
-.bed-mark {
-  padding-top: clamp(72px, 14vh, 148px);
-  padding-bottom: clamp(20px, 3vw, 36px);
+.hero-grid::before {
+  left: 0;
 }
 
-.wordmark {
-  margin: 0 auto;
-  max-width: var(--col);
-  font-family: var(--font-plate);
-  /* Heavy enough that a serif crossbar survives being grown as a hedge. */
-  font-weight: 500;
-  font-size: clamp(4.2rem, 19vw, 12rem);
-  line-height: 0.92;
-  /* Loose enough that the two f's read as two. */
-  letter-spacing: -0.005em;
-  font-variant-ligatures: none;
-  text-align: center;
-  /* The hedge is clipped from these very letters, so once the garden is up the
-     type steps back and lets the plant be the word. Until then it is type. */
-  color: var(--ink);
+.hero-grid::after {
+  right: 0;
 }
 
-.has-garden .wordmark { color: transparent; }
-
-/* ---------- the tagline ------------------------------------------------- */
-/* Deliberately unplanted. The one bed with nothing growing in it. */
-.tagline {
-  margin: 0 auto;
-  max-width: 26ch;
-  font-size: clamp(1.5rem, 3.4vw, 2.2rem);
-  font-style: italic;
-  font-weight: 300;
-  line-height: 1.36;
-  letter-spacing: -0.015em;
-  text-align: center;
-  text-wrap: balance;
-}
-
-/* ---------- the gate ---------------------------------------------------- */
-.bed-gate { padding-bottom: 0; }
-
-.gate {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  gap: clamp(18px, 5vw, 56px);
-}
-
-/* A clipped cone either side of the door. */
-.topiary {
-  flex: 0 0 auto;
-  width: clamp(52px, 9vw, 94px);
-  height: clamp(76px, 13vw, 122px);
-}
-
-/* Three-sided, open at the foot: a gate standing in the ground line rather
-   than a button floating above it. */
-.button {
-  flex: 0 0 auto;
-  display: inline-block;
-  padding: 18px clamp(24px, 5vw, 40px) 20px;
-  border: 1px solid var(--ink);
-  border-bottom: none;
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-tag);
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: background 260ms var(--ease), color 260ms var(--ease);
-}
-
-.button:hover, .button:focus-visible {
-  background: var(--ink);
-  color: var(--paper);
-}
-
-/* ---------- the rows ---------------------------------------------------- */
-.bed-rows { padding-block: clamp(28px, 5vw, 48px); }
-
-.rows { max-width: var(--col); margin-inline: auto; }
-
-.row {
+/* ---------- pricing ---------- */
+/* Neither section carries a heading any more, so both sit flush against the
+   hairline above them with no leading gap. */
+.pricing,
+.faq {
   position: relative;
-  border-bottom: 1px dashed var(--rule-soft);
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0;
+  text-align: left;
 }
 
-.row:last-child { border-bottom: none; }
+.pricing::after,
+.faq::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  margin-left: -50vw;
+  background: var(--panel-border);
+}
 
-.row-q {
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.pricing-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid var(--panel-border);
+  border-top: none;
+  border-bottom: none;
+  padding: 20px 18px;
+}
+
+.pricing-card-featured {
+  border-color: var(--panel-border);
+}
+
+.pricing-name {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.pricing-price {
+  margin: 8px 0 16px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.pricing-price span {
+  font-weight: 400;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.pricing-features {
+  flex: 1;
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.pricing-features li {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: var(--text-secondary);
+  padding: 8px 0;
+}
+
+.pricing-features li + li {
+  border-top: 1px dashed #cbcbcb;
+}
+
+.pricing-card .btn {
+  font-size: 0.85rem;
+  padding: 8px 12px;
+}
+
+/* ---------- faq ---------- */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.faq-item {
+  border-bottom: 1px dashed #cbcbcb;
+}
+
+.faq-q {
   list-style: none;
   cursor: pointer;
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  justify-content: space-between;
   gap: 16px;
-  padding: 22px 0 22px 42px;
-  font-size: 1.06rem;
-  font-weight: 400;
-  letter-spacing: -0.01em;
+  padding: 20px 40px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--text-primary);
 }
 
-.row-q::-webkit-details-marker { display: none; }
+.faq-q::-webkit-details-marker {
+  display: none;
+}
 
-.row-t { flex: 1; }
+/* The nudge that optically centres the caret rides inside the transform, so
+   it interpolates with the rotation instead of jumping at the halfway point. */
+.faq-q::after {
+  content: "";
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid #b0b0b0;
+  border-bottom: 1.5px solid #b0b0b0;
+  transform: translateY(-3px) rotate(45deg);
+  transition: transform var(--faq-duration) var(--faq-ease);
+}
 
-/* The seedling stands in the left margin, on the row's own dashed rule. It
-   is not planted until the answer is opened. */
-.marker {
+.js-faq .faq-item.is-open .faq-q::after,
+html:not(.js-faq) .faq-item[open] .faq-q::after {
+  transform: translateY(3px) rotate(-135deg);
+}
+
+/* motion.js animates the panel's height directly; it only needs the clip. */
+.js-faq .faq-a {
+  overflow: hidden;
+}
+
+.faq-a-inner {
+  padding: 0 40px 20px;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+/* The fade runs on the same clock as the height so the two read as one
+   movement — no lag, no delay to catch up on a fast second click. */
+.js-faq .faq-a-inner {
+  opacity: 0;
+  transition: opacity var(--faq-duration) var(--faq-ease);
+}
+
+.js-faq .faq-item.is-open .faq-a-inner {
+  opacity: 1;
+}
+
+/* animated "soffo" wordmark that opens the hero */
+.wordmark-band {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  padding-top: 20px;
+  padding-bottom: 30px;
+}
+
+.wordmark-band::after {
+  content: "";
   position: absolute;
-  left: 0;
   bottom: 0;
-  width: 30px;
-  height: 34px;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  margin-left: -50vw;
+  background: var(--panel-border);
+}
+
+.tile-field-host {
+  position: relative;
+  width: 100%;
+}
+
+.hero-tagline {
+  position: relative;
+  max-width: 44ch;
+  margin: 0 auto;
+  padding-top: 32px;
+  padding-bottom: 32px;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.hero-tagline::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  margin-left: -50vw;
+  background: var(--panel-border);
+}
+
+.tile-field-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
 }
 
-.row-q::after {
-  content: "";
-  flex: 0 0 auto;
-  align-self: center;
+/* ---------- frame selection on hover ---------- */
+/* A single ring, moved onto whichever band the pointer is over. It sits above
+   the column rules (51) and never takes the pointer, so hovering it can't
+   fight with the element underneath. */
+.frame-select {
+  position: absolute;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: 0 0 0 1px var(--select);
+  transition: left 140ms var(--select-ease), top 140ms var(--select-ease),
+    width 140ms var(--select-ease), height 140ms var(--select-ease),
+    opacity 110ms linear;
+}
+
+.frame-select.is-active {
+  opacity: 1;
+}
+
+/* Used for the single frame in which the ring is repositioned before it fades
+   in, so it never travels from its last frame's box. */
+.frame-select.is-snapping {
+  transition: none;
+}
+
+.frame-handle {
+  position: absolute;
   width: 7px;
   height: 7px;
-  border-right: 1px solid var(--graphite);
-  border-bottom: 1px solid var(--graphite);
-  transform: translateY(-2px) rotate(45deg);
-  transition: transform var(--row-duration) var(--ease);
+  background: var(--bg);
+  border: 1px solid var(--select);
 }
 
-.js-rows .row.is-open .row-q::after,
-html:not(.js-rows) .row[open] .row-q::after {
-  transform: translateY(2px) rotate(-135deg);
+.frame-handle-nw {
+  top: -4px;
+  left: -4px;
 }
 
-.js-rows .row-a { overflow: hidden; }
-
-.row-a-inner {
-  padding: 0 0 26px 42px;
-  max-width: 56ch;
-  font-size: 0.95rem;
-  line-height: 1.62;
-  color: var(--graphite);
+.frame-handle-ne {
+  top: -4px;
+  right: -4px;
 }
 
-.js-rows .row-a-inner {
-  opacity: 0;
-  transition: opacity var(--row-duration) var(--ease);
+.frame-handle-sw {
+  bottom: -4px;
+  left: -4px;
 }
 
-.js-rows .row.is-open .row-a-inner { opacity: 1; }
-
-/* ---------- the plots --------------------------------------------------- */
-.plots {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: clamp(24px, 6vw, 64px);
-  max-width: var(--col);
-  margin-inline: auto;
+.frame-handle-se {
+  bottom: -4px;
+  right: -4px;
 }
 
-.plot { display: flex; flex-direction: column; }
-
-/* Each plot has its own ground, and what stands on it is sized to the plan. */
-.plot-art {
-  height: 96px;
-  border-bottom: 1px solid var(--rule);
-  margin-bottom: 22px;
-}
-
-.plot-art-tall { height: 150px; }
-
-.plot-name {
-  margin: 0;
-  font-family: var(--font-tag);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--graphite);
-}
-
-.plot-price {
-  margin: 10px 0 22px;
-  font-size: 2.2rem;
-  font-weight: 300;
-  letter-spacing: -0.03em;
-  line-height: 1;
-}
-
-.plot-price span {
-  font-family: var(--font-tag);
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
-  color: var(--graphite);
-}
-
-.plot-list {
-  flex: 1;
-  list-style: none;
-  margin: 0 0 26px;
-  padding: 0;
-}
-
-.plot-list li {
-  padding: 9px 0;
-  font-size: 0.92rem;
-  color: var(--graphite);
-}
-
-.plot-list li + li { border-top: 1px dashed var(--rule-soft); }
-
-/* Inside a plot the gate is quieter — it closes at the foot, because it is a
-   label on a bed rather than the way in. */
-.button-quiet {
-  align-self: flex-start;
-  padding: 12px 20px 13px;
-  border: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
-  color: var(--graphite);
-}
-
-.button-quiet:hover, .button-quiet:focus-visible {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: var(--paper);
-}
-
-/* ---------- the close --------------------------------------------------- */
-.bed-close { padding-top: clamp(48px, 8vw, 88px); }
-
-/* The one tall thing on the page. */
-.canopy {
-  height: clamp(180px, 26vw, 300px);
-  border-bottom: 1px solid var(--rule);
-  margin-bottom: clamp(40px, 7vw, 72px);
-}
-
-.close-line {
-  margin: 0 auto;
-  max-width: 22ch;
-  font-size: clamp(1.7rem, 4.2vw, 2.8rem);
-  font-weight: 300;
-  line-height: 1.24;
-  letter-spacing: -0.025em;
-  text-align: center;
-  text-wrap: balance;
-}
-
-/* ---------- the foot ---------------------------------------------------- */
-.bed-foot {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  padding-block: 26px;
-  font-family: var(--font-tag);
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--graphite);
-}
-
-.bed-foot::after { content: none; }
-.bed-foot > * { max-width: none; margin-inline: 0; }
-
-/* ---------- a11y -------------------------------------------------------- */
-.skip {
+/* The badge Figma prints under a selection — the frame's name here rather than
+   its measurements. */
+.frame-label {
   position: absolute;
-  left: -9999px;
-  top: 0;
-  z-index: 10;
-  padding: 12px 18px;
-  background: var(--ink);
-  color: var(--paper);
-  font-family: var(--font-tag);
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  text-decoration: none;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 6px;
+  padding: 2px 6px;
+  border-radius: 2px;
+  background: var(--select);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.68rem;
+  line-height: 1.35;
+  letter-spacing: 0;
+  color: #ffffff;
+  white-space: nowrap;
 }
 
-.skip:focus { left: 0; }
-
-:focus-visible {
-  outline: 1px solid var(--ink);
-  outline-offset: 3px;
+/* Nothing below the last band to hang the badge over, so it flips to the top
+   edge instead of running off the end of the page. */
+.frame-select.is-flipped .frame-label {
+  top: auto;
+  bottom: 100%;
+  margin-top: 0;
+  margin-bottom: 6px;
 }
 
-/* ---------- reveal ------------------------------------------------------ */
-@media (prefers-reduced-motion: no-preference) {
-  html { scroll-behavior: smooth; }
-
-  .js-motion .tagline,
-  .js-motion .gate,
-  .js-motion .rows,
-  .js-motion .plots,
-  .js-motion .close-line {
-    opacity: 0;
-    transform: translateY(18px);
-    transition: opacity 900ms var(--ease), transform 900ms var(--ease);
+@media (max-width: 560px) {
+  /* Same shape as the desktop hero — the bands themselves carry the vertical
+     rhythm, so the hero only sets the side gutter the column rules align to. */
+  .hero {
+    padding: 4px 20px 0;
   }
 
-  .js-motion .is-visible { opacity: 1; transform: none; }
+  .hero-grid {
+    left: 20px;
+    right: 20px;
+  }
+
+  /* Both bars are near-empty, so on a phone they only need to be tall enough
+     to read as a bar above and below the content. */
+  .site-header {
+    min-height: 0;
+    padding: 9px 20px;
+  }
+
+  .site-footer {
+    padding: 9px 20px;
+  }
+
+  /* The band keeps the full column width like every other one — it is the
+     band's own padding, not a narrower band, that insets the button. */
+  .cta-row {
+    padding: 24px 20px;
+  }
+
+  .cta-row .btn {
+    width: 100%;
+    max-width: 320px;
+    padding: 12px 20px;
+  }
+
+  /* The 40px gutters read as generous next to a 32px desktop page margin and
+     as cramped next to a 20px one — match the page gutter instead. */
+  .faq-q {
+    gap: 12px;
+    padding: 16px 20px;
+  }
+
+  .faq-a-inner {
+    padding: 0 20px 16px;
+  }
+
+  .hero-tagline,
+  .headline {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
 }
 
-/* ---------- narrow ------------------------------------------------------ */
-@media (max-width: 640px) {
-  body { font-size: 16px; }
-
-  .bed { padding-block: clamp(44px, 11vw, 72px); }
-
-  .row-q { padding-left: 34px; }
-  .row-a-inner { padding-left: 34px; }
-  .marker { width: 24px; height: 28px; }
-
-  .plots { grid-template-columns: 1fr; gap: 44px; }
-  .plot-art { height: 78px; }
-  .plot-art-tall { height: 108px; }
-
-  .gate { gap: 14px; }
-  .topiary { width: 46px; height: 72px; }
-  .button { padding: 15px 20px 17px; font-size: 0.66rem; letter-spacing: 0.12em; }
-
-  .bed-foot { flex-direction: column; gap: 6px; }
+/* a little breathing room above anchor targets */
+#pricing,
+#faq {
+  scroll-margin-top: 32px;
 }
 
-#faq, #pricing { scroll-margin-top: 24px; }
+/* ---------- motion ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  .js-motion .hero-tagline,
+  .js-motion .headline,
+  .js-motion .cta-row,
+  .js-motion .pricing,
+  .js-motion .faq {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+
+  .js-motion .is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}

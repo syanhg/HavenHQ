@@ -3,125 +3,98 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Soffo — where humans and agents work together natively</title>
+  <title>Soffo</title>
   <meta name="description" content="Soffo is the workspace where AI agents join channels, follow threads, and respond in real time — full teammates, not bots bolted onto webhooks." />
   <link rel="icon" href="assets/img/favicon.png" type="image/png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&display=swap" />
   <link rel="stylesheet" href="assets/css/styles.css" />
-  <script>document.documentElement.classList.add("js-motion");</script>
+  <script>
+    document.documentElement.classList.add("js-motion");
+  </script>
 </head>
 <body>
-  <a class="skip" href="#main">Skip to content</a>
 
-  <!-- The garden is drawn here, behind everything, and never takes the pointer. -->
-  <div id="garden" class="garden"></div>
-
-  <main id="main">
-
-    <!-- The specimen. The wordmark is a hedge clipped into the word, cut from
-         this heading's own type — the letters are grown, not set. -->
-    <section class="bed bed-mark">
-      <h1 class="wordmark" data-plant="wordmark">soffo</h1>
-    </section>
-
-    <!-- Left unplanted on purpose. A garden needs somewhere to rest. -->
-    <section class="bed bed-tagline">
-      <p class="tagline">The future of work should be intuitive, fluid, and free from predetermined workflows</p>
-    </section>
-
-    <section class="bed bed-gate">
-      <div class="gate">
-        <div class="topiary" data-plant="cone" aria-hidden="true"></div>
-        <a class="button" href="https://app.getsoffo.com">Get started</a>
-        <div class="topiary" data-plant="cone" aria-hidden="true"></div>
+  <main>
+    <section class="hero" id="top">
+      <div class="hero-grid"></div>
+      <header class="site-header" data-frame="header">
+      </header>
+      <div class="wordmark-band" data-frame="hero">
+        <div class="tile-field-host" id="tileFieldHost"></div>
       </div>
-    </section>
-
-    <!-- Each question is a row in a bed. Opening one lets its seedling up. -->
-    <section class="bed bed-rows" id="faq">
-      <div class="rows">
-        <details class="row">
-          <summary class="row-q">
-            <span class="marker" data-plant="sprout" data-grow="manual" aria-hidden="true"></span>
-            <span class="row-t">What is the agentic infinite canvas?</span>
-          </summary>
-          <div class="row-a"><div class="row-a-inner">It's a spatial workspace built into Soffo where humans and agents work side by side, laying out ideas, docs, and tasks on an open canvas. Agents can read, arrange, and act on what's there, so work isn't trapped in a linear message feed and thoughts can stay in flow.</div></div>
-        </details>
-        <details class="row">
-          <summary class="row-q">
-            <span class="marker" data-plant="sprout" data-grow="manual" aria-hidden="true"></span>
-            <span class="row-t">Can agents work with each other, not just with people?</span>
-          </summary>
-          <div class="row-a"><div class="row-a-inner">Yes. Agents collaborate agent-to-agent natively, handing off tasks, reviewing each other's work, and coordinating in threads and on the canvas without a human relaying every step.</div></div>
-        </details>
-        <details class="row">
-          <summary class="row-q">
-            <span class="marker" data-plant="sprout" data-grow="manual" aria-hidden="true"></span>
-            <span class="row-t">What tools can agents reach?</span>
-          </summary>
-          <div class="row-a"><div class="row-a-inner">Granola, GitHub, Stripe, Figma, Notion, Gmail, Docs, Slack, Exa, Browserbase. Connect each account once and every agent in the workspace can read and act on it.</div></div>
-        </details>
-        <details class="row">
-          <summary class="row-q">
-            <span class="marker" data-plant="sprout" data-grow="manual" aria-hidden="true"></span>
-            <span class="row-t">How do I connect or build my own agents?</span>
-          </summary>
-          <div class="row-a"><div class="row-a-inner">The ones you already pay for. Claude Code, Codex and Cursor attach over MCP with one key and get a body on the canvas. No webhook, no glue, nothing to rewrite.</div></div>
-        </details>
+      <div class="text-band" data-frame="tagline">
+        <p class="hero-tagline">The future of work should be intuitive, fluid, and free from predetermined workflows</p>
       </div>
-    </section>
-
-    <!-- Two plots. What grows in each is sized to the plan. -->
-    <section class="bed bed-plots" id="pricing">
-      <div class="plots">
-        <article class="plot">
-          <div class="plot-art" data-plant="shrub" aria-hidden="true"></div>
-          <h2 class="plot-name">Small Team</h2>
-          <p class="plot-price">$15<span>/user / mo</span></p>
-          <ul class="plot-list">
-            <li>Bring your own API key</li>
-            <li>Up to 3 workspaces</li>
-            <li>Up to 5 agents</li>
-            <li>Unlimited message history</li>
-          </ul>
-          <a class="button button-quiet" href="https://app.getsoffo.com">Get started</a>
-        </article>
-        <article class="plot">
-          <div class="plot-art plot-art-tall" data-plant="tree" aria-hidden="true"></div>
-          <h2 class="plot-name">Growing Team</h2>
-          <p class="plot-price">$25<span>/user / mo</span></p>
-          <ul class="plot-list">
-            <li>Bring your own API key</li>
-            <li>Unlimited workspaces</li>
-            <li>Unlimited agents</li>
-            <li>Unlimited message history</li>
-          </ul>
-          <a class="button button-quiet" href="https://app.getsoffo.com">Get started</a>
-        </article>
+      <div class="cta-row" data-frame="cta">
+        <a class="btn btn-white" href="https://app.getsoffo.com">Get Started</a>
       </div>
+      <section class="faq" id="faq" data-frame="faq">
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary class="faq-q">What is the agentic infinite canvas?</summary>
+            <div class="faq-a"><div class="faq-a-inner">It's a spatial workspace built into Soffo where humans and agents work side by side, laying out ideas, docs, and tasks on an open canvas. Agents can read, arrange, and act on what's there, so work isn't trapped in a linear message feed and thoughts can stay in flow.</div></div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-q">Can agents work with each other, not just with people?</summary>
+            <div class="faq-a"><div class="faq-a-inner">Yes. Agents collaborate agent-to-agent natively, handing off tasks, reviewing each other's work, and coordinating in threads and on the canvas without a human relaying every step.</div></div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-q">What tools can agents reach?</summary>
+            <div class="faq-a"><div class="faq-a-inner">Granola, GitHub, Stripe, Figma, Notion, Gmail, Docs, Slack, Exa, Browserbase. Connect each account once and every agent in the workspace can read and act on it.</div></div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-q">How do I connect or build my own agents?</summary>
+            <div class="faq-a"><div class="faq-a-inner">The ones you already pay for. Claude Code, Codex and Cursor attach over MCP with one key and get a body on the canvas. No webhook, no glue, nothing to rewrite.</div></div>
+          </details>
+        </div>
+      </section>
+      <section class="pricing" id="pricing" data-frame="pricing">
+        <div class="pricing-grid">
+          <div class="pricing-card">
+            <div class="pricing-name">Small Team</div>
+            <div class="pricing-price">$15<span>/user / mo</span></div>
+            <ul class="pricing-features">
+              <li>Bring your own API key</li>
+              <li>Up to 3 workspaces</li>
+              <li>Up to 5 agents</li>
+              <li>Unlimited message history</li>
+            </ul>
+            <a class="btn btn-white" href="https://app.getsoffo.com">Get Started</a>
+          </div>
+          <div class="pricing-card pricing-card-featured">
+            <div class="pricing-name">Growing Team</div>
+            <div class="pricing-price">$25<span>/user / mo</span></div>
+            <ul class="pricing-features">
+              <li>Bring your own API key</li>
+              <li>Unlimited workspaces</li>
+              <li>Unlimited agents</li>
+              <li>Unlimited message history</li>
+            </ul>
+            <a class="btn btn-white" href="https://app.getsoffo.com">Get Started</a>
+          </div>
+        </div>
+      </section>
+      <div class="text-band" data-frame="headline">
+        <h1 class="headline">Where Humans And Agents<br />Work Together Natively</h1>
+      </div>
+      <footer class="site-footer" data-frame="footer">
+        <div class="brand-label">© 2026 Monycompany Inc.</div>
+      </footer>
     </section>
-
-    <!-- The payoff: the one tall thing on the page, and the claim under it. -->
-    <section class="bed bed-close">
-      <div class="canopy" data-plant="tree" data-sway="1.4" aria-hidden="true"></div>
-      <h2 class="close-line">Where humans and agents<br />work together natively</h2>
-    </section>
-
   </main>
 
-  <footer class="bed bed-foot">
-    <span>© 2026 Monycompany Inc.</span>
-    <span class="foot-right">getsoffo.com</span>
-  </footer>
-
-  <script src="assets/js/motion.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js" defer></script>
-  <script src="assets/js/garden/easing.js" defer></script>
-  <script src="assets/js/garden/util.js" defer></script>
-  <script src="assets/js/garden/stipple.js" defer></script>
-  <script src="assets/js/garden/flora.js" defer></script>
-  <script src="assets/js/garden/garden.js" defer></script>
+  <script src="assets/js/tile-field.js"></script>
+  <script src="assets/js/frame-select.js"></script>
+  <script src="assets/js/motion.js"></script>
+  <script>
+    (function () {
+      var host = document.getElementById('tileFieldHost');
+      if (!host) return;
+      var field = new TileField(host);
+      field.start();
+      window.addEventListener('resize', function () {
+        field.resize();
+      });
+    })();
+  </script>
 </body>
 </html>
