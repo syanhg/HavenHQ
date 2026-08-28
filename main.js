@@ -649,6 +649,7 @@
     var form = widget.querySelector('.access-form');
     var note = widget.querySelector('.access-note');
     var submit = widget.querySelector('.access-submit');
+    var done = false;
     var anim = null;
 
     function height() {
@@ -744,7 +745,7 @@
         return;
       }
 
-      note.textContent = 'Sending…';
+      note.textContent = '';
       submit.disabled = true;
 
       fetch(ENDPOINT, {
@@ -755,13 +756,17 @@
         return res.json().catch(function () { return {}; }).then(function (data) {
           if (!res.ok) throw new Error(data.error || 'that did not send');
           form.reset();
-          note.textContent = 'Thanks — we will be in touch.';
+          // the button is the whole confirmation: it says what happened and
+          // stays saying it, so there is no second line to read
+          submit.textContent = 'Requested';
+          submit.classList.add('is-done');
+          done = true;
         });
       }).catch(function (err) {
         // the endpoint's own words where it gave any: it knows why better
         note.textContent = (err.message || 'That did not send') + '. Try again in a moment.';
       }).then(function () {
-        submit.disabled = false;
+        if (!done) submit.disabled = false;
       });
     });
   });
