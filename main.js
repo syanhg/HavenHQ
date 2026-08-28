@@ -634,7 +634,12 @@
   var EASE = 'cubic-bezier(0.22, 1, 0.36, 1)';
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  var scrim = document.querySelector('.scrim');
   var open = null; // only one of them is ever open
+
+  function dim(on) {
+    if (scrim) scrim.classList.toggle('is-on', on);
+  }
 
   Array.prototype.forEach.call(widgets, function (widget) {
     var pill = widget.querySelector('.pill');
@@ -670,6 +675,7 @@
       panel.hidden = false;
       pill.setAttribute('aria-expanded', 'true');
       open = api;
+      dim(true);
 
       if (reduced) return focusFirst();
 
@@ -682,6 +688,7 @@
 
       pill.setAttribute('aria-expanded', 'false');
       if (open === api) open = null;
+      if (!open) dim(false);
 
       if (reduced) {
         panel.hidden = true;

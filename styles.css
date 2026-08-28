@@ -116,8 +116,29 @@ body {
    without moving anything on the page */
 .access {
   position: relative;
-  z-index: 3;
+  /* above the scrim, so the pill and its panel are the only lit things */
+  z-index: 31;
   margin: 26px 0 0;
+}
+
+/* everything else goes dark behind an open form */
+.scrim {
+  position: fixed;
+  inset: 0;
+  /* over everything that is fixed too: the header texts (20) and the chapter
+     list (15) are page, and page is what goes dark */
+  z-index: 30;
+  background: rgb(16 17 19 / 0.46);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+              visibility 0s linear 0.32s;
+}
+
+.scrim.is-on {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
 }
 
 .pill {
@@ -214,7 +235,7 @@ body {
 
 .field input:focus {
   outline: none;
-  border-color: var(--ink);
+  border-color: #b4b4b4;
 }
 
 .field input.is-bad {
@@ -237,8 +258,7 @@ body {
   background: #000;
 }
 
-.access-submit:focus-visible,
-.field input:focus-visible {
+.access-submit:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 2px;
 }
