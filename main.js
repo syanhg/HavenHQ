@@ -47,7 +47,7 @@
     }
   );
 
-  ['.hero-desc', '.pill', '.shot', '.section-title', '.features'].forEach(function (selector, i) {
+  ['.hero-desc', '.access', '.shot', '.section-title', '.features'].forEach(function (selector, i) {
     var el = document.querySelector(selector);
     if (!el) return;
     el.style.setProperty('--d', elapsed + i * 130 + 'ms');
@@ -612,4 +612,152 @@
 
   // images landing below the fold move every offset under them
   window.addEventListener('load', function () { measure(); update(); });
+})();
+
+/* Request access: the pill opens a small form in place.
+
+   The panel is absolutely positioned, so opening one never moves the page —
+   it drops below the pill in the hero and rises above it in the closing CTA,
+   where there is nothing below to drop into. Height is animated off the real
+   measured height, the same way the FAQ boxes are.
+
+   Set ENDPOINT to a URL that accepts a JSON POST to actually collect these.
+   Until then the form validates, reports back, and goes no further — it never
+   pretends to have sent something it has not. */
+(function () {
+  var ENDPOINT = '';
+
+  var widgets = document.querySelectorAll('.access');
+  if (!widgets.length) return;
+
+  var MS = 320;
+  var EASE = 'cubic-bezier(0.22, 1, 0.36, 1)';
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var open = null; // only one of them is ever open
+
+  Array.prototype.forEach.call(widgets, function (widget) {
+    var pill = widget.querySelector('.pill');
+    var panel = widget.querySelector('.access-panel');
+    var form = widget.querySelector('.access-form');
+    var note = widget.querySelector('.access-note');
+    var anim = null;
+
+    function height() {
+      return panel.getBoundingClientRect().height;
+    }
+
+    function run(from, to, opening) {
+      if (anim) anim.cancel();
+
+      anim = panel.animate(
+        { height: [from + 'px', to + 'px'], opacity: [opening ? 0 : 1, opening ? 1 : 0] },
+        { duration: MS, easing: EASE }
+      );
+
+      anim.onfinish = function () {
+        anim = null;
+        panel.style.height = '';
+        panel.style.opacity = '';
+        if (!opening) panel.hidden = true;
+      };
+    }
+
+    function show() {
+      if (open && open !== api) open.hide();
+
+      var from = panel.hidden ? 0 : height();
+      panel.hidden = false;
+      pill.setAttribute('aria-expanded', 'true');
+      open = api;
+
+      if (reduced) return focusFirst();
+
+      run(from, panel.scrollHeight, true);
+      focusFirst();
+    }
+
+    function hide() {
+      if (panel.hidden) return;
+
+      pill.setAttribute('aria-expanded', 'false');
+      if (open === api) open = null;
+
+      if (reduced) {
+        panel.hidden = true;
+        return;
+      }
+      run(height(), 0, false);
+    }
+
+    function focusFirst() {
+      var first = form.querySelector('input');
+      if (first) first.focus({ preventScroll: true });
+    }
+
+    var api = { hide: hide, widget: widget };
+
+    pill.addEventListener('click', function () {
+      if (panel.hidden || pill.getAttribute('aria-expanded') === 'false') show();
+      else hide();
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var email = form.elements.email;
+      var name = form.elements.name;
+      var bad = null;
+
+      [email, name].forEach(function (field) {
+        var ok = field.value.trim() && (field.type !== 'email' || /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(field.value.trim()));
+        field.classList.toggle('is-bad', !ok);
+        if (!ok && !bad) bad = field;
+      });
+
+      if (bad) {
+        note.textContent = bad === email ? 'A working email, please.' : 'Your name, please.';
+        bad.focus();
+        return;
+      }
+
+      var payload = {
+        email: email.value.trim(),
+        name: name.value.trim(),
+        organization: form.elements.organization.value.trim()
+      };
+
+      if (!ENDPOINT) {
+        note.textContent = 'Thanks — nothing is wired up to receive this yet.';
+        return;
+      }
+
+      note.textContent = 'Sending…';
+
+      fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function (res) {
+        if (!res.ok) throw new Error(res.status);
+        form.reset();
+        note.textContent = 'Thanks — we will be in touch.';
+      }).catch(function () {
+        note.textContent = 'That did not send. Try again in a moment.';
+      });
+    });
+  });
+
+  // a click anywhere else, or Escape, puts it away
+  document.addEventListener('click', function (e) {
+    if (open && !open.widget.contains(e.target)) open.hide();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && open) {
+      var w = open.widget;
+      open.hide();
+      w.querySelector('.pill').focus();
+    }
+  });
 })();

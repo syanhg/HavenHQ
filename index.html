@@ -21,12 +21,34 @@
     </h1>
     <p class="hero-desc">The future of work should be intuitive, fluid, and free</p>
 
-    <a class="pill" href="#">
-      Get Private Access
-      <svg class="pill-arrow" viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">
-        <path d="M2.5 8h11M9 3.5 13.5 8 9 12.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
+    <div class="access">
+      <button class="pill" type="button" aria-expanded="false" aria-controls="access-hero">
+        Get Private Access
+        <svg class="pill-arrow" viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">
+          <path d="M2.5 8h11M9 3.5 13.5 8 9 12.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <div class="access-panel" id="access-hero" hidden>
+        <form class="access-form" novalidate>
+          <label class="field">
+            <span>Email</span>
+            <input type="email" name="email" required autocomplete="email" />
+          </label>
+          <label class="field">
+            <span>Name</span>
+            <input type="text" name="name" required autocomplete="name" />
+          </label>
+          <label class="field">
+            <span>Organization <em>optional</em></span>
+            <input type="text" name="organization" autocomplete="organization" />
+          </label>
+
+          <button class="access-submit" type="submit">Request access</button>
+          <p class="access-note" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
 
     <button class="shot" type="button" aria-label="Show next image">
       <span class="shot-stage">
@@ -169,12 +191,34 @@
       <span class="line">Work Together Natively</span>
     </h2>
 
-    <a class="pill" href="#">
-      Get Private Access
-      <svg class="pill-arrow" viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">
-        <path d="M2.5 8h11M9 3.5 13.5 8 9 12.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
+    <div class="access">
+      <button class="pill" type="button" aria-expanded="false" aria-controls="access-cta">
+        Get Private Access
+        <svg class="pill-arrow" viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">
+          <path d="M2.5 8h11M9 3.5 13.5 8 9 12.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <div class="access-panel" id="access-cta" hidden>
+        <form class="access-form" novalidate>
+          <label class="field">
+            <span>Email</span>
+            <input type="email" name="email" required autocomplete="email" />
+          </label>
+          <label class="field">
+            <span>Name</span>
+            <input type="text" name="name" required autocomplete="name" />
+          </label>
+          <label class="field">
+            <span>Organization <em>optional</em></span>
+            <input type="text" name="organization" autocomplete="organization" />
+          </label>
+
+          <button class="access-submit" type="submit">Request access</button>
+          <p class="access-note" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
 
     <canvas class="cta-front" aria-hidden="true"></canvas>
   </footer>
@@ -193,8 +237,8 @@
       </div>
       <div class="foot-col">
         <h3>Social</h3>
-        <a href="#">X / Twitter</a>
-        <a href="#">LinkedIn</a>
+        <a href="https://x.com/monycompany" target="_blank" rel="noopener">X / Twitter</a>
+        <a href="https://www.linkedin.com/company/monyinc" target="_blank" rel="noopener">LinkedIn</a>
       </div>
       <div class="foot-col">
         <h3>Legal</h3>

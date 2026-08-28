@@ -112,12 +112,23 @@ body {
 
 /* ---------- Announcement pill ---------- */
 
+/* the pill and the panel it opens are one object, and the panel hangs off it
+   without moving anything on the page */
+.access {
+  position: relative;
+  z-index: 3;
+  margin: 26px 0 0;
+}
+
 .pill {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  margin: 26px 0 0;
+  margin: 0;
   padding: 3px 14px;
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
   background: #f2f2f2;
   color: var(--ink);
   font-size: 0.8125rem;
@@ -139,6 +150,108 @@ body {
 .pill-arrow {
   flex: none;
   display: block;
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* the arrow turns to point at what just opened */
+.pill[aria-expanded="true"] .pill-arrow {
+  transform: rotate(90deg);
+}
+
+/* ---------- The request-access panel ---------- */
+
+.access-panel {
+  position: absolute;
+  left: 50%;
+  z-index: 4;
+  width: 268px;
+  overflow: hidden;
+  border: 1px solid #e4e4e4;
+  background: #fff;
+  transform: translateX(-50%);
+  text-align: left;
+}
+
+/* in the hero it drops below the pill; in the closing CTA there is nothing
+   below, so it opens upward instead */
+.hero .access-panel { top: calc(100% + 9px); }
+.cta .access-panel { bottom: calc(100% + 9px); }
+
+.access-form {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.field span {
+  font-size: 0.75rem;
+  color: #8f8f8f;
+}
+
+.field em {
+  font-style: normal;
+  color: #b8b8b8;
+}
+
+.field input {
+  padding: 7px 9px;
+  border: 1px solid #e4e4e4;
+  border-radius: 0;
+  background: #fff;
+  font-family: inherit;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--ink);
+  transition: border-color 0.15s ease;
+}
+
+.field input:focus {
+  outline: none;
+  border-color: var(--ink);
+}
+
+.field input.is-bad {
+  border-color: #d2463c;
+}
+
+.access-submit {
+  margin-top: 2px;
+  padding: 8px 12px;
+  border: 0;
+  background: var(--ink);
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.access-submit:hover {
+  background: #000;
+}
+
+.access-submit:focus-visible,
+.field input:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.access-note {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: #8f8f8f;
+}
+
+.access-note:empty {
+  display: none;
 }
 
 .hero-title {
@@ -1165,7 +1278,8 @@ body {
   .eyebrow { margin-top: 64px; }
   .eyebrow + .section-title { margin-top: 14px; }
   .hero { padding: 64px 24px 0; }
-  .pill { margin-top: 22px; }
+  .access { margin-top: 22px; }
+  .access-panel { width: min(268px, calc(100vw - 48px)); }
   .shot { margin-top: 40px; padding: 10px; }
   .panel { margin-top: 64px; padding: 10px; }
   .faq { margin-top: 40px; }
