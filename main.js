@@ -40,7 +40,7 @@
   // the two fixed texts, not the bar: a transformed ancestor would become the
   // containing block for anything fixed inside it and break the pinning
   Array.prototype.forEach.call(
-    document.querySelectorAll('.topbar .wordmark, .topbar .nav-link'),
+    document.querySelectorAll('.topbar .wordmark, .topbar .nav-right'),
     function (el) {
       el.style.setProperty('--d', '0ms');
       el.classList.add('reveal');

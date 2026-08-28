@@ -49,7 +49,7 @@ body {
 }
 
 .wordmark,
-.nav-link {
+.nav-right {
   position: fixed;
   top: 36px;
   z-index: 20;
@@ -58,7 +58,16 @@ body {
 }
 
 .wordmark { left: 40px; }
-.nav-link { right: 40px; }
+
+/* the pair is taller than the lone link it replaced, so it rides up by half
+   that overhang and Docs keeps standing on the wordmark's line */
+.nav-right {
+  right: 40px;
+  top: 32px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
 
 /* in the footer it is text in a column again, not a corner of the viewport */
 .foot-brand .wordmark {
@@ -94,6 +103,30 @@ body {
 .nav-link:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 3px;
+}
+
+/* the access pill's shape, inverted: the one thing here you can do now,
+   rather than ask for */
+.nav-login {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 14px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.15s ease;
+}
+
+.nav-login:hover {
+  opacity: 0.78;
+}
+
+.nav-login:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
 }
 
 /* ---------- Hero layout: title → desc → pill → shot → section title ---------- */
@@ -166,6 +199,15 @@ body {
 .pill:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 2px;
+}
+
+/* sits on the text's line, not its box: the mark reads as a first letter */
+.pill-apple {
+  flex: none;
+  display: block;
+  width: 12px;
+  height: auto;
+  margin: -2px -2px 0 -1px;
 }
 
 .pill-arrow {
@@ -1272,9 +1314,8 @@ body {
 
 @media (max-width: 640px) {
   .topbar { height: 42px; }
-  .wordmark, .nav-link { top: 24px; }
-  .wordmark { left: 24px; }
-  .nav-link { right: 24px; }
+  .wordmark { top: 24px; left: 24px; }
+  .nav-right { top: 20px; right: 24px; gap: 14px; }
   .features { grid-template-columns: 1fr; gap: 16px; margin-top: 64px; }
   .marquee-img { width: 48px; height: 48px; }
   .section-title { margin-top: 64px; }
