@@ -735,6 +735,7 @@
         email: email.value.trim(),
         name: name.value.trim(),
         organization: form.elements.organization.value.trim(),
+        x_handle: form.elements.x_handle.value.trim(),
         company: form.elements.company.value   // honeypot: a person leaves it empty
       };
 

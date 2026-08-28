@@ -90,6 +90,14 @@ module.exports = async (req, res) => {
   const name = String(body.name || '').trim().slice(0, 120);
   const organization = String(body.organization || '').trim().slice(0, 160);
 
+  // handles get typed with and without the @, and pasted as a whole URL
+  const xHandle = String(body.x_handle || '')
+    .trim()
+    .slice(0, 80)
+    .replace(/^https?:\/\/(www\.)?(x|twitter)\.com\//i, '')
+    .replace(/^@+/, '')
+    .replace(/[^A-Za-z0-9_]/g, '');
+
   // a bot filling every field it finds
   if (String(body.company || '').trim()) return res.status(200).json({ ok: true });
 
@@ -99,7 +107,8 @@ module.exports = async (req, res) => {
   const message =
     'New Soffo access request\n' +
     name + ' <' + email + '>' +
-    (organization ? '\n' + organization : '');
+    (organization ? '\n' + organization : '') +
+    (xHandle ? '\nx.com/' + xHandle : '');
 
   try {
     if (process.env.POKE_API_KEY) {
@@ -112,6 +121,7 @@ module.exports = async (req, res) => {
         email: email,
         name: name,
         organization: organization,
+        x_handle: xHandle,
         at: new Date().toISOString()
       });
     } else {
