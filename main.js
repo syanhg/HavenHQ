@@ -548,10 +548,10 @@
   var ctaTop = 0;
   var showFrom = 0;
 
-  // the column is 1100px centred; the nav is 96px wide sitting 20px off the
+  // the column is 1100px centred; the nav is 96px wide sitting 26px off the
   // edge, so it needs that much clear margin plus a little air
   function hasRoom() {
-    return (window.innerWidth - 1100) / 2 >= 128;
+    return (window.innerWidth - 1100) / 2 >= 134;
   }
 
   function measure() {
@@ -782,5 +782,24 @@
       open.hide();
       w.querySelector('.pill').focus();
     }
+  });
+})();
+
+/* The links that have nowhere to go yet.
+
+   A bare href="#" is still a navigation: the browser writes getsoffo.com/#
+   into the address bar and snaps the page to the top, which looks like the
+   site broke rather than like a link that is not built. Until these have real
+   destinations the click is swallowed, and a stray # that arrived some other
+   way — a shared URL, a click from before this — is wiped on the way in. */
+(function () {
+  // a trailing '#' leaves location.hash empty, so the href is what tells you
+  if (window.history && history.replaceState && location.href.slice(-1) === '#') {
+    history.replaceState(null, '', location.href.slice(0, -1));
+  }
+
+  document.addEventListener('click', function (e) {
+    var el = e.target;
+    if (el && el.closest && el.closest('a[href="#"]')) e.preventDefault();
   });
 })();

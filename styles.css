@@ -521,7 +521,10 @@ body {
 .chapters {
   display: none;
   position: fixed;
-  left: 20px;
+  /* its own 14px of padding is taken off the offset so the chapter labels
+     stand on the wordmark's 40px line — the box hangs left of it, the text
+     does not */
+  left: 26px;
   top: 50%;
   z-index: 15;
   width: 96px;
