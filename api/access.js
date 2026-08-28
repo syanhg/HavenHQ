@@ -5,8 +5,11 @@
    request from the page, check it is one, and hand it to whatever is set up to
    alert someone — a Poke API key, or any other webhook URL.
 
-   Nothing is stored here. If no destination is configured the request is
-   refused rather than swallowed, so the page can tell the visitor the truth.
+   Two destinations, tried together: a row in Supabase, which is the record,
+   and a Poke message, which is the alert. A request counts as taken if either
+   one accepted it — losing the alert while keeping the row is recoverable,
+   and so is the reverse. Only if both fail is the visitor told it failed,
+   because only then is it actually true.
 
    What guards it: an Origin allowlist that a request must actually carry, a
    JSON-only content type so no cross-site form can reach it without a
@@ -110,31 +113,69 @@ module.exports = async (req, res) => {
     (organization ? '\n' + organization : '') +
     (xHandle ? '\nx.com/' + xHandle : '');
 
-  try {
-    if (process.env.POKE_API_KEY) {
-      await send(POKE_URL, { message }, {
-        Authorization: 'Bearer ' + process.env.POKE_API_KEY
-      });
-    } else if (process.env.WEBHOOK_URL) {
-      await send(process.env.WEBHOOK_URL, {
+  const jobs = [];
+
+  if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_KEY) {
+    jobs.push({ what: 'supabase', run: record({ email, name, organization, xHandle }) });
+  }
+
+  if (process.env.POKE_API_KEY) {
+    jobs.push({
+      what: 'poke',
+      run: send(POKE_URL, { message }, { Authorization: 'Bearer ' + process.env.POKE_API_KEY })
+    });
+  } else if (process.env.WEBHOOK_URL) {
+    jobs.push({
+      what: 'webhook',
+      run: send(process.env.WEBHOOK_URL, {
         text: message,
         email: email,
         name: name,
         organization: organization,
         x_handle: xHandle,
         at: new Date().toISOString()
-      });
-    } else {
-      // no destination yet: say so rather than accept and lose it
-      return res.status(503).json({ error: 'not accepting requests yet' });
-    }
-  } catch (err) {
-    console.error('forward failed', err);
+      })
+    });
+  }
+
+  if (!jobs.length) {
+    // nowhere to put it: say so rather than accept and lose it
+    return res.status(503).json({ error: 'not accepting requests yet' });
+  }
+
+  const results = await Promise.allSettled(jobs.map(j => j.run));
+
+  results.forEach((r, i) => {
+    if (r.status === 'rejected') console.error(jobs[i].what + ' failed', r.reason);
+  });
+
+  if (!results.some(r => r.status === 'fulfilled')) {
     return res.status(502).json({ error: 'could not pass that on' });
   }
 
   return res.status(200).json({ ok: true });
 };
+
+/* The row. PostgREST with the service role, which is the only thing RLS on
+   that table lets through — the key never leaves this environment. */
+function record(fields) {
+  const key = process.env.SUPABASE_SERVICE_KEY;
+
+  return send(
+    process.env.SUPABASE_URL.replace(/\/+$/, '') + '/rest/v1/access_requests',
+    {
+      email: fields.email,
+      name: fields.name,
+      organization: fields.organization || null,
+      x_handle: fields.xHandle || null
+    },
+    {
+      apikey: key,
+      Authorization: 'Bearer ' + key,
+      Prefer: 'return=minimal'
+    }
+  );
+}
 
 async function send(url, payload, extraHeaders) {
   const stop = new AbortController();
