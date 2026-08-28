@@ -105,23 +105,26 @@ body {
   outline-offset: 3px;
 }
 
-/* the access pill's shape, inverted: the one thing here you can do now,
-   rather than ask for */
+/* the access pill's shape in grey: the way in for whoever already has one,
+   which is not what this page is here to sell */
 .nav-login {
   display: inline-flex;
   align-items: center;
   padding: 3px 14px;
-  background: var(--ink);
-  color: var(--bg);
+  /* dark enough to hold white type at 5:1 — the greys the links are set in
+     would not */
+  background: #6f6f6f;
+  color: #fff;
   font-size: 0.8125rem;
   line-height: 1.5;
   text-decoration: none;
   white-space: nowrap;
-  transition: opacity 0.15s ease;
+  transition: background-color 0.15s ease;
 }
 
+/* the pill's convention: hover firms up rather than fades */
 .nav-login:hover {
-  opacity: 0.78;
+  background: #5c5c5c;
 }
 
 .nav-login:focus-visible {
