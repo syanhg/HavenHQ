@@ -1,0 +1,1176 @@
+:root {
+  --bg: #fbfbfb;
+  --ink: #1c1c1c;
+  --sel: #0d99ff;
+  /* the footer's ground: a colder grey than the page, which is the only thing
+     separating the two — no rule between them */
+  --cold: #f2f4f6;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* the chapter links jump to these, and they should land under the fixed
+   header rather than behind it */
+[id] {
+  scroll-margin-top: 96px;
+}
+
+body {
+  min-height: 100vh;
+  /* column layout lets .hero absorb whatever height the topbar leaves */
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Helvetica, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Topbar ---------- */
+
+/* The two texts stay with you, the bar does not: they are fixed to the corners
+   and .topbar is left behind as the space they used to occupy, so nothing below
+   shifts and there is no strip of chrome riding over the page. */
+.topbar {
+  flex: none;
+  width: 100%;
+  height: 54px;   /* 36px of padding, then the 18px line the two texts stand on */
+  font-size: 0.9375rem;
+  line-height: 1.2;
+}
+
+.wordmark,
+.nav-link {
+  position: fixed;
+  top: 36px;
+  z-index: 20;
+  font-size: 0.9375rem;
+  line-height: 1.2;
+}
+
+.wordmark { left: 40px; }
+.nav-link { right: 40px; }
+
+/* in the footer it is text in a column again, not a corner of the viewport */
+.foot-brand .wordmark {
+  position: static;
+}
+
+.wordmark {
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  transition: opacity 0.15s ease;
+}
+
+.wordmark:hover {
+  opacity: 0.6;
+}
+
+.wordmark:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.nav-link {
+  color: #a5a5a5;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.nav-link:hover {
+  color: var(--ink);
+}
+
+.nav-link:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* ---------- Hero layout: title → desc → pill → shot → section title ---------- */
+
+.hero {
+  width: 100%;
+  max-width: 1180px;
+  flex: 1;
+  margin: 0 auto;
+  padding: 96px 40px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* ---------- Announcement pill ---------- */
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 26px 0 0;
+  padding: 3px 14px;
+  background: #f2f2f2;
+  color: var(--ink);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.15s ease;
+}
+
+.pill:hover {
+  background: #e9e9e9;
+}
+
+.pill:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.pill-arrow {
+  flex: none;
+  display: block;
+}
+
+.hero-title {
+  margin: 0;
+  font-weight: 400;
+  /* 5.8vw keeps the longest line inside the viewport, so it never wraps to 3 rows */
+  font-size: min(3.25rem, 5.8vw);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.hero-title .line {
+  display: block;
+  white-space: nowrap;
+}
+
+/* ---------- Hero reveal: words drift out of a soft blur ---------- */
+
+.hero-title.is-typing .word {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(10px);
+  transform: translateY(0.22em);
+  animation: word-in 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--d, 0ms);
+  will-change: opacity, filter, transform;
+}
+
+@keyframes word-in {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(0.22em);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+}
+
+/* everything below the title follows on the same curve */
+.reveal {
+  opacity: 0;
+  filter: blur(8px);
+  transform: translateY(14px);
+  animation: rise-in 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+}
+
+/* the shot is a 1100px-wide bitmap; blurring it on the busiest frame of the
+   page load is the one reveal that costs something, and opacity plus travel
+   reads the same at this size */
+.shot.reveal {
+  filter: none;
+  animation-name: rise-in-sharp;
+}
+
+@keyframes rise-in-sharp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-title.is-typing .word,
+  .reveal {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    animation: none;
+  }
+}
+
+.hero-desc {
+  margin: 18px 0 0;
+  max-width: 52ch;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #a5a5a5;
+}
+
+/* ---------- Hero shot: click anywhere on it to advance ---------- */
+
+.shot {
+  display: block;
+  width: 100%;
+  /* fills the hero column */
+  max-width: 1100px;
+  margin-top: 56px;
+  padding: 14px;
+  border: 1px solid #e4e4e4;
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
+/* the mat sits between the border and the image, so the images stack in here */
+.shot-stage {
+  position: relative;
+  display: block;
+  width: 100%;
+  /* matches the source images, so nothing gets cropped */
+  aspect-ratio: 2200 / 1569;
+  overflow: hidden;
+}
+
+.shot:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.shot-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.shot-img.is-active {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shot-img { transition: none; }
+}
+
+/* the section's label, rounded where the hero's pill is square: that one is a
+   thing to press, this one is only a name for what follows */
+.eyebrow {
+  margin-top: 96px;
+  padding: 4px 13px;
+  border-radius: 999px;
+  background: #f0f0f0;
+  color: #7a7a7a;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+}
+
+/* the title is the label's other half, so it follows close */
+.eyebrow + .section-title {
+  margin-top: 16px;
+}
+
+.section-title {
+  /* matches .features margin-top, so the title sits evenly between the shot
+     and the boxes */
+  margin: 96px 0 0;
+  font-weight: 400;
+  font-size: min(2.125rem, 5.2vw);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+/* ---------- Chapters: where you are in the page ----------
+   It lives in the left margin beside the 1100px column, so it is only shown
+   when that margin is actually wide enough to hold it — main.js measures the
+   room and adds .has-room. */
+
+.chapters {
+  display: none;
+  position: fixed;
+  left: 20px;
+  top: 50%;
+  z-index: 15;
+  width: 96px;
+  flex-direction: column;
+  gap: 10px;
+  padding: 13px 14px;
+  background: var(--cold);
+  text-align: left;
+
+  /* out of the way until the page has been scrolled past the hero */
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-6px, -50%);
+  transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              visibility 0s linear 0.35s;
+}
+
+.chapters.has-room {
+  display: flex;
+}
+
+.chapters.is-shown {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(0, -50%);
+  transition-delay: 0s;
+}
+
+.chapters a {
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  color: #9aa1a8;
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+.chapters a:hover,
+.chapters a.is-here {
+  color: var(--ink);
+}
+
+.chapters a:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* ---------- Site footer ---------- */
+
+.site-foot {
+  flex: none;
+  padding: 40px 40px 48px;
+  background: var(--cold);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 48px;
+  text-align: left;
+}
+
+.foot-brand {
+  display: flex;
+  flex-direction: column;
+}
+
+.foot-brand .wordmark {
+  font-size: 1rem;
+  line-height: 20px;
+}
+
+/* dropped to the second row of links: the heading box (16) + its 3px margin +
+   the 11px gap + the first link (20) + the next gap (11) puts that row 61px
+   down, and the wordmark above this is 20 of those */
+.foot-copy {
+  margin: 0;
+  padding-top: 41px;
+  font-size: 0.875rem;
+  line-height: 20px;
+  color: #9aa1a8;
+}
+
+.foot-nav {
+  display: flex;
+  gap: 56px;
+}
+
+.foot-col {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.foot-col h3 {
+  margin: 0 0 3px;
+  font-size: 0.6875rem;
+  line-height: 16px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.foot-col a {
+  font-size: 0.875rem;
+  line-height: 20px;
+  color: #9aa1a8;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.foot-col a:hover {
+  color: var(--ink);
+}
+
+.foot-col a:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* ---------- Footer CTA ---------- */
+
+.cta {
+  position: relative;
+  flex: none;
+  padding: 96px 40px 128px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* the branches grow off the bottom edge of this section, under the words */
+.cta-art {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cta-art canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* the handful of branches that pass in front of the words */
+.cta-front {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.cta-title {
+  position: relative;
+  z-index: 1;
+}
+
+/* branches may cross the headline, but never the thing you are meant to press */
+.cta .pill {
+  position: relative;
+  z-index: 3;
+}
+
+.cta-title {
+  margin: 0;
+  font-weight: 400;
+  font-size: min(3.25rem, 5.8vw);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.cta-title .line {
+  display: block;
+  white-space: nowrap;
+}
+
+/* ---------- FAQ: a boxed question that opens onto its answer ---------- */
+
+.faq {
+  width: 100%;
+  max-width: 720px;
+  margin: 52px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+}
+
+.faq-item {
+  border: 1px solid #e6e6e6;
+  background: #fff;
+  transition: border-color 0.18s ease;
+}
+
+.faq-item:hover {
+  border-color: #dadada;
+}
+
+.faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 15px 18px;
+  cursor: pointer;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--ink);
+  /* the UA triangle, gone in both dialects */
+  list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
+}
+
+/* a plus that turns into a cross, which is the whole affordance */
+.faq-mark {
+  flex: none;
+  color: #b0b0b0;
+  transition: transform 0.36s cubic-bezier(0.22, 1, 0.36, 1), color 0.18s ease;
+}
+
+.faq-item[open] .faq-mark {
+  transform: rotate(45deg);
+  color: #8a8a8a;
+}
+
+/* height is animated in JS off the real measured height; overflow hidden is
+   what makes that animation a reveal rather than a squash */
+.faq-body {
+  overflow: hidden;
+}
+
+.faq-body p {
+  margin: 0;
+  padding: 0 18px 17px;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #969696;
+}
+
+/* ---------- Wide panel: the shot's frame, at the width of the feature row ---------- */
+
+.panel {
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 96px;
+  padding: 14px;
+  border: 1px solid #e4e4e4;
+  background: #f5f5f5;
+}
+
+.panel-stage {
+  width: 100%;
+  /* matches the source image, so nothing gets cropped */
+  aspect-ratio: 2200 / 1569;
+  background: #fff;
+  overflow: hidden;
+}
+
+.panel-stage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- Feature boxes: one row spanning the same width as the shot ---------- */
+
+.features {
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 96px;
+  display: grid;
+  /* minmax(0, 1fr) rather than 1fr: the icon row inside the third box is
+     max-content wide, and a plain 1fr track takes its minimum from that and
+     blows the column out */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.feature-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* the lead-in carries the point in ink and the rest of the sentence follows in
+   grey — same weight throughout, the colour is the whole distinction. The three
+   are written to the same length so they wrap to the same number of rows, and
+   min-height holds a floor of two so the columns stay level regardless. */
+.feature-desc {
+  margin: 14px 0 0;
+  min-height: calc(2 * 1.55em);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.55;
+  color: #a5a5a5;
+  text-align: left;
+  text-wrap: pretty;
+}
+
+.feature-desc .lead {
+  color: var(--ink);
+}
+
+.feature {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border: 1px solid #e4e4e4;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* ---------- Artifact loading frame ----------
+   The blue edge glow and the mark that writes itself, both from the Canvas repo
+   (.framewip and .loading-mark in client/styles.css, ui/loading-mark.js). The
+   durations, easings, keyframes and the mark's path are unchanged; --size is
+   smaller because this box is a third the width of the 640px frame they were
+   drawn for. */
+
+:root {
+  --ink-mark: #c9c9c9;     /* stroke colour */
+  --stroke-w: 26;          /* stroke width, in viewBox units */
+  --draw: 1900ms;          /* time to write */
+  --erase: 1500ms;         /* time to unwrite */
+  --hold-full: 420ms;      /* pause when fully drawn */
+  --hold-empty: 320ms;     /* pause when empty */
+  --size: 24px;            /* width of the mark */
+
+  /* the mark's viewBox is 550 x 295, so its drawn height is 0.536 of its width;
+     text is sized so its ascender-to-descender run matches that height */
+  --mark-h: calc(var(--size) * .5364);
+  --text-size: calc(var(--mark-h) / .95);
+
+  --shine: #a2a2a2;        /* the band that sweeps through the text */
+  --word-hold: 2000ms;     /* time each word is on screen */
+  --sweep: 3000ms;         /* time for one shimmer pass */
+}
+
+.feature-wip {
+  justify-content: center;
+}
+
+/* the badge rides above the frame, on its left edge */
+.wip {
+  width: 68%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+}
+
+/* one announcement, with a shine running through it */
+.wip-badge {
+  position: relative;
+  overflow: hidden;
+  flex: none;
+  padding: 0 8px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 5px;
+  background: var(--sel);
+  color: #fff;
+  font: 500 10.5px/1 system-ui, -apple-system, "Segoe UI", Inter, sans-serif;
+  white-space: nowrap;
+}
+
+.wip-badge::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 22%, rgb(255 255 255 / .5) 50%, transparent 78%);
+  transform: translateX(-100%);
+  animation: wipshine 1.9s ease-in-out infinite;
+}
+
+@keyframes wipshine { to { transform: translateX(100%); } }
+
+/* an agent has claimed this rectangle and is working in it where you can watch.
+   A frame standing on the canvas, not the whole box it sits in. */
+.framewip {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 8 / 5;
+  border: 1px solid #e4e4e4;
+  background: #fff;
+  overflow: hidden;
+
+  --wip-peak: .34;
+  --wip-far: 34%;
+}
+
+/* registered so they can be animated: a raw custom property inside a gradient
+   is substituted once and then holds, so the breathing below would have had
+   nothing to interpolate */
+@property --wip-reach {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 34%;
+}
+
+@property --wip-lit {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: .34;
+}
+
+/* four one-sided fades, one per edge, each landing on transparent well before
+   the middle: light coming off the inside of the box rather than a line drawn
+   on it. Nothing here is a box-shadow, which is the one way it could leak out */
+.framewip::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  --wip-edge: rgb(13 153 255 / var(--wip-lit));
+  background:
+    linear-gradient(to right,  var(--wip-edge), transparent var(--wip-reach)),
+    linear-gradient(to left,   var(--wip-edge), transparent var(--wip-reach)),
+    linear-gradient(to bottom, var(--wip-edge), transparent var(--wip-reach)),
+    linear-gradient(to top,    var(--wip-edge), transparent var(--wip-reach));
+  animation: wipglow 4.4s ease-in-out infinite;
+}
+
+/* a tide rather than a pulse: both ends of the swell are slow and the depth
+   moves further than the brightness does */
+@keyframes wipglow {
+  0%, 100% { --wip-reach: calc(var(--wip-far) * .72); --wip-lit: calc(var(--wip-peak) * .62); }
+  50%      { --wip-reach: var(--wip-far);             --wip-lit: var(--wip-peak); }
+}
+
+/* centred in whatever is waiting, and painting nothing of its own */
+.loading-mark {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  overflow: hidden;
+}
+
+.loading-mark .stage {
+  width: var(--size);
+  display: block;
+  overflow: visible;
+}
+
+.loading-mark .mark {
+  fill: none;
+  stroke: var(--ink-mark);
+  stroke-width: var(--stroke-w);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* --len is written by JS from getTotalLength() */
+  stroke-dasharray: var(--len);
+  stroke-dashoffset: var(--len);
+  will-change: stroke-dashoffset;
+}
+
+.loading-mark .loader {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--size) * .18);
+}
+
+/* every word sits in the same grid cell, so the box is as wide as the longest
+   one and nothing reflows as they swap */
+.loading-mark .words {
+  display: grid;
+  margin: 0;
+  /* line height must clear the font's ascent+descent, not just 1em:
+     background-clip only paints inside the padding box, so descenders would
+     get clipped away */
+  font: 500 var(--text-size)/1.35 system-ui, -apple-system, "Segoe UI", Inter, sans-serif;
+  letter-spacing: -.02em;
+  white-space: nowrap;
+  transform: translateY(-.04em);
+}
+
+.loading-mark .words b {
+  grid-area: 1 / 1;
+  justify-self: start;
+  font-weight: inherit;
+  opacity: 0;
+  padding: .06em .08em;
+
+  /* the shimmer: a darker band riding through the glyphs. The gradient is 3x
+     the box so the band travels fully off one edge before it re-enters the
+     other */
+  background: linear-gradient(90deg,
+    var(--ink-mark) 0%, var(--ink-mark) 45%,
+    var(--shine) 50%,
+    var(--ink-mark) 55%, var(--ink-mark) 100%);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.loading-mark.ready .words b {
+  animation:
+    swap calc(var(--word-hold) * 7) infinite,
+    shimmer var(--sweep) linear infinite;
+}
+
+.loading-mark.ready .words b:nth-child(1) { animation-delay: calc(var(--word-hold) *  0), 0ms; }
+.loading-mark.ready .words b:nth-child(2) { animation-delay: calc(var(--word-hold) * -1), 0ms; }
+.loading-mark.ready .words b:nth-child(3) { animation-delay: calc(var(--word-hold) * -2), 0ms; }
+.loading-mark.ready .words b:nth-child(4) { animation-delay: calc(var(--word-hold) * -3), 0ms; }
+.loading-mark.ready .words b:nth-child(5) { animation-delay: calc(var(--word-hold) * -4), 0ms; }
+.loading-mark.ready .words b:nth-child(6) { animation-delay: calc(var(--word-hold) * -5), 0ms; }
+.loading-mark.ready .words b:nth-child(7) { animation-delay: calc(var(--word-hold) * -6), 0ms; }
+
+/* each word owns a 1/7 slot and only fades out after its slot ends, with the
+   incoming word waiting 1.6% before it rises: the handover overlaps by enough
+   that there is never a blank frame */
+@keyframes swap {
+  0%        { opacity: 0; transform: translateY(.1em)  scale(.99); }
+  1.6%      { opacity: 0; transform: translateY(.1em)  scale(.99);
+              animation-timing-function: cubic-bezier(.25, .6, .35, 1); }
+  5.2%      { opacity: 1; transform: translateY(0)     scale(1);
+              animation-timing-function: linear; }
+  14.2857%  { opacity: 1; transform: translateY(0)     scale(1);
+              animation-timing-function: cubic-bezier(.3, .86, .5, 1); }
+  17.1%     { opacity: 0; transform: translateY(-.1em) scale(.99); }
+  100%      { opacity: 0; transform: translateY(-.1em) scale(.99); }
+}
+
+@keyframes shimmer {
+  from { background-position: 100% 0; }
+  to   { background-position: 0% 0; }
+}
+
+/* animation only starts once JS has measured the path and written the
+   @keyframes (it needs the real path length in px) */
+.loading-mark.ready .mark {
+  animation: write var(--cycle) infinite;
+}
+
+/* nothing in this row burns frames while it is off screen. The glow repaints
+   its gradient every frame by design, so this is the one that matters */
+.features:not(.is-onscreen) .framewip::before,
+.features:not(.is-onscreen) .loading-mark .mark,
+.features:not(.is-onscreen) .loading-mark .words b,
+.features:not(.is-onscreen) .marquee-track,
+.features:not(.is-onscreen) .dm-caret,
+.features:not(.is-onscreen) .wip-badge::after {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .framewip::before {
+    animation: none;
+    --wip-reach: calc(var(--wip-far) * .86);
+    --wip-lit: calc(var(--wip-peak) * .8);
+  }
+  .wip-badge::after { display: none; }
+  .dm-caret { animation: none; }
+  .dm { opacity: 1; transform: none; transition: none; }
+  .loading-mark.ready .mark { animation: none; stroke-dashoffset: 0; }
+  .loading-mark.ready .words b { animation: none; }
+  /* without the cycle every word would sit at opacity 0 — hold the first */
+  .loading-mark .words b:first-child { opacity: 1; transform: none; color: var(--ink-mark); }
+}
+
+/* ---------- Cursor box ----------
+   Cursor geometry, colours and tag styling are lifted verbatim from the Canvas
+   repo (cursor.html, drawn from client/ui/arrow.js and client/styles.css); the
+   selection blue is its --sel. Only the motion below is new. */
+
+.feature-canvas {
+  --ptr-edge: #fff;
+}
+
+.mini {
+  position: absolute;
+  inset: 0;
+  /* the cursors and the marquee repaint constantly; contain keeps that work
+     from reaching layout or paint anywhere outside this box */
+  contain: strict;
+}
+
+/* two blocks for the cursors to work over: a shell and a table, each drawn as
+   the skeleton of the real thing. They take turns in the middle of the box —
+   see the sequence in main.js — so there is one block on the canvas at a time
+   and the cursors always have somewhere to be. */
+
+/* both stand in the same place, dead centre, because only one of them is ever
+   on the canvas at a time */
+.dm {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 58%;
+  opacity: 0;
+  transform: translate(-50%, calc(-50% + 5px));
+  transition: opacity 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dm.is-in {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+
+.dm-card {
+  border: 1px solid #e6e6e6;
+  background: #fff;
+  overflow: hidden;
+  transition: border-color 0.12s ease;
+}
+
+.dm.is-sel .dm-card {
+  border-color: var(--sel);
+}
+
+/* ---- the shell: a title bar, a prompt, what it printed, another prompt ---- */
+
+.dm-chrome {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 11px;
+  padding: 0 5px;
+  border-bottom: 1px solid #eee;
+  background: #fafafa;
+}
+
+.dm-chrome i {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #ddd;
+}
+
+.dm-body {
+  padding: 5px 6px 6px;
+}
+
+/* a prompt and the line typed after it */
+.dm-cmd {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 6px;
+}
+
+.dm-cmd b {
+  font: 700 6px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: #c4c4c4;
+}
+
+.dm-cmd span {
+  height: 3px;
+  width: var(--l);
+  background: #e2e2e2;
+}
+
+/* what it printed back: indented under the command, lighter than it */
+.dm-out {
+  height: 3px;
+  width: var(--l);
+  margin: 4px 0 0 8px;
+  background: #efefef;
+}
+
+.dm-cmd + .dm-out { margin-top: 5px; }
+.dm-out + .dm-cmd { margin-top: 6px; }
+
+.dm-caret {
+  width: 3px;
+  height: 6px;
+  background: #c4c4c4;
+  animation: dmblink 1.1s steps(1) infinite;
+}
+
+@keyframes dmblink { 50% { opacity: 0; } }
+
+/* ---- the table: uneven columns, a heading row, and the gaps are the rules ---- */
+
+.dm-table {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr 0.85fr;
+  gap: 1px;
+  padding: 1px;
+  background: #ececec;
+}
+
+.dm-table u {
+  display: block;
+  padding: 3px 4px;
+  background: #fff;
+}
+
+.dm-table u.head {
+  background: #f6f6f6;
+}
+
+.dm-table i {
+  display: block;
+  height: 3px;
+  width: var(--l);
+  background: #e9e9e9;
+}
+
+.dm-table u.head i {
+  background: #d8d8d8;
+}
+
+.mini-marquee {
+  position: absolute;
+  display: none;
+  border: 1.5px solid var(--sel);
+  background: color-mix(in srgb, var(--sel) 8%, transparent);
+  pointer-events: none;
+}
+
+/* ---- the cursor body: arrow and name tag in one row ---- */
+
+.cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-start;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.arrow {
+  display: block;
+  overflow: visible;
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / .25));
+}
+
+/* the halo is drawn first and slightly fatter, so the coloured arrow keeps a
+   clean white edge against whatever is underneath */
+.arrow-halo {
+  fill: var(--ptr-edge);
+  stroke: var(--ptr-edge);
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.arrow-fill {
+  fill: var(--agent, hsl(var(--hue) 72% 52%));
+  stroke: var(--agent, hsl(var(--hue) 72% 52%));
+  stroke-width: .6;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+/* a press dips the arrow toward its own tip and back, so the point it is
+   pointing at never appears to move */
+.cursor.pressing .arrow {
+  animation: cursorpress .17s ease-out;
+  transform-origin: 2px 1px;
+}
+
+@keyframes cursorpress {
+  40% { transform: scale(.82); }
+  to  { transform: scale(1); }
+}
+
+.tag {
+  margin: 9px 0 0 -1px;
+  max-width: 180px;
+  padding: 4px 8px 5px;
+  border-radius: 5px;
+  background: var(--agent, hsl(var(--hue) 72% 52%));
+  color: #fff;
+  font: 500 11px/1 "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* one endless row: the track holds two identical sets and slides by exactly
+   one set width, so the loop point is invisible */
+.marquee {
+  width: 100%;
+  overflow: hidden;
+}
+
+.marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+  will-change: transform;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - 7px)); } /* half the gap keeps it seamless */
+}
+
+.marquee-img {
+  flex: none;
+  /* 240px sources, so these stay sharp well past 2x */
+  width: 56px;
+  height: 56px;
+  display: block;
+  /* square sources in a square box, but contain guarantees no crop or squash */
+  object-fit: contain;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}
+
+@media (max-width: 640px) {
+  .topbar { height: 42px; }
+  .wordmark, .nav-link { top: 24px; }
+  .wordmark { left: 24px; }
+  .nav-link { right: 24px; }
+  .features { grid-template-columns: 1fr; gap: 16px; margin-top: 64px; }
+  .marquee-img { width: 48px; height: 48px; }
+  .section-title { margin-top: 64px; }
+  .eyebrow { margin-top: 64px; }
+  .eyebrow + .section-title { margin-top: 14px; }
+  .hero { padding: 64px 24px 0; }
+  .pill { margin-top: 22px; }
+  .shot { margin-top: 40px; padding: 10px; }
+  .panel { margin-top: 64px; padding: 10px; }
+  .faq { margin-top: 40px; }
+  .cta { padding: 64px 24px 88px; }
+  .site-foot { flex-direction: column; gap: 36px; padding: 32px 24px 40px; }
+  .foot-copy { padding-top: 14px; }
+  .foot-nav { gap: 40px; }
+}

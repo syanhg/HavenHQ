@@ -1,1 +1,5 @@
 .DS_Store
+
+# local leftovers, not part of the published site
+Twitter post - *.png
+sketch.js
