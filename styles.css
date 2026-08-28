@@ -233,10 +233,6 @@ body {
   transition: border-color 0.15s ease;
 }
 
-.field input::placeholder {
-  color: #c4c4c4;
-}
-
 .field input:focus {
   outline: none;
   border-color: #b4b4b4;
