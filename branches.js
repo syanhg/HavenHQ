@@ -216,27 +216,24 @@ function makeLayers() {
   _frontCtx = _frontEl.getContext('2d');
 }
 
-/* Sticks rooted under the words rather than spread across the section: the
-   roots cluster in the middle third and lean inward, so the growth gathers
-   behind the headline and thins out toward the edges. */
+/* Sticks rooted right across the section, not bunched under the words: even
+   slots edge to edge with enough jitter that the spacing never reads as a
+   grid, and a lean that follows the slot outward. */
 function plant() {
-  let count = width < 700 ? 4 : 7;
-  let spread = width < 700 ? 0.52 : 0.46; // share of the width they root across
+  let count = width < 700 ? 6 : 11;
   let sticks = [];
 
   for (let i = 0; i < count; i++) {
-    // jittered positions inside the middle band, densest at the centre
-    let t = (i + random(0.2, 0.8)) / count;
-    let pull = (t - 0.5) * 2;                    // -1 at the left of the band
-    pull = pull * abs(pull);                     // eased: crowds the middle
-    let x = width * (0.5 + pull * spread * 0.5);
+    // one per slot, placed loosely inside it
+    let t = (i + random(0.15, 0.85)) / count;
+    let x = width * (0.03 + t * 0.94);
 
-    let lean = -pull * 22 + random(-7, 7);       // leaning back toward centre
-    let len = random(0.48, 0.9) * height;
+    let lean = (t - 0.5) * 26 + random(-8, 8);   // fanning out from the middle
+    let len = random(0.45, 0.9) * height;
 
     // a couple of them pass in front of the headline instead of behind it —
     // the tallest ones, since those are the ones that reach the words at all
-    let front = len > 0.72 * height && random() < 0.6;
+    let front = len > 0.72 * height && random() < 0.45;
 
     sticks.push({ x: x, dir: lean, len: len, front: front });
   }
