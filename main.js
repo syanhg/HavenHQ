@@ -621,11 +621,13 @@
    where there is nothing below to drop into. Height is animated off the real
    measured height, the same way the FAQ boxes are.
 
-   Set ENDPOINT to a URL that accepts a JSON POST to actually collect these.
-   Until then the form validates, reports back, and goes no further — it never
-   pretends to have sent something it has not. */
+   ENDPOINT is a small function on Vercel (api/access.js in this repo), because
+   GitHub Pages serves this site but cannot run anything. It forwards the
+   request to whatever is set up to alert someone and stores nothing. If it
+   answers with an error the visitor is told, rather than shown a success that
+   did not happen. */
 (function () {
-  var ENDPOINT = '';
+  var ENDPOINT = 'https://soffo-hq.vercel.app/api/access';
 
   var widgets = document.querySelectorAll('.access');
   if (!widgets.length) return;
@@ -646,6 +648,7 @@
     var panel = widget.querySelector('.access-panel');
     var form = widget.querySelector('.access-form');
     var note = widget.querySelector('.access-note');
+    var submit = widget.querySelector('.access-submit');
     var anim = null;
 
     function height() {
@@ -731,7 +734,8 @@
       var payload = {
         email: email.value.trim(),
         name: name.value.trim(),
-        organization: form.elements.organization.value.trim()
+        organization: form.elements.organization.value.trim(),
+        company: form.elements.company.value   // honeypot: a person leaves it empty
       };
 
       if (!ENDPOINT) {
@@ -740,17 +744,23 @@
       }
 
       note.textContent = 'Sending…';
+      submit.disabled = true;
 
       fetch(ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       }).then(function (res) {
-        if (!res.ok) throw new Error(res.status);
-        form.reset();
-        note.textContent = 'Thanks — we will be in touch.';
-      }).catch(function () {
-        note.textContent = 'That did not send. Try again in a moment.';
+        return res.json().catch(function () { return {}; }).then(function (data) {
+          if (!res.ok) throw new Error(data.error || 'that did not send');
+          form.reset();
+          note.textContent = 'Thanks — we will be in touch.';
+        });
+      }).catch(function (err) {
+        // the endpoint's own words where it gave any: it knows why better
+        note.textContent = (err.message || 'That did not send') + '. Try again in a moment.';
+      }).then(function () {
+        submit.disabled = false;
       });
     });
   });
