@@ -1,5 +1,7 @@
 # this project is the request-access endpoint, not a second copy of the site
 index.html
+terms
+privacy
 styles.css
 main.js
 branches.js

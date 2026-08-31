@@ -1335,3 +1335,109 @@ body {
   .foot-copy { padding-top: 14px; }
   .foot-nav { gap: 40px; }
 }
+
+/* ---------- Legal pages ---------- */
+
+/* The hero centers because it is a poster. This is a document, so it is one
+   column, left aligned, with a margin every line can start against. */
+.legal {
+  width: 100%;
+  max-width: 700px;
+  flex: 1;
+  margin: 0 auto;
+  padding: 88px 40px 112px;
+  text-align: left;
+}
+
+/* the section label from the home page, standing at the top of the document
+   instead of between two of them */
+.legal .eyebrow {
+  display: inline-block;
+  margin-top: 0;
+}
+
+.legal-title {
+  margin: 16px 0 0;
+  font-weight: 400;
+  font-size: min(2.125rem, 7.4vw);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.legal-meta {
+  margin: 10px 0 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: #9aa1a8;
+}
+
+.legal-intro {
+  margin: 30px 0 0;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--ink);
+}
+
+/* the headings stay close to full ink and the prose sits a shade off it, so
+   the numbers carry the structure without a size jump doing it for them */
+.legal h2 {
+  margin: 42px 0 0;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.legal p,
+.legal li {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: #45494d;
+}
+
+.legal p { margin: 12px 0 0; }
+
+.legal ul {
+  margin: 12px 0 0;
+  padding-left: 20px;
+}
+
+.legal li { margin-top: 7px; }
+
+.legal li::marker { color: #c2c8cd; }
+
+.legal b {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.legal a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: #c9ced3;
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.15s ease;
+}
+
+.legal a:hover {
+  text-decoration-color: var(--ink);
+}
+
+.legal a:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* the other half of the pair, offered once this one is read out */
+.legal-more {
+  margin-top: 56px;
+  padding-top: 26px;
+  border-top: 1px solid #ececec;
+}
+
+@media (max-width: 640px) {
+  .legal { padding: 56px 24px 80px; }
+  .legal h2 { margin-top: 36px; }
+}
