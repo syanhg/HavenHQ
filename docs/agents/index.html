@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Working with agents - Soffo Docs</title>
+  <meta name="description" content="How to hand work over, what it looks like while it runs, and what you get back." />
+  <link rel="canonical" href="https://getsoffo.com/docs/agents/" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/docs/docs.css" />
+</head>
+<body class="is-docs">
+  <header class="topbar">
+    <a class="wordmark" href="/" aria-label="Soffo home">Soffo</a>
+    <div class="nav-right">
+      <a class="nav-link" href="/docs/">Docs</a>
+      <a class="nav-login" href="https://app.getsoffo.com">Log In</a>
+    </div>
+  </header>
+
+  <main class="docs">
+    <div class="docs-side">
+      <div class="docs-find">
+        <svg class="df-glass" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="m10.5 10.5 3 3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        <input class="df-input" type="search" placeholder="Search" autocomplete="off" spellcheck="false"
+               role="combobox" aria-expanded="false" aria-controls="df-list" aria-label="Search the docs" />
+        <span class="df-hint" aria-hidden="true"><span class="key">&#8984;</span><span class="key">K</span></span>
+        <div class="df-out" id="df-list" role="listbox" hidden></div>
+      </div>
+
+      <button class="docs-toggle" type="button" aria-expanded="false" aria-controls="docs-nav">
+        Contents
+        <svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true"><path d="M7 1.5v11M1.5 7h11" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </button>
+
+      <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <h2>Start</h2>
+      <a class="dn-page" href="/docs/">Overview</a>
+      <a class="dn-page" href="/docs/canvas/">The canvas</a>
+      <h2>Agents</h2>
+      <a class="dn-page on" href="/docs/agents/" aria-current="page">Working with agents</a>
+      <div class="dn-subs">
+        <a class="dn-sub" href="#asking">Asking</a>
+        <a class="dn-sub" href="#lanes">Several errands at once</a>
+        <a class="dn-sub" href="#apps">Apps on the canvas</a>
+      </div>
+      <a class="dn-page" href="/docs/your-agents/">Your own agents</a>
+      <a class="dn-page" href="/docs/context/">What agents read</a>
+      <h2>Your side</h2>
+      <a class="dn-page" href="/docs/tasks/">Tasks and routines</a>
+      <h2>People</h2>
+      <a class="dn-page" href="/docs/sharing/">Sharing a canvas</a>
+      <a class="dn-page" href="/docs/account/">Account</a>
+      </nav>
+    </div>
+
+    <article class="docs-body">
+      <span class="eyebrow">Agents</span>
+      <h1 class="docs-title">Working with agents</h1>
+      <p class="docs-lede">How to hand work over, what it looks like while it runs, and what you get back.</p>
+<section id="asking">
+  <h2>Asking</h2>
+  <p>Write a block with a name in it. That is the whole gesture.</p>
+  <p><code>@soffo</code> reaches the resident. <code>@claude</code> or <code>@codex</code> reaches a coding agent you attached. A name you chose reaches a colleague you built. <code>@gmail</code> or <code>@notion</code> reaches an app you connected. One character, and you do not have to know which kind you are reaching for.</p>
+  <p>What happens next is on the plane. A cursor moves to clear space near what you asked about and the answer is written there as it arrives, in that agent&rsquo;s colour with its name on it. You can keep working while it does.</p>
+  <p>Escape means stand down, and it reaches every body at once.</p>
+  <p>An agent looking at the canvas sees what is drawn on it: the blocks, the tables, the ink, rendered for it. Not your screen, and not <a href="/docs/tasks/">your list</a>.</p>
+</section>
+
+<section id="lanes">
+  <h2>Several errands at once</h2>
+  <p>Ask for three things and you get three columns, each with a cursor moving inside it, each labelled with the errand it is running.</p>
+  <p>This is the one thing a plane does that a feed cannot. Two agents working at once in a chat window produce two message streams braided into one column, and the only way to read either is to filter by author in your head while both are still writing. That is why chat products serialise, and why two independent errands there take twice as long for no reason but the shape of the container.</p>
+  <p>Nothing is drawn around the columns. You look once and you know how many things are going, which is which, how far each has got, and which one is stuck. Nothing an agent writes leaves its own column, and every lane says one line in the thread the moment it is done, including the ones that came back with nothing: a column gone quiet is otherwise indistinguishable from a column still working.</p>
+  <p>Escape reaches lanes that have not started yet, as well as the ones running. Work nobody is waiting for should not set off behind your back.</p>
+</section>
+
+<section id="apps">
+  <h2>Apps on the canvas</h2>
+  <p>Press <span class="key">&#8997;</span><span class="key">B</span> and ask for something that runs. What comes back is a working app on the plane, not a picture of one and not a link elsewhere.</p>
+  <p>Because it is on the canvas, everyone has the same app at the same coordinates, a rebuild reloads it under all of them at once, and pressing something in it is an event rather than a private one. An app can also hand an answer back, which is what makes a generated interface a control an agent reads: build a form, have people fill it in, and the agent that built it hears what they did.</p>
+  <p>It runs sandboxed. It cannot touch the page around it, read your session, or reach the network.</p>
+  <div class="note">
+    <p>The canvas does not write these itself. Your coding agent does, on your machine against your repository, and hands the result over. So an app here can be a preview of your real code at a real commit rather than a mock-up that resembles it.</p>
+  </div>
+</section>
+      <nav class="docs-pn" aria-label="Pages">
+        <a class="pn prev" href="/docs/canvas/"><span>Previous</span>The canvas</a>
+        <a class="pn next" href="/docs/your-agents/"><span>Next</span>Your own agents</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-foot">
+    <div class="foot-brand">
+      <a class="wordmark" href="/" aria-label="Soffo home">Soffo</a>
+      <p class="foot-copy">&copy; 2026 MonyCompany Inc.</p>
+    </div>
+
+    <nav class="foot-nav" aria-label="Footer">
+      <div class="foot-col">
+        <h3>Company</h3>
+        <a href="/">Home</a>
+        <a href="/docs/">Docs</a>
+      </div>
+      <div class="foot-col">
+        <h3>Social</h3>
+        <a href="https://x.com/monycompany" target="_blank" rel="noopener">X / Twitter</a>
+        <a href="https://www.linkedin.com/company/monyinc" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <div class="foot-col">
+        <h3>Legal</h3>
+        <a href="/terms">Terms</a>
+        <a href="/privacy">Privacy</a>
+      </div>
+    </nav>
+  </footer>
+
+  <script src="/docs/docs.js"></script>
+</body>
+</html>

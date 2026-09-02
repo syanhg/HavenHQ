@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your own agents - Soffo Docs</title>
+  <meta name="description" content="The coding agent you already pay for, the colleagues you write briefs for, and the procedures you hand both of them." />
+  <link rel="canonical" href="https://getsoffo.com/docs/your-agents/" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/docs/docs.css" />
+</head>
+<body class="is-docs">
+  <header class="topbar">
+    <a class="wordmark" href="/" aria-label="Soffo home">Soffo</a>
+    <div class="nav-right">
+      <a class="nav-link" href="/docs/">Docs</a>
+      <a class="nav-login" href="https://app.getsoffo.com">Log In</a>
+    </div>
+  </header>
+
+  <main class="docs">
+    <div class="docs-side">
+      <div class="docs-find">
+        <svg class="df-glass" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="m10.5 10.5 3 3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        <input class="df-input" type="search" placeholder="Search" autocomplete="off" spellcheck="false"
+               role="combobox" aria-expanded="false" aria-controls="df-list" aria-label="Search the docs" />
+        <span class="df-hint" aria-hidden="true"><span class="key">&#8984;</span><span class="key">K</span></span>
+        <div class="df-out" id="df-list" role="listbox" hidden></div>
+      </div>
+
+      <button class="docs-toggle" type="button" aria-expanded="false" aria-controls="docs-nav">
+        Contents
+        <svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true"><path d="M7 1.5v11M1.5 7h11" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </button>
+
+      <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <h2>Start</h2>
+      <a class="dn-page" href="/docs/">Overview</a>
+      <a class="dn-page" href="/docs/canvas/">The canvas</a>
+      <h2>Agents</h2>
+      <a class="dn-page" href="/docs/agents/">Working with agents</a>
+      <a class="dn-page on" href="/docs/your-agents/" aria-current="page">Your own agents</a>
+      <div class="dn-subs">
+        <a class="dn-sub" href="#bring">Bring your own agent</a>
+        <a class="dn-sub" href="#colleagues">Building a colleague</a>
+        <a class="dn-sub" href="#skills">Skills</a>
+      </div>
+      <a class="dn-page" href="/docs/context/">What agents read</a>
+      <h2>Your side</h2>
+      <a class="dn-page" href="/docs/tasks/">Tasks and routines</a>
+      <h2>People</h2>
+      <a class="dn-page" href="/docs/sharing/">Sharing a canvas</a>
+      <a class="dn-page" href="/docs/account/">Account</a>
+      </nav>
+    </div>
+
+    <article class="docs-body">
+      <span class="eyebrow">Agents</span>
+      <h1 class="docs-title">Your own agents</h1>
+      <p class="docs-lede">The coding agent you already pay for, the colleagues you write briefs for, and the procedures you hand both of them.</p>
+<section id="bring">
+  <h2>Bring your own agent</h2>
+  <p>Your coding agent can have a body here. It attaches over MCP and keeps its own machine, repository and test runner, while getting a cursor on the canvas with its own name and colour.</p>
+  <p>Open Settings, then Models, then Agents, and pick the one you use. Cursor is a single click. The other two get a line to paste.</p>
+
+  <h3>Claude Code</h3>
+  <div class="snip">
+    <div class="snip-tag">Terminal</div>
+    <pre><code>claude mcp add --transport http soffo &lt;url&gt; --header "Authorization: Bearer &lt;key&gt;"</code></pre>
+  </div>
+
+  <h3>Codex</h3>
+  <div class="snip">
+    <div class="snip-tag">~/.codex/config.toml</div>
+    <pre><code>[mcp_servers.soffo]
+url = "&lt;url&gt;"</code></pre>
+  </div>
+
+  <h3>Anything else</h3>
+  <p>One HTTP MCP server named <code>soffo</code>, under <code>mcpServers</code> in whatever <code>mcp.json</code> your client reads.</p>
+
+  <div class="note">
+    <p>The panel writes the real URL and key for you. The placeholders above are only the shape.</p>
+    <p>A key opens one canvas, so replace any <code>soffo</code> entry already configured rather than adding a second: the old one points somewhere else. Most clients read that file only at startup, so expect the tools after a restart.</p>
+  </div>
+
+  <h3>What it can do once it is in</h3>
+  <p>An attached agent gets the canvas as verbs rather than as a screen to parse. It can <b>look</b> at what is there, <b>note</b> something down, <b>edit</b> or <b>erase</b> a block, name an <b>area</b>, <b>move</b>, <b>say</b> a line in the thread, ask <b>who</b> is here, read the <b>tasks</b> it was handed, <b>build</b> a running app, and mark itself <b>finished</b>. Keys are revocable from the panel that minted them.</p>
+</section>
+
+<section id="colleagues">
+  <h2>Building a colleague</h2>
+  <p>Open the panel on the right (<span class="key">&#8997;</span><span class="key">K</span>) and add an agent. Three things make one:</p>
+  <ul>
+    <li><b>A name.</b> What you type after the <code>@</code>, and what its notes are signed with.</li>
+    <li><b>A brief.</b> A paragraph saying what it is for. This goes in front of the model on every turn, so it is worth writing properly.</li>
+    <li><b>Its tools.</b> The fixed set it may reach. An agent built for invoicing gets Stripe and the ledger, and cannot wander into Slack because a sentence mentioned it.</li>
+  </ul>
+  <p>It runs the same loop the resident does and arrives on the same plane. What it has that Soffo does not is the brief and the ceiling.</p>
+  <p>Colleagues follow you rather than the canvas, so one you built this morning is on every canvas you open this afternoon. A body appears because you switched one on, and switching it off takes the cursor away.</p>
+</section>
+
+<section id="skills">
+  <h2>Skills</h2>
+  <p>A skill is a procedure you have handed over: a <code>SKILL.md</code> with frontmatter naming it and saying when it applies, and markdown underneath saying how it goes.</p>
+  <p>The format is Claude Code&rsquo;s and Codex&rsquo;s, matched exactly, because a skill is a file you already have rather than something to author here, and because it has to go back out as one. An agent Soffo starts on a repository gets your skills written into its worktree at <code>.claude/skills/&lt;name&gt;/SKILL.md</code> and reads them natively, with none of this app in the way.</p>
+  <p>Skills follow you, not the canvas. Attach the ones an agent should have on its row in the panel.</p>
+</section>
+      <nav class="docs-pn" aria-label="Pages">
+        <a class="pn prev" href="/docs/agents/"><span>Previous</span>Working with agents</a>
+        <a class="pn next" href="/docs/context/"><span>Next</span>What agents read</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-foot">
+    <div class="foot-brand">
+      <a class="wordmark" href="/" aria-label="Soffo home">Soffo</a>
+      <p class="foot-copy">&copy; 2026 MonyCompany Inc.</p>
+    </div>
+
+    <nav class="foot-nav" aria-label="Footer">
+      <div class="foot-col">
+        <h3>Company</h3>
+        <a href="/">Home</a>
+        <a href="/docs/">Docs</a>
+      </div>
+      <div class="foot-col">
+        <h3>Social</h3>
+        <a href="https://x.com/monycompany" target="_blank" rel="noopener">X / Twitter</a>
+        <a href="https://www.linkedin.com/company/monyinc" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <div class="foot-col">
+        <h3>Legal</h3>
+        <a href="/terms">Terms</a>
+        <a href="/privacy">Privacy</a>
+      </div>
+    </nav>
+  </footer>
+
+  <script src="/docs/docs.js"></script>
+</body>
+</html>

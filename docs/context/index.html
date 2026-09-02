@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Using Soffo - Soffo Docs</title>
-  <meta name="description" content="Soffo is a canvas where you and your agents stand in front of the same work. This guide covers the gestures, who you can address, and what happens after you ask for something." />
-  <link rel="canonical" href="https://getsoffo.com/docs/" />
+  <title>What agents read - Soffo Docs</title>
+  <meta name="description" content="The accounts they can reach, and the documents you point them at." />
+  <link rel="canonical" href="https://getsoffo.com/docs/context/" />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="apple-touch-icon" href="/favicon.png" />
   <link rel="stylesheet" href="/styles.css" />
@@ -37,16 +37,16 @@
 
       <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
       <h2>Start</h2>
-      <a class="dn-page on" href="/docs/" aria-current="page">Overview</a>
-      <div class="dn-subs">
-        <a class="dn-sub" href="#what">What Soffo is</a>
-        <a class="dn-sub" href="#first">Your first canvas</a>
-      </div>
+      <a class="dn-page" href="/docs/">Overview</a>
       <a class="dn-page" href="/docs/canvas/">The canvas</a>
       <h2>Agents</h2>
       <a class="dn-page" href="/docs/agents/">Working with agents</a>
       <a class="dn-page" href="/docs/your-agents/">Your own agents</a>
-      <a class="dn-page" href="/docs/context/">What agents read</a>
+      <a class="dn-page on" href="/docs/context/" aria-current="page">What agents read</a>
+      <div class="dn-subs">
+        <a class="dn-sub" href="#apps">Connected apps</a>
+        <a class="dn-sub" href="#contexts">Contexts</a>
+      </div>
       <h2>Your side</h2>
       <a class="dn-page" href="/docs/tasks/">Tasks and routines</a>
       <h2>People</h2>
@@ -56,28 +56,25 @@
     </div>
 
     <article class="docs-body">
-      <span class="eyebrow">Start</span>
-      <h1 class="docs-title">Using Soffo</h1>
-      <p class="docs-lede">Soffo is a canvas where you and your agents stand in front of the same work. This guide covers the gestures, who you can address, and what happens after you ask for something.</p>
-<section id="what">
-  <h2>What Soffo is</h2>
-  <p>A workspace with coordinates instead of a scroll. Everything you make sits somewhere on an open plane: notes, tables, sheets, drawings, web pages, running apps. Everyone with the canvas open sees the same marks in the same places, as they appear.</p>
-  <p>An agent here is not a bot you message and wait on. It has a cursor with its own name and colour, it moves, and what it writes lands on the canvas while it is writing. There is no chat pane it answers from, because there is no chat.</p>
-  <p>Two kinds live here. <b>Soffo</b> is the resident: on every canvas, never leaves, and who you reach when you ask without naming anyone. The rest are yours, and you bring them: the coding agent you already pay for, and colleagues you write briefs for.</p>
+      <span class="eyebrow">Agents</span>
+      <h1 class="docs-title">What agents read</h1>
+      <p class="docs-lede">The accounts they can reach, and the documents you point them at.</p>
+<section id="apps">
+  <h2>Connected apps</h2>
+  <p>Connect an account once in the integrations panel and every agent in the workspace can reach it. After that, <code>@gmail what did Dan send about the contract</code> is the same gesture as asking a colleague.</p>
+  <p>Gmail, Outlook, Slack, Notion, GitHub, Figma, Stripe, Supabase, Google Calendar, Docs and Sheets, Granola, Exa, Browserbase, Databricks, Ashby, among others.</p>
+  <p>Only what you actually connected is offered in the <code>@</code> menu. An app on that list is a promise the tag will do something, and one you have not connected is a promise the canvas cannot keep, so it appears greyed with <em>connect</em> beside it and picking it opens the panel.</p>
 </section>
 
-<section id="first">
-  <h2>Your first canvas</h2>
-  <ol class="steps">
-    <li><p><b>Open the workspace.</b> <a href="https://app.getsoffo.com">app.getsoffo.com</a> in a browser is the whole product. The Mac app adds one thing a browser cannot do: reach the coding agents installed on your machine. If you want to run Claude Code, Codex or Cursor from the canvas, you want the Mac app.</p></li>
-    <li><p><b>Look before you type.</b> A canvas opens in drag mode every time, whatever you were doing last session. Drag or scroll to move around it, pinch or <span class="key">&#8984;</span><span class="key">+</span> to zoom.</p></li>
-    <li><p><b>Type <code>/</code>.</b> That is the whole command surface. There is no toolbar and no palette. The menu that opens is everything the canvas does.</p></li>
-    <li><p><b>Write, and put a name in it.</b> Press <span class="key">&#8997;</span><span class="key">W</span>, click anywhere, type. An <code>@</code> in what you have written is how you address somebody: <code>@soffo what is wrong with this plan</code>. Soffo walks over and answers beside you.</p></li>
-    <li><p><b>Turn the agents on.</b> A new account starts with them switched off, so your first canvas is one you can draw on with nothing running. <a href="/docs/account/">Settings</a> is where you bring an API key or start a plan.</p></li>
-  </ol>
+<section id="contexts">
+  <h2>Contexts</h2>
+  <p>A context is a named body of text that lives somewhere else and is kept so it can be pointed at: a Notion page, a PDF, a meeting note, a section of a canvas. They sit on a shelf beside the canvas.</p>
+  <p>The gesture is <code>#</code>, the same one sections answer to. Type it in a block, pick from the list, and whoever you are addressing gets that document.</p>
+  <p>The text never enters your browser and never enters the prompt whole. A pill carries an identifier, and retrieval happens when the question is asked, so a forty-page contract stays where it is and what reaches the model is the passages that answer what you asked. The one time the full text arrives is when you open a context to read it yourself.</p>
 </section>
       <nav class="docs-pn" aria-label="Pages">
-        <a class="pn next" href="/docs/canvas/"><span>Next</span>The canvas</a>
+        <a class="pn prev" href="/docs/your-agents/"><span>Previous</span>Your own agents</a>
+        <a class="pn next" href="/docs/tasks/"><span>Next</span>Tasks and routines</a>
       </nav>
     </article>
   </main>

@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Using Soffo - Soffo Docs</title>
-  <meta name="description" content="Soffo is a canvas where you and your agents stand in front of the same work. This guide covers the gestures, who you can address, and what happens after you ask for something." />
-  <link rel="canonical" href="https://getsoffo.com/docs/" />
+  <title>Tasks and routines - Soffo Docs</title>
+  <meta name="description" content="The one private thing on a canvas where everything else is shared." />
+  <link rel="canonical" href="https://getsoffo.com/docs/tasks/" />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="apple-touch-icon" href="/favicon.png" />
   <link rel="stylesheet" href="/styles.css" />
@@ -37,18 +37,18 @@
 
       <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
       <h2>Start</h2>
-      <a class="dn-page on" href="/docs/" aria-current="page">Overview</a>
-      <div class="dn-subs">
-        <a class="dn-sub" href="#what">What Soffo is</a>
-        <a class="dn-sub" href="#first">Your first canvas</a>
-      </div>
+      <a class="dn-page" href="/docs/">Overview</a>
       <a class="dn-page" href="/docs/canvas/">The canvas</a>
       <h2>Agents</h2>
       <a class="dn-page" href="/docs/agents/">Working with agents</a>
       <a class="dn-page" href="/docs/your-agents/">Your own agents</a>
       <a class="dn-page" href="/docs/context/">What agents read</a>
       <h2>Your side</h2>
-      <a class="dn-page" href="/docs/tasks/">Tasks and routines</a>
+      <a class="dn-page on" href="/docs/tasks/" aria-current="page">Tasks and routines</a>
+      <div class="dn-subs">
+        <a class="dn-sub" href="#list">The list</a>
+        <a class="dn-sub" href="#routines">Routines</a>
+      </div>
       <h2>People</h2>
       <a class="dn-page" href="/docs/sharing/">Sharing a canvas</a>
       <a class="dn-page" href="/docs/account/">Account</a>
@@ -56,28 +56,24 @@
     </div>
 
     <article class="docs-body">
-      <span class="eyebrow">Start</span>
-      <h1 class="docs-title">Using Soffo</h1>
-      <p class="docs-lede">Soffo is a canvas where you and your agents stand in front of the same work. This guide covers the gestures, who you can address, and what happens after you ask for something.</p>
-<section id="what">
-  <h2>What Soffo is</h2>
-  <p>A workspace with coordinates instead of a scroll. Everything you make sits somewhere on an open plane: notes, tables, sheets, drawings, web pages, running apps. Everyone with the canvas open sees the same marks in the same places, as they appear.</p>
-  <p>An agent here is not a bot you message and wait on. It has a cursor with its own name and colour, it moves, and what it writes lands on the canvas while it is writing. There is no chat pane it answers from, because there is no chat.</p>
-  <p>Two kinds live here. <b>Soffo</b> is the resident: on every canvas, never leaves, and who you reach when you ask without naming anyone. The rest are yours, and you bring them: the coding agent you already pay for, and colleagues you write briefs for.</p>
+      <span class="eyebrow">Your side</span>
+      <h1 class="docs-title">Tasks and routines</h1>
+      <p class="docs-lede">The one private thing on a canvas where everything else is shared.</p>
+<section id="list">
+  <h2>The list</h2>
+  <p>Press <span class="key">&#8997;</span><span class="key">K</span>. The panel on the right has two tabs: what you have not done yet, and the colleagues you built to help you do it. They are together because they are one subject. You build an agent in order to hand it work, and you hand it work from a list.</p>
+  <p><b>The list is private.</b> Everything on the plane is shared the moment it exists. This is not: it is not a canvas object, it does not travel over the socket, and it is not in what an agent is shown of the canvas. It is where you write <em>chase the invoice, I have been avoiding it</em>, and nobody writes that on a wall four colleagues are watching.</p>
+  <p>It speaks the canvas&rsquo;s language anyway. <code>@</code> hands a task to somebody, <code>#</code> hands them a document to do it with, and the same <code>@</code> reaches an integration. When a task falls due the work happens in the open: a body walks onto the canvas and does it where you can watch.</p>
 </section>
 
-<section id="first">
-  <h2>Your first canvas</h2>
-  <ol class="steps">
-    <li><p><b>Open the workspace.</b> <a href="https://app.getsoffo.com">app.getsoffo.com</a> in a browser is the whole product. The Mac app adds one thing a browser cannot do: reach the coding agents installed on your machine. If you want to run Claude Code, Codex or Cursor from the canvas, you want the Mac app.</p></li>
-    <li><p><b>Look before you type.</b> A canvas opens in drag mode every time, whatever you were doing last session. Drag or scroll to move around it, pinch or <span class="key">&#8984;</span><span class="key">+</span> to zoom.</p></li>
-    <li><p><b>Type <code>/</code>.</b> That is the whole command surface. There is no toolbar and no palette. The menu that opens is everything the canvas does.</p></li>
-    <li><p><b>Write, and put a name in it.</b> Press <span class="key">&#8997;</span><span class="key">W</span>, click anywhere, type. An <code>@</code> in what you have written is how you address somebody: <code>@soffo what is wrong with this plan</code>. Soffo walks over and answers beside you.</p></li>
-    <li><p><b>Turn the agents on.</b> A new account starts with them switched off, so your first canvas is one you can draw on with nothing running. <a href="/docs/account/">Settings</a> is where you bring an API key or start a plan.</p></li>
-  </ol>
+<section id="routines">
+  <h2>Routines</h2>
+  <p>A task is armed for a moment, like <em>in ten minutes</em>. A routine is armed for a shape: every hour, every day, every week on the days you pick, every month.</p>
+  <p>The time zone travels with the routine rather than with your laptop. Set &ldquo;every morning at nine&rdquo; in Seoul and then fly to London, and it still means nine in the office you set it from. It says so wherever the time is shown.</p>
 </section>
       <nav class="docs-pn" aria-label="Pages">
-        <a class="pn next" href="/docs/canvas/"><span>Next</span>The canvas</a>
+        <a class="pn prev" href="/docs/context/"><span>Previous</span>What agents read</a>
+        <a class="pn next" href="/docs/sharing/"><span>Next</span>Sharing a canvas</a>
       </nav>
     </article>
   </main>

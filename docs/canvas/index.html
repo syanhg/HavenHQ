@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The canvas - Soffo Docs</title>
+  <meta name="description" content="One menu, six modes and three objects. This is everything the plane itself does, before any agent is involved." />
+  <link rel="canonical" href="https://getsoffo.com/docs/canvas/" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/docs/docs.css" />
+</head>
+<body class="is-docs">
+  <header class="topbar">
+    <a class="wordmark" href="/" aria-label="Soffo home">Soffo</a>
+    <div class="nav-right">
+      <a class="nav-link" href="/docs/">Docs</a>
+      <a class="nav-login" href="https://app.getsoffo.com">Log In</a>
+    </div>
+  </header>
+
+  <main class="docs">
+    <div class="docs-side">
+      <div class="docs-find">
+        <svg class="df-glass" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="m10.5 10.5 3 3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        <input class="df-input" type="search" placeholder="Search" autocomplete="off" spellcheck="false"
+               role="combobox" aria-expanded="false" aria-controls="df-list" aria-label="Search the docs" />
+        <span class="df-hint" aria-hidden="true"><span class="key">&#8984;</span><span class="key">K</span></span>
+        <div class="df-out" id="df-list" role="listbox" hidden></div>
+      </div>
+
+      <button class="docs-toggle" type="button" aria-expanded="false" aria-controls="docs-nav">
+        Contents
+        <svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true"><path d="M7 1.5v11M1.5 7h11" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </button>
+
+      <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <h2>Start</h2>
+      <a class="dn-page" href="/docs/">Overview</a>
+      <a class="dn-page on" href="/docs/canvas/" aria-current="page">The canvas</a>
+      <div class="dn-subs">
+        <a class="dn-sub" href="#menu">The “/” menu</a>
+        <a class="dn-sub" href="#writing">Writing</a>
+        <a class="dn-sub" href="#objects">Tables, sheets and pages</a>
+        <a class="dn-sub" href="#drawing">Drawing and erasing</a>
+        <a class="dn-sub" href="#moving">Moving around</a>
+      </div>
+      <h2>Agents</h2>
+      <a class="dn-page" href="/docs/agents/">Working with agents</a>
+      <a class="dn-page" href="/docs/your-agents/">Your own agents</a>
+      <a class="dn-page" href="/docs/context/">What agents read</a>
+      <h2>Your side</h2>
+      <a class="dn-page" href="/docs/tasks/">Tasks and routines</a>
+      <h2>People</h2>
+      <a class="dn-page" href="/docs/sharing/">Sharing a canvas</a>
+      <a class="dn-page" href="/docs/account/">Account</a>
+      </nav>
+    </div>
+
+    <article class="docs-body">
+      <span class="eyebrow">Start</span>
+      <h1 class="docs-title">The canvas</h1>
+      <p class="docs-lede">One menu, six modes and three objects. This is everything the plane itself does, before any agent is involved.</p>
+<section id="menu">
+  <h2>The &ldquo;/&rdquo; menu</h2>
+  <p>Type <code>/</code> anywhere. What opens is short, and it is the only menu you have to learn.</p>
+  <p>Two kinds of thing are on it. A <b>mode</b> changes what a click does and you stay in it, like a pen you are holding. An <b>action</b> puts one object down and leaves you where you were.</p>
+
+  <h3>Modes</h3>
+  <dl class="cmds">
+    <dt>/drag</dt><dd class="k"><span class="key">&#8997;</span><span class="key">V</span></dd><dd>Move the plane and pick things up. Where every canvas opens.</dd>
+    <dt>/write</dt><dd class="k"><span class="key">&#8997;</span><span class="key">W</span></dd><dd>Click to leave a block of text. Markdown works.</dd>
+    <dt>/build</dt><dd class="k"><span class="key">&#8997;</span><span class="key">B</span></dd><dd>Ask for something that runs rather than something to read.</dd>
+    <dt>/draw</dt><dd class="k"><span class="key">&#8997;</span><span class="key">D</span></dd><dd>Ink on the plane. Agents can see it.</dd>
+    <dt>/erase</dt><dd class="k"><span class="key">&#8997;</span><span class="key">E</span></dd><dd>Take things off it.</dd>
+  </dl>
+
+  <h3>Actions</h3>
+  <dl class="cmds">
+    <dt>/table</dt><dd class="k"><span class="key">&#8997;</span><span class="key">T</span></dd><dd>A table, here.</dd>
+    <dt>/shell</dt><dd class="k"><span class="key">&#8997;</span><span class="key">S</span></dd><dd>A sheet you write on, with a prompt box at its foot.</dd>
+    <dt>/browser</dt><dd class="k"><span class="key">&#8997;</span><span class="key">P</span></dd><dd>A live web page, at the size of a window.</dd>
+  </dl>
+
+  <div class="note">
+    <p>The modifier is Option rather than Command on purpose. Three of those letters belong to the browser and not to the page: <span class="key">&#8984;</span><span class="key">W</span> closes the tab whatever we have to say about it. On Option, every mode keeps the letter its own name gave it.</p>
+    <p><code>/ask</code> is a mode too and still works typed out, but it is not on the menu. Writing a block with an <code>@</code> in it is already that gesture.</p>
+  </div>
+</section>
+
+<section id="writing">
+  <h2>Writing</h2>
+  <p>A block is the unit of everything here. Press <span class="key">&#8997;</span><span class="key">W</span>, click, type. Escape or a click away leaves it. It saves as you go, and it is on everyone else&rsquo;s screen before you finish the word.</p>
+  <p>Three characters open a menu while you write:</p>
+  <ul>
+    <li><code>@</code> addresses somebody: Soffo, a colleague you built, a coding agent you attached, or a connected app. All four are in one list, because from where you are typing there is no difference worth drawing.</li>
+    <li><code>#</code> points at a body of text: a named section of this canvas, or anything on the <a href="/docs/context/#contexts">context shelf</a>.</li>
+    <li><code>/</code> opens the command menu from inside a block.</li>
+  </ul>
+  <p>What someone said is theirs. You cannot rewrite a message you did not write, or anything an agent wrote, however much of the canvas you own. An answer that anyone present could quietly reword is one nobody in the room can rely on.</p>
+
+  <h3>Sections</h3>
+  <p>Name a region of the canvas and it becomes something you can point at. After that <code>#thatname</code> in any sentence hands its whole contents to whoever you are addressing, without you describing where it is.</p>
+</section>
+
+<section id="objects">
+  <h2>Tables, sheets and pages</h2>
+  <p>Three things you put down rather than three modes you enter.</p>
+  <p>A <b>table</b> (<span class="key">&#8997;</span><span class="key">T</span>) is a grid on the plane. Agents read and fill them, so it is the right shape for anything you want back as rows.</p>
+  <p>A <b>sheet</b> (<span class="key">&#8997;</span><span class="key">S</span>) is a document with a prompt box at the bottom. Use it when the work wants its own page: a draft, a spec, a summary that keeps growing. The prompt box takes an <code>@</code> the same way a block does.</p>
+  <p>A <b>page</b> (<span class="key">&#8997;</span><span class="key">P</span>) is a real browser on the canvas. Not a screenshot and not a link, but a window-sized page you can use, sitting beside the work it is about, which an agent can be pointed at.</p>
+</section>
+
+<section id="drawing">
+  <h2>Drawing and erasing</h2>
+  <p>Press <span class="key">&#8997;</span><span class="key">D</span> and draw. Ink is part of the canvas rather than a layer over it, so an agent looking at the canvas sees your circles and arrows the same way it sees the text.</p>
+  <p>That makes it the natural thing to do to an app you asked for and do not like: circle the part that is wrong and say what you want instead. Soffo asks the running app what is actually at the place you circled, so the note names the element rather than a rectangle.</p>
+  <p><span class="key">&#8997;</span><span class="key">E</span> erases. Ink belongs to the canvas rather than to whoever laid it down, so there is no erasing only your own.</p>
+</section>
+
+<section id="moving">
+  <h2>Moving around</h2>
+  <dl class="cmds plain">
+    <dt>Zoom in</dt><dd class="k"><span class="key">&#8984;</span><span class="key">+</span></dd><dd>Closer.</dd>
+    <dt>Zoom out</dt><dd class="k"><span class="key">&#8984;</span><span class="key">&minus;</span></dd><dd>Further out.</dd>
+    <dt>Zoom to fit</dt><dd class="k"><span class="key">&#8679;</span><span class="key">1</span></dd><dd>Everything on the canvas at once.</dd>
+    <dt>Zoom to selection</dt><dd class="k"><span class="key">&#8679;</span><span class="key">2</span></dd><dd>Just what you have picked.</dd>
+    <dt>Actual size</dt><dd class="k"><span class="key">&#8984;</span><span class="key">0</span></dd><dd>Back to 100%.</dd>
+    <dt>Your panel</dt><dd class="k"><span class="key">&#8997;</span><span class="key">K</span></dd><dd>The list and your colleagues, on the right.</dd>
+  </dl>
+  <p>Everyone here has a cursor and a colour, and there are eight of them. Soffo wears the first and nobody else is given it, so the one body on every canvas is the one you recognise without reading the label.</p>
+</section>
+      <nav class="docs-pn" aria-label="Pages">
+        <a class="pn prev" href="/docs/"><span>Previous</span>Overview</a>
+        <a class="pn next" href="/docs/agents/"><span>Next</span>Working with agents</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-foot">
+    <div class="foot-brand">
+      <a class="wordmark" href="/" aria-label="Soffo home">Soffo</a>
+      <p class="foot-copy">&copy; 2026 MonyCompany Inc.</p>
+    </div>
+
+    <nav class="foot-nav" aria-label="Footer">
+      <div class="foot-col">
+        <h3>Company</h3>
+        <a href="/">Home</a>
+        <a href="/docs/">Docs</a>
+      </div>
+      <div class="foot-col">
+        <h3>Social</h3>
+        <a href="https://x.com/monycompany" target="_blank" rel="noopener">X / Twitter</a>
+        <a href="https://www.linkedin.com/company/monyinc" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <div class="foot-col">
+        <h3>Legal</h3>
+        <a href="/terms">Terms</a>
+        <a href="/privacy">Privacy</a>
+      </div>
+    </nav>
+  </footer>
+
+  <script src="/docs/docs.js"></script>
+</body>
+</html>

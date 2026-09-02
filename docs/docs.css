@@ -1,9 +1,11 @@
 /* ---------- Docs ----------
    The landing page is a column you fall down. This is a room you walk around
-   in: a list of where you can go on the left, and one thing at a time on the
-   right. Everything below is layout and hierarchy — the ink, the ground and
-   the typeface are /styles.css's, because a docs page that invents its own is
-   a second website. */
+   in: a way of finding things on the left, and one page at a time on the right.
+   Everything below is layout and hierarchy. The ink, the ground and the
+   typeface are /styles.css's, because a docs page that invents its own is a
+   second website.
+
+   Written by scripts/docs.py, which owns the markup these class names land on. */
 
 .docs {
   width: 100%;
@@ -18,26 +20,158 @@
   text-align: left;
 }
 
-/* ---------- The list on the left ---------- */
-
-/* Sticky rather than fixed: it belongs to the column, so it stays inside the
-   1180px the rest of the site is measured in and never drifts out to the
-   window's edge on a wide screen. */
-.docs-nav {
+/* Sticky rather than fixed, so it stays inside the 1180px the rest of the site
+   is measured in and never drifts out to the window's edge on a wide screen. */
+.docs-side {
   position: sticky;
   top: 88px;
   max-height: calc(100vh - 128px);
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 24px;
+}
+
+/* ---------- Finding something ---------- */
+
+.docs-find {
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 9px;
+  border: 1px solid #e4e6e9;
+  background: #fff;
+  transition: border-color 0.15s ease;
+}
+
+.docs-find:focus-within { border-color: #c2c6ca; }
+
+.df-glass {
+  flex: none;
+  margin-right: 7px;
+  color: #a9aeb3;
+}
+
+.df-input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  padding: 0;
+  background: none;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.df-input::placeholder { color: #a9aeb3; }
+.df-input:focus { outline: 0; }
+
+/* The native clear button is a second, differently-shaped affordance sitting
+   inside a field that is already one control. Escape empties it. */
+.df-input::-webkit-search-cancel-button { display: none; }
+
+/* Not a label of what the field is, which the placeholder already says. It is
+   the shortcut, shown until you no longer need telling. */
+.df-hint {
+  flex: none;
+  margin-left: 6px;
+  opacity: 1;
+  transition: opacity 0.12s ease;
+}
+
+.docs-find:focus-within .df-hint,
+.docs-find.has .df-hint { opacity: 0; }
+
+/* ---------- What it found ----------
+   Over the page rather than pushing it down: a list that reflows the sidebar
+   on every keystroke moves the thing you are reading while you type. */
+.df-out {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 6px);
+  left: 0;
+  width: min(420px, calc(100vw - 48px));
+  max-height: min(420px, calc(100vh - 200px));
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding-bottom: 40px;
-  /* the scrollbar is chrome on a surface that is already quiet */
+  border: 1px solid #e4e6e9;
+  background: #fff;
+  box-shadow: 0 8px 28px rgba(20, 22, 24, 0.08);
+}
+
+.df-hit {
+  display: block;
+  padding: 11px 13px;
+  border-top: 1px solid #f2f3f4;
+  text-decoration: none;
+}
+
+.df-hit:first-child { border-top: 0; }
+
+.df-hit:hover,
+.df-hit.on { background: #f7f8f8; }
+
+.df-hit b {
+  display: block;
+  color: var(--ink);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.df-hit i {
+  float: right;
+  margin-left: 12px;
+  color: #a9aeb3;
+  font-size: 0.6875rem;
+  font-style: normal;
+  line-height: 1.9;
+}
+
+.df-hit span {
+  display: block;
+  margin-top: 2px;
+  overflow: hidden;
+  color: #74797e;
+  font-size: 0.75rem;
+  line-height: 1.55;
+  /* two lines of the paragraph the hit is in, which is enough to know whether
+     it is the one you meant */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.df-hit em {
+  color: var(--ink);
+  font-style: normal;
+  font-weight: 500;
+}
+
+.df-none {
+  padding: 13px;
+  color: #a9aeb3;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+/* ---------- The list on the left ---------- */
+
+.docs-nav {
+  flex: 1;
+  min-height: 0;
+  margin-top: 26px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   scrollbar-width: none;
 }
 
 .docs-nav::-webkit-scrollbar { display: none; }
 
 .docs-nav h2 {
-  margin: 32px 0 0;
+  margin: 28px 0 0;
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 1.4;
@@ -48,7 +182,7 @@
 
 .docs-nav h2:first-child { margin-top: 0; }
 
-.docs-nav a {
+.dn-page {
   display: block;
   margin-top: 2px;
   padding: 5px 0;
@@ -59,32 +193,45 @@
   transition: color 0.15s ease;
 }
 
-.docs-nav h2 + a { margin-top: 8px; }
+.docs-nav h2 + .dn-page { margin-top: 8px; }
 
-.docs-nav a:hover { color: var(--ink); }
+.dn-page:hover { color: var(--ink); }
 
-/* Where you actually are. Weight rather than a rule or a tint, because the
-   sidebar is a list of words and the heaviest word in a list of words is the
-   one you are on — nothing else has to be drawn to say it. */
-.docs-nav a.on {
+/* Where you are. Weight rather than a rule or a tint: the heaviest word in a
+   list of words is the one you are on, and nothing else has to be drawn. */
+.dn-page.on {
   color: var(--ink);
   font-weight: 500;
 }
 
-.docs-nav a:focus-visible {
+/* The sections of the page you are on, and only that page. Indented off a
+   hairline so the list reads as belonging to the link above it. */
+.dn-subs {
+  margin: 4px 0 6px;
+  padding-left: 11px;
+  border-left: 1px solid #ececec;
+}
+
+.dn-sub {
+  display: block;
+  padding: 4px 0;
+  color: #85898e;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.dn-sub:hover { color: var(--ink); }
+.dn-sub.on { color: var(--ink); }
+
+.docs-nav a:focus-visible,
+.df-hit:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 3px;
 }
 
-/* the group that leaves the page */
-.docs-nav .out::after {
-  content: '↗';
-  margin-left: 6px;
-  font-size: 0.75rem;
-  color: #b5babf;
-}
-
-/* ---------- The thing you are reading ---------- */
+/* ---------- The page you are reading ---------- */
 
 .docs-body {
   max-width: 700px;
@@ -111,11 +258,11 @@
   color: #45494d;
 }
 
-/* A section starts on a hairline, which is the only rule on this page. It is
-   what tells you the subject changed without a heading having to shout it. */
+/* A section starts on a hairline, the only rule on the page. It says the
+   subject changed without a heading having to shout it. */
 .docs-body section {
-  margin-top: 64px;
-  padding-top: 34px;
+  margin-top: 56px;
+  padding-top: 32px;
   border-top: 1px solid #ececec;
 }
 
@@ -129,7 +276,7 @@
 }
 
 .docs-body h3 {
-  margin: 36px 0 0;
+  margin: 34px 0 0;
   font-size: 0.9375rem;
   font-weight: 500;
   line-height: 1.5;
@@ -177,9 +324,8 @@
 }
 
 /* ---------- A keystroke ----------
-   The app draws its shortcuts as keycaps in the "/" menu and in the zoom menu.
-   Drawing them the same way here means the page and the product are teaching
-   one notation rather than two. */
+   Drawn the way the app draws its own, in the "/" menu and the zoom menu, so
+   the page and the product teach one notation rather than two. */
 .key {
   display: inline-flex;
   align-items: center;
@@ -199,6 +345,12 @@
 
 .key + .key { margin-left: 3px; }
 
+.df-hint .key {
+  min-width: 18px;
+  height: 18px;
+  font-size: 0.6875rem;
+}
+
 /* what you type, inside a sentence */
 .docs-body code {
   padding: 1px 5px;
@@ -209,8 +361,8 @@
 }
 
 /* ---------- A block of it ----------
-   Labelled, because a person who has scrolled to a grey rectangle full of
-   monospace deserves to be told where they are meant to type it. */
+   Labelled, because somebody who has scrolled to a rectangle of monospace
+   deserves to be told where they are meant to type it. */
 .snip {
   margin-top: 16px;
   border: 1px solid #ececec;
@@ -255,7 +407,7 @@
 }
 
 /* The shortcut list is not a list of commands, so its left column is words
-   rather than something you type, and it should not wear a typewriter. */
+   rather than something you type, and should not wear a typewriter. */
 .cmds.plain dt {
   font-family: inherit;
   font-size: 0.9375rem;
@@ -291,8 +443,8 @@
 .cmds dt:first-child + .k + dd { border-top: 0; }
 
 /* ---------- Steps ----------
-   Numbered because the order is load-bearing, which is not true of the bulleted
-   lists elsewhere on the page. */
+   Numbered because the order is load-bearing, which is not true of the
+   bulleted lists elsewhere. */
 .steps {
   margin: 20px 0 0;
   padding: 0;
@@ -343,24 +495,61 @@
   color: #6b7075;
 }
 
-.note p + p { margin-top: 8px; }
+.note p + p { margin-top: 10px; }
 
-/* ---------- The way out at the bottom ---------- */
-.docs-next {
+/* ---------- The way on ----------
+   Eight pages read in an order, so the bottom of one says what the next is
+   rather than sending people back to the sidebar to work it out. */
+.docs-pn {
   margin-top: 64px;
-  padding-top: 26px;
+  padding-top: 24px;
   border-top: 1px solid #ececec;
+  display: flex;
+  gap: 16px;
 }
 
-/* ---------- The list, on a screen too narrow to stand it beside the text ----
-   It becomes a disclosure above the page rather than a drawer over it: there
-   is nothing to hide behind on a page that is only words, and a panel that
-   slides in from the edge is a mechanism to learn for a list of nine links. */
+.pn {
+  flex: 1;
+  min-width: 0;
+  padding: 13px 15px;
+  border: 1px solid #ececec;
+  background: #fff;
+  color: var(--ink);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  text-decoration: none;
+  transition: border-color 0.15s ease;
+}
+
+.pn:hover { border-color: #d6d9dc; }
+
+.pn span {
+  display: block;
+  margin-bottom: 3px;
+  color: #9a9fa4;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.pn.next {
+  text-align: right;
+  margin-left: auto;
+}
+
+.pn:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* ---------- The fold, on a screen too narrow for a column beside the text ----
+   The list becomes a disclosure above the page rather than a drawer over it.
+   There is nothing to hide behind on a page that is only words, and a panel
+   sliding in from the edge is a mechanism to learn for eight links. */
 
 .docs-toggle {
   display: none;
   width: 100%;
-  margin: 0;
+  margin: 20px 0 0;
   padding: 11px 0;
   border: 0;
   border-bottom: 1px solid #ececec;
@@ -388,35 +577,38 @@
     padding: 56px 24px 0;
   }
 
+  .docs-side {
+    position: static;
+    max-height: none;
+    display: block;
+    padding-bottom: 0;
+  }
+
   .docs-toggle { display: block; }
 
   .docs-nav {
-    position: static;
-    max-height: none;
+    margin-top: 0;
     padding: 22px 0 26px;
     border-bottom: 1px solid #ececec;
+    overflow: visible;
   }
 
   .docs-nav[hidden] { display: none; }
 
   .docs-nav h2 { margin-top: 26px; }
 
-  .docs-body {
-    padding-bottom: 88px;
-  }
-
+  .docs-body { padding-bottom: 88px; }
   .docs-body .eyebrow { margin-top: 40px; }
 
   .docs-body section {
-    margin-top: 48px;
-    padding-top: 30px;
+    margin-top: 44px;
+    padding-top: 28px;
   }
 
-  /* Three columns do not fit on a phone, and folding one of them under
-     another inside a grid means hand-placing every cell. So the grid is given
-     up rather than fought: each entry becomes three stacked lines with one
-     rule above it, which is the same reading order at a quarter of the
-     machinery. */
+  /* Three columns do not fit on a phone, and folding one under another inside
+     a grid means hand-placing every cell. So the grid is given up rather than
+     fought: each entry becomes three stacked lines under one rule, which is
+     the same reading order at a quarter of the machinery. */
   .cmds { display: block; }
 
   .cmds dt {
@@ -440,6 +632,9 @@
     padding-top: 0;
     border-top: 0;
   }
+
+  .docs-pn { flex-direction: column; }
+  .pn.next { text-align: left; }
 }
 
 @media (prefers-reduced-motion: reduce) {

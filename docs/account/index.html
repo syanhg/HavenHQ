@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Using Soffo - Soffo Docs</title>
-  <meta name="description" content="Soffo is a canvas where you and your agents stand in front of the same work. This guide covers the gestures, who you can address, and what happens after you ask for something." />
-  <link rel="canonical" href="https://getsoffo.com/docs/" />
+  <title>Account - Soffo Docs</title>
+  <meta name="description" content="What your agents run on, and what it costs." />
+  <link rel="canonical" href="https://getsoffo.com/docs/account/" />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="apple-touch-icon" href="/favicon.png" />
   <link rel="stylesheet" href="/styles.css" />
@@ -37,11 +37,7 @@
 
       <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
       <h2>Start</h2>
-      <a class="dn-page on" href="/docs/" aria-current="page">Overview</a>
-      <div class="dn-subs">
-        <a class="dn-sub" href="#what">What Soffo is</a>
-        <a class="dn-sub" href="#first">Your first canvas</a>
-      </div>
+      <a class="dn-page" href="/docs/">Overview</a>
       <a class="dn-page" href="/docs/canvas/">The canvas</a>
       <h2>Agents</h2>
       <a class="dn-page" href="/docs/agents/">Working with agents</a>
@@ -51,33 +47,35 @@
       <a class="dn-page" href="/docs/tasks/">Tasks and routines</a>
       <h2>People</h2>
       <a class="dn-page" href="/docs/sharing/">Sharing a canvas</a>
-      <a class="dn-page" href="/docs/account/">Account</a>
+      <a class="dn-page on" href="/docs/account/" aria-current="page">Account</a>
+      <div class="dn-subs">
+        <a class="dn-sub" href="#models">Models and keys</a>
+        <a class="dn-sub" href="#plans">Plans</a>
+      </div>
       </nav>
     </div>
 
     <article class="docs-body">
-      <span class="eyebrow">Start</span>
-      <h1 class="docs-title">Using Soffo</h1>
-      <p class="docs-lede">Soffo is a canvas where you and your agents stand in front of the same work. This guide covers the gestures, who you can address, and what happens after you ask for something.</p>
-<section id="what">
-  <h2>What Soffo is</h2>
-  <p>A workspace with coordinates instead of a scroll. Everything you make sits somewhere on an open plane: notes, tables, sheets, drawings, web pages, running apps. Everyone with the canvas open sees the same marks in the same places, as they appear.</p>
-  <p>An agent here is not a bot you message and wait on. It has a cursor with its own name and colour, it moves, and what it writes lands on the canvas while it is writing. There is no chat pane it answers from, because there is no chat.</p>
-  <p>Two kinds live here. <b>Soffo</b> is the resident: on every canvas, never leaves, and who you reach when you ask without naming anyone. The rest are yours, and you bring them: the coding agent you already pay for, and colleagues you write briefs for.</p>
+      <span class="eyebrow">People</span>
+      <h1 class="docs-title">Account</h1>
+      <p class="docs-lede">What your agents run on, and what it costs.</p>
+<section id="models">
+  <h2>Models and keys</h2>
+  <p>Settings, then Models, is where you say what your agents run on. Bring your own API key from Anthropic, OpenAI or Google, and the work runs on your account at your rates. The catalogue there is where you pick which model does what.</p>
+  <p>A new account starts with nobody switched on: a canvas you can draw on with the agents off. That is deliberate, and it is what makes the choice at the end of your first run a real one.</p>
 </section>
 
-<section id="first">
-  <h2>Your first canvas</h2>
-  <ol class="steps">
-    <li><p><b>Open the workspace.</b> <a href="https://app.getsoffo.com">app.getsoffo.com</a> in a browser is the whole product. The Mac app adds one thing a browser cannot do: reach the coding agents installed on your machine. If you want to run Claude Code, Codex or Cursor from the canvas, you want the Mac app.</p></li>
-    <li><p><b>Look before you type.</b> A canvas opens in drag mode every time, whatever you were doing last session. Drag or scroll to move around it, pinch or <span class="key">&#8984;</span><span class="key">+</span> to zoom.</p></li>
-    <li><p><b>Type <code>/</code>.</b> That is the whole command surface. There is no toolbar and no palette. The menu that opens is everything the canvas does.</p></li>
-    <li><p><b>Write, and put a name in it.</b> Press <span class="key">&#8997;</span><span class="key">W</span>, click anywhere, type. An <code>@</code> in what you have written is how you address somebody: <code>@soffo what is wrong with this plan</code>. Soffo walks over and answers beside you.</p></li>
-    <li><p><b>Turn the agents on.</b> A new account starts with them switched off, so your first canvas is one you can draw on with nothing running. <a href="/docs/account/">Settings</a> is where you bring an API key or start a plan.</p></li>
-  </ol>
+<section id="plans">
+  <h2>Plans</h2>
+  <p>Priced per person, per month.</p>
+  <ul>
+    <li><b>Small Team, $15.</b> Three workspaces, five agents, unlimited message history, bring your own API key.</li>
+    <li><b>Growing Team, $25.</b> Unlimited workspaces, unlimited agents, unlimited message history, bring your own API key.</li>
+  </ul>
+  <p>A limit is reached rather than hit: the workspace or agent you are adding is refused, everything you already have goes on working, and the plan you are on says how many it includes.</p>
 </section>
       <nav class="docs-pn" aria-label="Pages">
-        <a class="pn next" href="/docs/canvas/"><span>Next</span>The canvas</a>
+        <a class="pn prev" href="/docs/sharing/"><span>Previous</span>Sharing a canvas</a>
       </nav>
     </article>
   </main>
