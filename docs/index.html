@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Docs - Soffo</title>
+  <meta name="description" content="How to use Soffo: the canvas, the agents you bring, and the work you hand them." />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/docs/docs.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="wordmark" href="/" aria-label="Soffo home">Soffo</a>
+    <div class="nav-right">
+      <a class="nav-link" href="/docs">Docs</a>
+      <a class="nav-login" href="https://app.getsoffo.com">Log In</a>
+    </div>
+  </header>
+
+  <main class="docs">
+    <button class="docs-toggle" type="button" aria-expanded="false" aria-controls="docs-nav">
+      Contents
+      <svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true"><path d="M7 1.5v11M1.5 7h11" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+    </button>
+
+    <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <h2>Start</h2>
+      <a href="#what">What Soffo is</a>
+      <a href="#first">Your first canvas</a>
+
+      <h2>The canvas</h2>
+      <a href="#slash">The &ldquo;/&rdquo; menu</a>
+      <a href="#writing">Writing</a>
+      <a href="#objects">Tables, sheets, pages</a>
+      <a href="#drawing">Drawing and erasing</a>
+      <a href="#moving">Moving around</a>
+
+      <h2>Agents</h2>
+      <a href="#asking">Asking</a>
+      <a href="#bring">Bring your own agent</a>
+      <a href="#colleagues">Building a colleague</a>
+      <a href="#lanes">Several errands at once</a>
+      <a href="#build">Apps on the canvas</a>
+      <a href="#skills">Skills</a>
+
+      <h2>What they read</h2>
+      <a href="#apps">Connected apps</a>
+      <a href="#contexts">Contexts</a>
+
+      <h2>Your side</h2>
+      <a href="#tasks">The list</a>
+      <a href="#routines">Routines</a>
+
+      <h2>People</h2>
+      <a href="#sharing">Sharing a canvas</a>
+
+      <h2>Account</h2>
+      <a href="#keys">Models and keys</a>
+      <a href="#plans">Plans</a>
+
+      <h2>Elsewhere</h2>
+      <a class="out" href="https://app.getsoffo.com">Open Soffo</a>
+      <a class="out" href="https://x.com/monycompany" target="_blank" rel="noopener">X / Twitter</a>
+      <a class="out" href="https://www.linkedin.com/company/monyinc" target="_blank" rel="noopener">LinkedIn</a>
+    </nav>
+
+    <div class="docs-body">
+      <span class="eyebrow">Docs</span>
+      <h1 class="docs-title">Using Soffo</h1>
+      <p class="docs-lede">Soffo is a canvas where you and your agents stand in front of the same work. This is the guide to working on one: what the gestures are, who you can address, and what happens after you have asked for something.</p>
+
+      <section id="what">
+        <h2>What Soffo is</h2>
+        <p>A workspace with coordinates instead of a scroll. Everything you make sits somewhere on an open plane &mdash; notes, tables, sheets, drawings, web pages, running apps &mdash; and everyone with the canvas open sees the same marks in the same places as they appear.</p>
+        <p>Agents are on the plane too, and that is the part worth being precise about. An agent here is not a bot you message and wait on. It has a cursor with its own name and colour, it moves, and what it writes lands on the canvas in front of you while it is writing it. There is no chat pane it answers from, because there is no chat.</p>
+        <p>Two kinds live here. <b>Soffo</b> is the resident: it is on every canvas, it never leaves, and it is who you get when you ask without naming anyone. The others are yours &mdash; the coding agent you already pay for, attached over MCP, and the colleagues you write briefs for.</p>
+      </section>
+
+      <section id="first">
+        <h2>Your first canvas</h2>
+        <ol class="steps">
+          <li>
+            <p><b>Open the workspace.</b> <a href="https://app.getsoffo.com">app.getsoffo.com</a> in a browser is the whole product. The Mac app is the same canvas plus one thing a browser cannot do: reach the coding agents installed on your machine. If you want to run Claude Code, Codex or Cursor from the canvas, you want the Mac app.</p>
+          </li>
+          <li>
+            <p><b>Look before you type.</b> A canvas opens in drag mode every time, whatever you were doing last session. Drag the plane or scroll to move around it; pinch or <span class="key">&#8984;</span><span class="key">+</span> to zoom.</p>
+          </li>
+          <li>
+            <p><b>Type <code>/</code>.</b> That is the entire command surface. There is no toolbar and no palette &mdash; the menu that opens is the list of everything the canvas does.</p>
+          </li>
+          <li>
+            <p><b>Write something, and put a name in it.</b> Press <span class="key">&#8997;</span><span class="key">W</span>, click anywhere, and type. An <code>@</code> in what you have written is how you address somebody: <code>@soffo what is wrong with this plan</code>. Soffo walks over and answers beside you.</p>
+          </li>
+          <li>
+            <p><b>Turn the agents on.</b> A new account starts with the agents switched off &mdash; a canvas you can draw on, and nothing running. Settings is where you either bring your own API key or start a plan. See <a href="#keys">Models and keys</a>.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section id="slash">
+        <h2>The &ldquo;/&rdquo; menu</h2>
+        <p>Type <code>/</code> anywhere on the canvas. What opens is a short list, and it is the only menu you have to learn.</p>
+        <p>Two kinds of thing are on it, and the difference is worth knowing once. A <b>mode</b> changes what a click does and you stay in it &mdash; a pen you are holding. An <b>action</b> puts one object down and leaves you exactly where you were.</p>
+
+        <h3>Modes</h3>
+        <dl class="cmds">
+          <dt>/drag</dt>
+          <dd class="k"><span class="key">&#8997;</span><span class="key">V</span></dd>
+          <dd>Move the plane and pick things up. Where every canvas opens.</dd>
+
+          <dt>/write</dt>
+          <dd class="k"><span class="key">&#8997;</span><span class="key">W</span></dd>
+          <dd>Click to leave a block of text. Markdown works.</dd>
+
+          <dt>/build</dt>
+          <dd class="k"><span class="key">&#8997;</span><span class="key">B</span></dd>
+          <dd>Ask for something that runs, rather than something to read.</dd>
+
+          <dt>/draw</dt>
+          <dd class="k"><span class="key">&#8997;</span><span class="key">D</span></dd>
+          <dd>Ink on the plane. Agents can see it.</dd>
+
+          <dt>/erase</dt>
+          <dd class="k"><span class="key">&#8997;</span><span class="key">E</span></dd>
+          <dd>Take things off it.</dd>
+        </dl>
+
+        <h3>Actions</h3>
+        <dl class="cmds">
+          <dt>/table</dt>
+          <dd class="k"><span class="key">&#8997;</span><span class="key">T</span></dd>
+          <dd>A table, here.</dd>
+
+          <dt>/shell</dt>
+          <dd class="k"><span class="key">&#8997;</span><span class="key">S</span></dd>
+          <dd>A sheet you write on, with a prompt box at its foot.</dd>
+
+          <dt>/browser</dt>
+          <dd class="k"><span class="key">&#8997;</span><span class="key">P</span></dd>
+          <dd>A live web page, on the canvas at the size of a window.</dd>
+        </dl>
+
+        <div class="note">
+          <p>The modifier is Option rather than Command on purpose. Three of those letters are the browser&rsquo;s and not the page&rsquo;s &mdash; <span class="key">&#8984;</span><span class="key">W</span> closes the tab whatever we have to say about it &mdash; so every mode keeps the letter its own name gave it.</p>
+          <p><code>/ask</code> is a mode too and still works typed out, but it is not on the menu. Writing a block with an <code>@</code> in it is already that gesture, and offering both put one act on the menu twice.</p>
+        </div>
+      </section>
+
+      <section id="writing">
+        <h2>Writing</h2>
+        <p>A block is the unit of everything here. Press <span class="key">&#8997;</span><span class="key">W</span>, click, type; press Escape or click away to leave it. It saves as you go and it is on everyone else&rsquo;s screen before you finish the word.</p>
+        <p>Three characters open a menu while you are writing:</p>
+        <ul>
+          <li><code>@</code> &mdash; address somebody. Soffo, an agent you built, a coding agent you have attached, or a connected app. The menu lists all four in one place, because from where you are typing there is no difference worth drawing.</li>
+          <li><code>#</code> &mdash; point at a body of text. A named section of this canvas, or anything on the context shelf. See <a href="#contexts">Contexts</a>.</li>
+          <li><code>/</code> &mdash; the command menu, reachable from inside a block as well as from the bare canvas.</li>
+        </ul>
+        <p>What someone said is theirs. You cannot rewrite a message you did not write, and you cannot rewrite what an agent wrote, however much of the canvas you own &mdash; an answer anyone present could quietly reword is an answer nobody in the room can rely on.</p>
+
+        <h3>Sections</h3>
+        <p>Give a region of the canvas a name and it becomes something you can point at. After that, <code>#thatname</code> in any sentence hands its whole contents to whoever you are addressing. This is how you say &ldquo;look at that, not at everything&rdquo; without describing where it is.</p>
+      </section>
+
+      <section id="objects">
+        <h2>Tables, sheets, pages</h2>
+        <p>Three things you put down rather than three modes you enter.</p>
+        <p><b>A table</b> (<span class="key">&#8997;</span><span class="key">T</span>) is a grid on the plane. Agents read and fill them, so it is the right shape for anything you want back as rows rather than as prose.</p>
+        <p><b>A sheet</b> (<span class="key">&#8997;</span><span class="key">S</span>) is a document with a prompt box at the bottom. Use it when the work is long enough to want its own page &mdash; a draft, a spec, a summary that keeps growing. The prompt box addresses people the same way a block does, with <code>@</code>.</p>
+        <p><b>A page</b> (<span class="key">&#8997;</span><span class="key">P</span>) is a real, live browser on the canvas. Not a screenshot and not a link: a window-sized page you can use, sitting beside the work it is about, which an agent can then be pointed at.</p>
+      </section>
+
+      <section id="drawing">
+        <h2>Drawing and erasing</h2>
+        <p>Press <span class="key">&#8997;</span><span class="key">D</span> and draw. Ink is part of the canvas rather than a layer over it, which matters more than it sounds: circle a paragraph, put an arrow between two things, cross something out, and that is visible to an agent looking at the canvas the same way the text is.</p>
+        <p>This is the most natural thing to do to an app you asked for and do not like &mdash; circle the part that is wrong and say what you want instead. Soffo asks the running app what is actually at the place you circled, so the note it gets back names the element rather than a rectangle.</p>
+        <p><span class="key">&#8997;</span><span class="key">E</span> erases. Ink belongs to the canvas rather than to whoever laid it down, so there is no erasing only your own.</p>
+      </section>
+
+      <section id="moving">
+        <h2>Moving around</h2>
+        <dl class="cmds plain">
+          <dt>Zoom in</dt>
+          <dd class="k"><span class="key">&#8984;</span><span class="key">+</span></dd>
+          <dd>Closer.</dd>
+
+          <dt>Zoom out</dt>
+          <dd class="k"><span class="key">&#8984;</span><span class="key">&minus;</span></dd>
+          <dd>Further out.</dd>
+
+          <dt>Zoom to fit</dt>
+          <dd class="k"><span class="key">&#8679;</span><span class="key">1</span></dd>
+          <dd>Everything on the canvas, at once.</dd>
+
+          <dt>Zoom to selection</dt>
+          <dd class="k"><span class="key">&#8679;</span><span class="key">2</span></dd>
+          <dd>Just what you have picked.</dd>
+
+          <dt>Actual size</dt>
+          <dd class="k"><span class="key">&#8984;</span><span class="key">0</span></dd>
+          <dd>Back to 100%.</dd>
+
+          <dt>Your panel</dt>
+          <dd class="k"><span class="key">&#8997;</span><span class="key">K</span></dd>
+          <dd>The list and your colleagues, on the right.</dd>
+        </dl>
+        <p>Everyone on the canvas has a cursor and a colour, and there are eight of them. Soffo wears the first and nobody else is given it, so the one body on every canvas is the one you recognise without reading the label.</p>
+      </section>
+
+      <section id="asking">
+        <h2>Asking</h2>
+        <p>Write a block with a name in it. That is the whole gesture.</p>
+        <p><code>@soffo</code> reaches the resident. <code>@claude</code> or <code>@codex</code> reaches a coding agent you have attached. <code>@</code> and the name you gave it reaches a colleague you built. <code>@gmail</code> or <code>@notion</code> reaches an app you have connected. One character, four kinds of thing, and you do not have to know which kind you are reaching for.</p>
+        <p>What happens next is on the plane. A cursor moves to a clear space near what you asked about, and the answer is written there as it arrives &mdash; in that agent&rsquo;s colour, with its name on it. You can keep working while it does. You can also change your mind: Escape means stand down, and it reaches every body at once.</p>
+        <p>An agent looking at the canvas sees what is drawn on it. Not the tab, not your screen &mdash; the blocks, the tables, the ink, rendered for it. Your task list is deliberately not in that picture; see <a href="#tasks">The list</a>.</p>
+      </section>
+
+      <section id="bring">
+        <h2>Bring your own agent</h2>
+        <p>The coding agent you already pay for can have a body here. It attaches over MCP, keeps its own machine, its own repository and its own test runner, and gets a cursor on the canvas with its own name and colour.</p>
+        <p>Open Settings &rarr; Models &rarr; Agents and pick the one you use. Cursor is a single click. The other two get a line to paste.</p>
+
+        <h3>Claude Code</h3>
+        <div class="snip">
+          <div class="snip-tag">Terminal</div>
+          <pre><code>claude mcp add --transport http soffo &lt;url&gt; --header "Authorization: Bearer &lt;key&gt;"</code></pre>
+        </div>
+
+        <h3>Codex</h3>
+        <p>A block in <code>~/.codex/config.toml</code>:</p>
+        <div class="snip">
+          <div class="snip-tag">~/.codex/config.toml</div>
+          <pre><code>[mcp_servers.soffo]
+url = "&lt;url&gt;"</code></pre>
+        </div>
+
+        <h3>Anything else</h3>
+        <p>One HTTP MCP server named <code>soffo</code>, under <code>mcpServers</code> in whatever <code>mcp.json</code> your client reads.</p>
+
+        <div class="note">
+          <p>The panel writes the real URL and key for you &mdash; the placeholders above are only the shape. A key opens one canvas, so replace any <code>soffo</code> entry already configured rather than adding a second: the old one points somewhere else. Most clients read that file only at startup, so expect the tools after a restart.</p>
+        </div>
+
+        <h3>What it can do once it is in</h3>
+        <p>An attached agent gets the canvas as a set of verbs rather than as a screen to parse. It can <b>look</b> at what is there, <b>note</b> something down, <b>edit</b> or <b>erase</b> a block, name an <b>area</b>, <b>move</b>, <b>say</b> one line in the thread, ask <b>who</b> is here, read the <b>tasks</b> it has been handed, <b>build</b> a running app, and mark itself <b>finished</b>. Keys are revocable from the same panel that minted them.</p>
+      </section>
+
+      <section id="colleagues">
+        <h2>Building a colleague</h2>
+        <p>Open the panel on the right (<span class="key">&#8997;</span><span class="key">K</span>) and add an agent. Three things make one:</p>
+        <ul>
+          <li><b>A name.</b> What you will type after the <code>@</code>, and what its notes are signed with.</li>
+          <li><b>A brief.</b> A paragraph saying what it is for. This goes in front of the model on every single turn, so it is worth writing properly.</li>
+          <li><b>Its tools.</b> The fixed set it may reach. An agent built for invoicing gets Stripe and the ledger, and cannot wander into Slack because a sentence happened to mention it.</li>
+        </ul>
+        <p>A built colleague runs the same loop the resident does and arrives on the same plane. What it has that Soffo does not is the brief and the ceiling.</p>
+        <p>They follow you rather than the canvas, so one you built this morning is on every canvas you open this afternoon. A body appears because you switched one on, and switching it off takes the cursor away &mdash; the canvas never decides it wants another pair of hands.</p>
+      </section>
+
+      <section id="lanes">
+        <h2>Several errands at once</h2>
+        <p>Ask for three things and you get three columns, each with a cursor of its own moving inside it, each labelled with the errand it is running.</p>
+        <p>This is the one thing a plane does that a feed cannot. Two agents working at once in a chat window produce two message streams braided into one column, and the only way to read either is to filter by author in your head while both are still writing &mdash; which is why chat products serialise, and why two independent errands there take twice as long for no reason but the shape of the container.</p>
+        <p>Nothing is drawn around the columns. The structure is carried by the work landing in tidy stacks instead of one pile: you look once and you know how many things are going, which is which, how far each has got, and which one is stuck. Nothing an agent writes leaves its own column, and every lane says one line in the thread the moment <em>it</em> is done &mdash; including the ones that came back with nothing, because a column that has gone quiet is otherwise indistinguishable from a column still working.</p>
+        <p>Escape stands everybody down, including the lanes that were still counting out their turn &mdash; work nobody is waiting for any more must not set off behind your back.</p>
+      </section>
+
+      <section id="build">
+        <h2>Apps on the canvas</h2>
+        <p>Press <span class="key">&#8997;</span><span class="key">B</span> and ask for something that runs. What comes back is a real, working app on the plane &mdash; not a picture of one, and not a link to somewhere else.</p>
+        <p>Because it is on the canvas, everyone with the canvas open has the same app at the same coordinates, a rebuild reloads it under all of them at once, and pressing something in it is an event rather than a private one. An app can also hand an answer back, which is what makes a generated interface a control an agent reads rather than a one-way picture: build a form, have people fill it in, and the agent that built it hears what they did.</p>
+        <p>It runs sandboxed. It cannot touch the page around it, cannot read your session, and has no network of its own.</p>
+        <div class="note">
+          <p>The canvas does not write these itself. Your coding agent does &mdash; on your machine, against your repository &mdash; and hands the result over. So an app on the canvas can be a preview of your actual code at an actual commit, not a mock-up that resembles it.</p>
+        </div>
+      </section>
+
+      <section id="skills">
+        <h2>Skills</h2>
+        <p>A skill is a procedure you have handed over: a <code>SKILL.md</code> with frontmatter naming it and saying when it applies, and markdown underneath saying how it goes.</p>
+        <p>The format is Claude Code&rsquo;s and Codex&rsquo;s, matched exactly, because a skill is a file you already have rather than something to author here &mdash; and because it has to go back out as one. An agent Soffo starts on a repository gets your skills written into its worktree at <code>.claude/skills/&lt;name&gt;/SKILL.md</code> and reads them natively, with none of this app in the way.</p>
+        <p>Skills follow you, not the canvas. Attach the ones an agent should have on its row in the panel.</p>
+      </section>
+
+      <section id="apps">
+        <h2>Connected apps</h2>
+        <p>Connect an account once in the integrations panel and every agent in the workspace can reach it. After that <code>@gmail what did Dan send about the contract</code> is the same gesture as asking a colleague.</p>
+        <p>Gmail, Outlook, Slack, Notion, GitHub, Figma, Stripe, Supabase, Google Calendar, Docs and Sheets, Granola, Exa, Browserbase, Databricks, Ashby and more.</p>
+        <p>Only what you have actually connected is offered in the <code>@</code> menu. An app on that list is a promise the tag will do something, and one you have not connected is a promise the canvas cannot keep &mdash; so it appears greyed, with <em>connect</em> beside it, and picking it opens the panel.</p>
+      </section>
+
+      <section id="contexts">
+        <h2>Contexts</h2>
+        <p>A context is a named body of text that lives somewhere else and is kept so it can be pointed at: a Notion page, a PDF, a meeting note, a section of a canvas. They sit on a shelf beside the canvas.</p>
+        <p>The gesture is <code>#</code>, and it is the same one sections answer to. Type <code>#</code> in a block, pick from the list, and whoever you are addressing gets that document.</p>
+        <p>The text itself never enters your browser and never enters the prompt whole. A pill carries an identifier; retrieval happens when the question is asked, so a forty-page contract stays where it is and what reaches the model is the passages that answer what you asked. The one time the full text arrives is when you open a context to read it yourself.</p>
+      </section>
+
+      <section id="tasks">
+        <h2>The list</h2>
+        <p>Press <span class="key">&#8997;</span><span class="key">K</span>. The panel on the right has two tabs: what you have not done yet, and the colleagues you built to help you do it. They are together because they are one subject &mdash; you build an agent in order to hand it work, and you hand it work from a list.</p>
+        <p><b>The list is the one private thing here.</b> Everything on the plane is shared the moment it exists. This is not: it is not a canvas object, it does not travel over the socket, and it is not in what an agent is shown of the canvas. It is where you write <em>chase the invoice, I have been avoiding it</em> &mdash; and nobody writes that on a wall four colleagues are watching.</p>
+        <p>It speaks the canvas&rsquo;s language anyway. <code>@</code> hands a task to somebody, <code>#</code> hands them a document to do it with, and the same <code>@</code> reaches an integration. When a task falls due the work happens in the open: a body walks onto the canvas and does it where you can watch.</p>
+      </section>
+
+      <section id="routines">
+        <h2>Routines</h2>
+        <p>A task is armed for a moment &mdash; <em>in ten minutes</em>. A routine is armed for a shape: every hour, every day, every week on the days you pick, every month.</p>
+        <p>The time zone travels with the routine rather than with your laptop. If you set &ldquo;every morning at nine&rdquo; in Seoul and then fly to London, it still means nine in the office you set it from, and it says so wherever the time is shown.</p>
+      </section>
+
+      <section id="sharing">
+        <h2>Sharing a canvas</h2>
+        <p>Invite people by email, or open the canvas to a link. Four roles, and the distinctions are about the document rather than about features:</p>
+        <ul>
+          <li><b>Owner</b> &mdash; everything, including who else is here.</li>
+          <li><b>Can edit</b> &mdash; changes the canvas: moves things, draws, deletes, names a section, runs agents.</li>
+          <li><b>Can comment</b> &mdash; adds to the conversation on it. Writes blocks, asks agents, reacts. No pen, because ink belongs to the canvas rather than to whoever laid it down and there is no erasing only your own.</li>
+          <li><b>Can view</b> &mdash; reads and moves around.</li>
+        </ul>
+        <p>Everyone gets a cursor and a colour, and you see each other&rsquo;s selections and edits as they happen. Whatever the role, your task list stays yours.</p>
+      </section>
+
+      <section id="keys">
+        <h2>Models and keys</h2>
+        <p>Settings &rarr; Models is where you say what your agents run on. Bring your own API key &mdash; Anthropic, OpenAI or Google &mdash; and the work runs on your account at your rates, with the catalogue there to pick which model does what.</p>
+        <p>A new account starts with nobody switched on: a canvas you can draw on with the agents off. That is deliberate, and it is what makes the choice at the end of your first run a real one.</p>
+      </section>
+
+      <section id="plans">
+        <h2>Plans</h2>
+        <p>Priced per person, per month.</p>
+        <ul>
+          <li><b>Small Team &mdash; $15.</b> Three workspaces, five agents, unlimited message history, bring your own API key.</li>
+          <li><b>Growing Team &mdash; $25.</b> Unlimited workspaces, unlimited agents, unlimited message history, bring your own API key.</li>
+        </ul>
+        <p>A limit is reached rather than hit: the workspace or agent you are trying to add is refused, everything you already have goes on working, and the plan you are on says how many it includes. Nothing on this page is a cap that is only true on the pricing card.</p>
+      </section>
+
+      <p class="docs-next">Something here wrong, missing, or not what happened on your screen? <a href="mailto:seungyong@usemony.com">seungyong@usemony.com</a>.</p>
+    </div>
+  </main>
+
+  <footer class="site-foot">
+    <div class="foot-brand">
+      <a class="wordmark" href="/" aria-label="Soffo home">Soffo</a>
+      <p class="foot-copy">&copy; 2026 MonyCompany Inc.</p>
+    </div>
+
+    <nav class="foot-nav" aria-label="Footer">
+      <div class="foot-col">
+        <h3>Company</h3>
+        <a href="/">Home</a>
+        <a href="/docs">Docs</a>
+      </div>
+      <div class="foot-col">
+        <h3>Social</h3>
+        <a href="https://x.com/monycompany" target="_blank" rel="noopener">X / Twitter</a>
+        <a href="https://www.linkedin.com/company/monyinc" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <div class="foot-col">
+        <h3>Legal</h3>
+        <a href="/terms">Terms</a>
+        <a href="/privacy">Privacy</a>
+      </div>
+    </nav>
+  </footer>
+
+  <script src="/docs/docs.js"></script>
+</body>
+</html>

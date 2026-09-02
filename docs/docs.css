@@ -1,0 +1,447 @@
+/* ---------- Docs ----------
+   The landing page is a column you fall down. This is a room you walk around
+   in: a list of where you can go on the left, and one thing at a time on the
+   right. Everything below is layout and hierarchy — the ink, the ground and
+   the typeface are /styles.css's, because a docs page that invents its own is
+   a second website. */
+
+.docs {
+  width: 100%;
+  max-width: 1180px;
+  flex: 1;
+  margin: 0 auto;
+  padding: 88px 40px 0;
+  display: grid;
+  grid-template-columns: 214px minmax(0, 1fr);
+  gap: 72px;
+  align-items: start;
+  text-align: left;
+}
+
+/* ---------- The list on the left ---------- */
+
+/* Sticky rather than fixed: it belongs to the column, so it stays inside the
+   1180px the rest of the site is measured in and never drifts out to the
+   window's edge on a wide screen. */
+.docs-nav {
+  position: sticky;
+  top: 88px;
+  max-height: calc(100vh - 128px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: 40px;
+  /* the scrollbar is chrome on a surface that is already quiet */
+  scrollbar-width: none;
+}
+
+.docs-nav::-webkit-scrollbar { display: none; }
+
+.docs-nav h2 {
+  margin: 32px 0 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #9a9fa4;
+}
+
+.docs-nav h2:first-child { margin-top: 0; }
+
+.docs-nav a {
+  display: block;
+  margin-top: 2px;
+  padding: 5px 0;
+  color: #6b7075;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.docs-nav h2 + a { margin-top: 8px; }
+
+.docs-nav a:hover { color: var(--ink); }
+
+/* Where you actually are. Weight rather than a rule or a tint, because the
+   sidebar is a list of words and the heaviest word in a list of words is the
+   one you are on — nothing else has to be drawn to say it. */
+.docs-nav a.on {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.docs-nav a:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* the group that leaves the page */
+.docs-nav .out::after {
+  content: '↗';
+  margin-left: 6px;
+  font-size: 0.75rem;
+  color: #b5babf;
+}
+
+/* ---------- The thing you are reading ---------- */
+
+.docs-body {
+  max-width: 700px;
+  padding-bottom: 120px;
+}
+
+.docs-body .eyebrow {
+  display: inline-block;
+  margin-top: 0;
+}
+
+.docs-title {
+  margin: 16px 0 0;
+  font-weight: 400;
+  font-size: min(2.125rem, 7.4vw);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.docs-lede {
+  margin: 14px 0 0;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: #45494d;
+}
+
+/* A section starts on a hairline, which is the only rule on this page. It is
+   what tells you the subject changed without a heading having to shout it. */
+.docs-body section {
+  margin-top: 64px;
+  padding-top: 34px;
+  border-top: 1px solid #ececec;
+}
+
+.docs-body h2 {
+  margin: 0;
+  font-size: 1.375rem;
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.docs-body h3 {
+  margin: 36px 0 0;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+}
+
+.docs-body p,
+.docs-body li {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: #45494d;
+}
+
+.docs-body p { margin: 14px 0 0; }
+
+.docs-body ul {
+  margin: 14px 0 0;
+  padding-left: 20px;
+}
+
+.docs-body li { margin-top: 8px; }
+.docs-body li::marker { color: #c2c8cd; }
+
+.docs-body b,
+.docs-body strong {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.docs-body a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: #c9ced3;
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.15s ease;
+}
+
+.docs-body a:hover { text-decoration-color: var(--ink); }
+
+.docs-body a:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* ---------- A keystroke ----------
+   The app draws its shortcuts as keycaps in the "/" menu and in the zoom menu.
+   Drawing them the same way here means the page and the product are teaching
+   one notation rather than two. */
+.key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 21px;
+  height: 21px;
+  padding: 0 5px;
+  border: 1px solid #e2e5e8;
+  background: #fff;
+  color: #45494d;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1;
+  vertical-align: 1px;
+}
+
+.key + .key { margin-left: 3px; }
+
+/* what you type, inside a sentence */
+.docs-body code {
+  padding: 1px 5px;
+  background: #f1f2f3;
+  color: #2b2e31;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  font-size: 0.8125rem;
+}
+
+/* ---------- A block of it ----------
+   Labelled, because a person who has scrolled to a grey rectangle full of
+   monospace deserves to be told where they are meant to type it. */
+.snip {
+  margin-top: 16px;
+  border: 1px solid #ececec;
+  background: #fff;
+}
+
+.snip-tag {
+  padding: 9px 14px;
+  border-bottom: 1px solid #ececec;
+  background: #fafafa;
+  color: #8a8f94;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+.snip pre {
+  margin: 0;
+  padding: 14px;
+  overflow-x: auto;
+}
+
+.snip code {
+  padding: 0;
+  background: none;
+  color: #2b2e31;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  white-space: pre;
+}
+
+/* ---------- The command list ----------
+   Three columns: what you type, the key it also answers to, what it does. A
+   definition list rather than a table, because a table draws a grid and there
+   is nothing to compare down a column here. */
+.cmds {
+  margin: 22px 0 0;
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  gap: 0;
+  align-items: baseline;
+}
+
+/* The shortcut list is not a list of commands, so its left column is words
+   rather than something you type, and it should not wear a typewriter. */
+.cmds.plain dt {
+  font-family: inherit;
+  font-size: 0.9375rem;
+  color: #45494d;
+}
+
+.cmds dt {
+  padding: 11px 0;
+  border-top: 1px solid #f0f0f0;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  font-size: 0.8125rem;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.cmds .k {
+  padding: 11px 20px 11px 18px;
+  border-top: 1px solid #f0f0f0;
+  white-space: nowrap;
+}
+
+.cmds dd {
+  margin: 0;
+  padding: 11px 0;
+  border-top: 1px solid #f0f0f0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #45494d;
+}
+
+.cmds dt:first-child,
+.cmds dt:first-child + .k,
+.cmds dt:first-child + .k + dd { border-top: 0; }
+
+/* ---------- Steps ----------
+   Numbered because the order is load-bearing, which is not true of the bulleted
+   lists elsewhere on the page. */
+.steps {
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.steps > li {
+  position: relative;
+  margin-top: 20px;
+  padding-left: 34px;
+  counter-increment: step;
+}
+
+.steps > li:first-child { margin-top: 0; }
+
+.steps > li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 21px;
+  height: 21px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f2f3;
+  color: #6b7075;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.steps > li > p:first-child { margin-top: 0; }
+
+/* ---------- An aside ----------
+   For the sentence that is true, useful, and not what the paragraph is about. */
+.note {
+  margin-top: 20px;
+  padding: 2px 0 2px 16px;
+  border-left: 2px solid #e5e7e9;
+}
+
+.note p {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: #6b7075;
+}
+
+.note p + p { margin-top: 8px; }
+
+/* ---------- The way out at the bottom ---------- */
+.docs-next {
+  margin-top: 64px;
+  padding-top: 26px;
+  border-top: 1px solid #ececec;
+}
+
+/* ---------- The list, on a screen too narrow to stand it beside the text ----
+   It becomes a disclosure above the page rather than a drawer over it: there
+   is nothing to hide behind on a page that is only words, and a panel that
+   slides in from the edge is a mechanism to learn for a list of nine links. */
+
+.docs-toggle {
+  display: none;
+  width: 100%;
+  margin: 0;
+  padding: 11px 0;
+  border: 0;
+  border-bottom: 1px solid #ececec;
+  background: none;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  text-align: left;
+  cursor: pointer;
+}
+
+.docs-toggle svg {
+  float: right;
+  margin-top: 4px;
+  transition: transform 0.2s ease;
+}
+
+.docs-toggle[aria-expanded="true"] svg { transform: rotate(45deg); }
+
+@media (max-width: 900px) {
+  .docs {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    padding: 56px 24px 0;
+  }
+
+  .docs-toggle { display: block; }
+
+  .docs-nav {
+    position: static;
+    max-height: none;
+    padding: 22px 0 26px;
+    border-bottom: 1px solid #ececec;
+  }
+
+  .docs-nav[hidden] { display: none; }
+
+  .docs-nav h2 { margin-top: 26px; }
+
+  .docs-body {
+    padding-bottom: 88px;
+  }
+
+  .docs-body .eyebrow { margin-top: 40px; }
+
+  .docs-body section {
+    margin-top: 48px;
+    padding-top: 30px;
+  }
+
+  /* Three columns do not fit on a phone, and folding one of them under
+     another inside a grid means hand-placing every cell. So the grid is given
+     up rather than fought: each entry becomes three stacked lines with one
+     rule above it, which is the same reading order at a quarter of the
+     machinery. */
+  .cmds { display: block; }
+
+  .cmds dt {
+    display: block;
+    padding: 15px 0 0;
+    border-top: 1px solid #f0f0f0;
+  }
+
+  .cmds .k {
+    display: block;
+    padding: 7px 0 0;
+    border-top: 0;
+  }
+
+  .cmds dd {
+    display: block;
+    padding: 3px 0 15px;
+  }
+
+  .cmds dt:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .docs-toggle svg { transition: none; }
+}
