@@ -254,7 +254,7 @@ url = "&lt;url&gt;"</code></pre>
 {
  'slug': 'tasks',
  'nav': 'Tasks and routines',
- 'group': 'Your side',
+ 'group': 'Tasks',
  'title': 'Tasks and routines',
  'lede': 'The one private thing on a canvas where everything else is shared.',
  'body': '''
@@ -275,7 +275,7 @@ url = "&lt;url&gt;"</code></pre>
 {
  'slug': 'sharing',
  'nav': 'Sharing a canvas',
- 'group': 'People',
+ 'group': 'Multiplayer',
  'title': 'Sharing a canvas',
  'lede': 'Who else is here, and what each of them may do.',
  'body': '''
@@ -300,7 +300,7 @@ url = "&lt;url&gt;"</code></pre>
 {
  'slug': 'account',
  'nav': 'Account',
- 'group': 'People',
+ 'group': 'Multiplayer',
  'title': 'Account',
  'lede': 'What your agents run on, and what it costs.',
  'body': '''

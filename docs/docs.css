@@ -170,14 +170,18 @@
 
 .docs-nav::-webkit-scrollbar { display: none; }
 
+/* A group heading is a word, set in the sentence case the rest of the site is
+   written in. It carries weight instead of capitals: small uppercase grey is
+   the standard-issue docs label, and it says "this is a docs template" before
+   it says what the group is. Bold ink is louder than the page links under it
+   without shouting the letters. */
 .docs-nav h2 {
   margin: 28px 0 0;
-  font-size: 0.75rem;
-  font-weight: 500;
-  line-height: 1.4;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #9a9fa4;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -0.005em;
+  color: var(--ink);
 }
 
 .docs-nav h2:first-child { margin-top: 0; }
