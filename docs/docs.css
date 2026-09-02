@@ -33,24 +33,41 @@
 
 /* ---------- Finding something ---------- */
 
+/* A well rather than a box.
+   A hairline rectangle is the one shape on this page that has to be drawn to
+   exist, and it sits at the top of a column of plain words where nothing else
+   is outlined. Sunk into the page instead, it reads as somewhere to put
+   something without a line saying so. The ground has to come down a shade off
+   the page for the shadow to have anything to fall on: an inset shadow on
+   white is invisible. */
 .docs-find {
   position: relative;
   flex: none;
   display: flex;
   align-items: center;
   height: 32px;
-  padding: 0 9px;
-  border: 1px solid #e4e6e9;
-  background: #fff;
-  transition: border-color 0.15s ease;
+  padding: 0 10px;
+  border: 0;
+  background: #f1f2f3;
+  box-shadow: inset 0 1px 2.5px rgba(20, 22, 24, 0.07),
+              inset 0 0 0 1px rgba(20, 22, 24, 0.035);
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.docs-find:focus-within { border-color: #c2c6ca; }
+/* Deeper rather than outlined, so focus is the same gesture as the resting
+   state and not a second treatment laid over it. */
+.docs-find:focus-within {
+  background: #edeef0;
+  box-shadow: inset 0 1px 3px rgba(20, 22, 24, 0.1),
+              inset 0 0 0 1px rgba(20, 22, 24, 0.06);
+}
 
+/* Both of these used to sit on white. On the well's ground they need a step
+   down to hold the same separation from it. */
 .df-glass {
   flex: none;
   margin-right: 7px;
-  color: #a9aeb3;
+  color: #8d9298;
 }
 
 .df-input {
@@ -65,7 +82,7 @@
   line-height: 1.4;
 }
 
-.df-input::placeholder { color: #a9aeb3; }
+.df-input::placeholder { color: #8d9298; }
 .df-input:focus { outline: 0; }
 
 /* The native clear button is a second, differently-shaped affordance sitting
